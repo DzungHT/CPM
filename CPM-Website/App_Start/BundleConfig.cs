@@ -24,7 +24,9 @@ namespace CPM_Website
                             .Include("~/vendors/pnotify/dist/pnotify.buttons.css")
                             .Include("~/vendors/pnotify/dist/pnotify.nonblock.css")
                         );
-
+            bundles.Add(new StyleBundle("~/css/dataTable")
+                            .Include("~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css", new CssRewriteUrlTransform())
+                        );
             #endregion
 
             #region JS
@@ -69,6 +71,11 @@ namespace CPM_Website
                             .Include("~/vendors/pnotify/dist/pnotify.js")
                             .Include("~/vendors/pnotify/dist/pnotify.buttons.js")
                             .Include("~/vendors/pnotify/dist/pnotify.nonblock.js")
+                        );
+            bundles.Add(new ScriptBundle("~/js/dataTable")
+                            .Include("~/vendors/datatables.net/js/jquery.dataTables.min.js")
+                            .Include("~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js")
+                            .Include("~/vendors/datatables.net/js/dataTables.defaults.js")
                         );
             #endregion
         }

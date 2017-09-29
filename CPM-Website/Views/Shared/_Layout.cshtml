@@ -11,6 +11,7 @@
 
     @Styles.Render("~/css/common")
     @Styles.Render("~/css/pnotify")
+    @Styles.Render("~/css/dataTable")
 
 </head>
 <body class="nav-md footer_fixed" ng-app="CybertronPolicyManagement">
@@ -160,12 +161,12 @@
             </div>
             <!-- /top navigation -->
             <!-- page content -->
-            <div class="right_col" role="main">
+            <div class="right_col" role="main" style="padding-bottom:75px">
                 @RenderBody()
             </div>
             <!-- /page content -->
             <!-- footer content -->
-            <footer>
+            <footer style="z-index: 999999">
                 <div class="pull-right">
                     @ApplicationResources.AppName - Cybertron ©2017
                 </div>
@@ -177,5 +178,8 @@
 
     @Scripts.Render("~/js/common")
     @Scripts.Render("~/js/pnotify")
+    @Scripts.Render("~/js/dataTable")
+
+    @RenderSection("script", false)
 </body>
 </html>

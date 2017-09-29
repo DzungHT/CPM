@@ -63,6 +63,8 @@
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.5.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -132,8 +134,9 @@
     <Content Include="Scripts\Common\bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\Common\custom.js" />
     <Content Include="Scripts\Common\custom.min.js" />
+    <Content Include="Scripts\vi_VN.lang.js" />
     <None Include="Scripts\Common\jquery\jquery-1.12.4.intellisense.js" />
-    <Content Include="Scripts\Common\datatable.custom.js" />
+    <Content Include="vendors\datatables.net\js\dataTables.defaults.js" />
     <Content Include="Scripts\Common\jquery\jquery-1.12.4.js" />
     <Content Include="Scripts\Common\jquery\jquery-1.12.4.min.js" />
     <None Include="Scripts\Common\jquery\jquery-3.1.1.intellisense.js" />
@@ -2558,26 +2561,24 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\ActionLog.cs" />
+    <Compile Include="Models\Entities\Application.cs" />
     <Compile Include="Models\Common\EncryptionExtension.cs" />
     <Compile Include="Models\Common\SaveResult.cs" />
     <Compile Include="Models\Common\Constants.cs" />
-    <Compile Include="Models\DAOs\AccountDAO.cs" />
-    <Compile Include="Models\DAOs\MenuDAO.cs" />
-    <Compile Include="Models\Entities\ActionLog.cs" />
-    <Compile Include="Models\Entities\Application.cs" />
-    <Compile Include="Models\Entities\dbContext.cs" />
     <Compile Include="Models\Entities\DomainData.cs" />
     <Compile Include="Models\Entities\DomainType.cs" />
     <Compile Include="Models\Entities\Menu.cs" />
+    <Compile Include="Models\Entities\MyDbContext.cs" />
     <Compile Include="Models\Entities\Operation.cs" />
     <Compile Include="Models\Entities\Permission.cs" />
     <Compile Include="Models\Entities\Resource.cs" />
     <Compile Include="Models\Entities\Role.cs" />
     <Compile Include="Models\Entities\RoleMenu.cs" />
-    <Compile Include="Models\Entities\sysdiagram.cs" />
     <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\Entities\UserRole.cs" />
     <Compile Include="Models\Entities\UserRoleData.cs" />
@@ -2612,6 +2613,9 @@
     <Content Include="Scripts\Common\jquery\jquery-1.12.4.min.map" />
     <Content Include="Scripts\Common\jquery\jquery-3.1.1.min.map" />
     <Content Include="Scripts\Common\jquery\jquery-3.1.1.slim.min.map" />
+    <Content Include="vendors\datatables.net\i18n\vi_VN.lang" />
+    <Content Include="vendors\datatables.net\i18n\en_US.lang" />
+    <Content Include="Views\Users\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2621,6 +2625,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\DAOs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\ApplicationResources.resx">
