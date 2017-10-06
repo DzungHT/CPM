@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        $.ajax({
+            method:"GET",
+            url: "http://localhost:8880/api/Values",
+            contentType: "json",
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin:1234567')
+            },
+            success: function (result) {
+                $("#result").html(result);
+            }
+        });
+    });
+    </script>
+
+</head>
+<body>
+    <div id="result"></div>
+</body>
+</html>
