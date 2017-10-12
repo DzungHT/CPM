@@ -8,12 +8,13 @@
         $(document).ready(function () {
         $.ajax({
             method:"GET",
-            url: "http://localhost:8880/api/Values",
+            url: "http://localhost:8880/v1/api/Users/getList",
             contentType: "json",
             headers: {
-                'Authorization': 'Basic ' + btoa('admin:1234567')
+                'Authorization': 'Basic ' + btoa('admin:123456')
             },
             success: function (result) {
+                console.log(result);
                 $("#result").html(result);
             }
         });

@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CPM-Website", "CPM-Website\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMP-Servive", "CMP-Servive\CMP-Servive.csproj", "{8B46ABEF-B36C-436D-9237-51E5307E913A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMP-Servive.Tests", "CMP-Servive.Tests\CMP-Servive.Tests.csproj", "{55BE5F5D-A470-4621-81B8-4D1D0A948533}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{8B46ABEF-B36C-436D-9237-51E5307E913A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B46ABEF-B36C-436D-9237-51E5307E913A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B46ABEF-B36C-436D-9237-51E5307E913A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55BE5F5D-A470-4621-81B8-4D1D0A948533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55BE5F5D-A470-4621-81B8-4D1D0A948533}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55BE5F5D-A470-4621-81B8-4D1D0A948533}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55BE5F5D-A470-4621-81B8-4D1D0A948533}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

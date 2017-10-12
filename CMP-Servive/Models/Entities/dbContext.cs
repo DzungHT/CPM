@@ -17,13 +17,16 @@ namespace CMP_Servive.Models.Entities
         public virtual DbSet<DomainData> DomainDatas { get; set; }
         public virtual DbSet<DomainType> DomainTypes { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
+        public virtual DbSet<OAuthClientDetail> OAuthClientDetails { get; set; }
         public virtual DbSet<Operation> Operations { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Resource> Resources { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<OAuthDetail> OAuthDetails { get; set; }
         public virtual DbSet<RoleMenu> RoleMenus { get; set; }
         public virtual DbSet<UserRoleData> UserRoleDatas { get; set; }
 
@@ -42,6 +45,11 @@ namespace CMP_Servive.Models.Entities
             modelBuilder.Entity<Menu>()
                 .HasMany(e => e.RoleMenus)
                 .WithRequired(e => e.Menu)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<OAuthClientDetail>()
+                .HasMany(e => e.OAuthDetails)
+                .WithRequired(e => e.OAuthClientDetail)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Permission>()
