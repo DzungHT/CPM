@@ -17,7 +17,8 @@
 <body class="nav-md footer_fixed" ng-app="CybertronPolicyManagement">
     <div class="container body">
         <div class="main_container">
-            <div class="col-md-3 left_col menu_fixed">
+            <div class="clearfix"></div>
+            <div class="col-md-3 left_col menu_fixed" style="z-index: 9999999;">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
                         <a href="@Url.Action("index","home")" class="site_title"><i class="@ApplicationResources.FontIcon"></i> <span>@ApplicationResources.AppNameSumary</span></a>
@@ -43,6 +44,9 @@
                                 <li>
                                     <a href="@Url.Action("index","home")"><i class="fa fa-home"></i> Home</a>
                                 </li>
+                                <li>
+                                    <a href="@Url.Action("index","test")"><i class="fa fa-bolt"></i> Test</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -66,6 +70,7 @@
                 </div>
             </div>
             <!-- top navigation -->
+            <div class="clearfix"></div>
             <div class="top_nav">
                 <div class="nav_menu">
                     <nav>
@@ -76,7 +81,8 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="https://scontent.fhan5-2.fna.fbcdn.net/v/t1.0-9/17156037_1253402538088938_7718839922421342644_n.jpg?oh=c15dab1969f1f6a839d3aabcd73238d2&oe=5A28B45C" alt="">John Doe
+                                    <img src="https://scontent.fhan5-2.fna.fbcdn.net/v/t1.0-9/17156037_1253402538088938_7718839922421342644_n.jpg?oh=c15dab1969f1f6a839d3aabcd73238d2&oe=5A28B45C" alt="">
+                                    Hoàng Trí Dũng
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">

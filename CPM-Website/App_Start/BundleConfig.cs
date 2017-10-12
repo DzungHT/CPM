@@ -16,7 +16,7 @@ namespace CPM_Website
                             .Include("~/Content/Common/font-awesome.css", new CssRewriteUrlTransform())
                             .Include("~/vendors/nprogress/nprogress.css")
                             .Include("~/vendors/iCheck/skins/flat/green.css", new CssRewriteUrlTransform())
-                            .Include("~/Content/Common/custom.css")
+                            .Include("~/Content/Common/custom.min.css")
                         );
 
             bundles.Add(new StyleBundle("~/css/pnotify")
@@ -77,6 +77,11 @@ namespace CPM_Website
                             .Include("~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js")
                             .Include("~/vendors/datatables.net/js/dataTables.defaults.js")
                         );
+
+            #endregion
+            #region Controller
+            bundles.Add(new ScriptBundle("~/ctrl/test").Include("~/Scripts/Test/test.ctrl.js"));
+
             #endregion
         }
     }
