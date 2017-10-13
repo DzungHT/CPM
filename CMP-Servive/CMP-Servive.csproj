@@ -214,13 +214,17 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Business\ApplicationBusiness.cs" />
     <Compile Include="Business\BusinessBase.cs" />
+    <Compile Include="Business\MenuBusiness.cs" />
+    <Compile Include="Business\RoleBusiness.cs" />
     <Compile Include="Business\UserBusiness.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\TokensController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -232,8 +236,10 @@
     <Compile Include="Models\Entities\DomainData.cs" />
     <Compile Include="Models\Entities\DomainType.cs" />
     <Compile Include="Models\Entities\Menu.cs" />
+    <Compile Include="Models\Entities\OAuthAccessToken.cs" />
     <Compile Include="Models\Entities\OAuthClientDetail.cs" />
     <Compile Include="Models\Entities\OAuthDetail.cs" />
+    <Compile Include="Models\Entities\OAuthRefreshToken.cs" />
     <Compile Include="Models\Entities\Operation.cs" />
     <Compile Include="Models\Entities\Permission.cs" />
     <Compile Include="Models\Entities\Resource.cs" />
@@ -244,6 +250,7 @@
     <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\Entities\UserRole.cs" />
     <Compile Include="Models\Entities\UserRoleData.cs" />
+    <Compile Include="Models\TokenIdentity.cs" />
     <Compile Include="Providers\Authentication\BasicAuthenticationAttribute.cs" />
     <Compile Include="Models\Common\CommonUtil.cs" />
     <Compile Include="Models\Common\EncryptionExtension.cs" />
@@ -251,6 +258,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Providers\Authentication\BasicAuthenticationIdentity.cs" />
+    <Compile Include="Providers\Authentication\IServiceToken.cs" />
+    <Compile Include="Providers\Authentication\ServiceToken.cs" />
     <Compile Include="Providers\CorsPolicyProvider.cs" />
     <Compile Include="Providers\RequireHttpsAttribute.cs" />
     <Compile Include="Results\ChallengeResult.cs" />

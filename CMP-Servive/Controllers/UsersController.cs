@@ -164,6 +164,26 @@ namespace CMP_Servive.Controllers
             }
         }
 
+        [Route("addRole")]
+        [HttpPost]
+        public IHttpActionResult addRole(int userId, List<int> lstRoleId)
+        {
+            try
+            {
+                if (userBusiness.addRole(userId, lstRoleId))
+                {
+                    return Ok();
+                } else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
 
