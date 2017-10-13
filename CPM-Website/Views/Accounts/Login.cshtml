@@ -28,6 +28,7 @@
             <div class="animate form login_form">
                 <section class="login_content">
                     <form method="post" action="@Url.Action("login","accounts")">
+                        @Html.AntiForgeryToken()
                         <h1>@LoginResources.LoginFormTitle</h1>
                         <div>
                             <input type="text" name="Username" class="form-control" placeholder="@LoginResources.UsernamePlaceholder" required autofocus/>
@@ -42,40 +43,6 @@
                         <div class="clearfix"></div>
                         <div class="separator">
                             <p class="change_link">
-                                @LoginResources.NewToSite
-                                <a href="#signup" class="to_register"> @LoginResources.CreateNewAccount </a>
-                            </p>
-                            <div class="clearfix"></div>
-                            <br />
-                            <div>
-                                <h1><span class="glyphicons glyphicons-fire"></span> Cybertron!</h1>
-                                <p>©2017 All Rights Reserved. Privacy and Terms</p>
-                            </div>
-                        </div>
-                    </form>
-                </section>
-            </div>
-            <div id="register" class="animate form registration_form">
-                <section class="login_content">
-                    <form>
-                        <h1>@LoginResources.CreateAccountTitle</h1>
-                        <div>
-                            <input type="text" class="form-control" placeholder="@LoginResources.UsernamePlaceholder" required />
-                        </div>
-                        <div>
-                            <input type="email" class="form-control" placeholder="@LoginResources.EmailPlaceholder" required />
-                        </div>
-                        <div>
-                            <input type="password" class="form-control" placeholder="@LoginResources.PasswordPlaceholder" required />
-                        </div>
-                        <div>
-                            <button class="btn btn-default submit">@LoginResources.btnCreateAccount</button>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="separator">
-                            <p class="change_link">
-                                @LoginResources.HasAnAccount
-                                <a href="#signin" class="to_register"> @LoginResources.btnLogin </a>
                             </p>
                             <div class="clearfix"></div>
                             <br />
@@ -96,4 +63,3 @@
     <script src="~/vendors/iCheck/icheck.min.js"></script>
 </body>
 </html>
-
