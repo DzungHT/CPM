@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace CPM_Website.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         // GET: Home
