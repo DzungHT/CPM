@@ -8,11 +8,9 @@ using System.Web;
 
 namespace CMP_Servive.Business
 {
-    public class UserBusiness : BusinessBase
+    public class UserBusiness : BaseBusiness<dbContext>
     {
-        dbContext db = new dbContext();
-
-        public bool login(string userName, string password)
+        public bool Login(string userName, string password)
         {
             using (db)
             {

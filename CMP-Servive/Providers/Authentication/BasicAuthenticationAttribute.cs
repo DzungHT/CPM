@@ -51,7 +51,7 @@ namespace CMP_Servive.Authentication.Providers
             }
 
             UserBusiness userBusiness = new UserBusiness();
-            if (!userBusiness.login(identity.UserName, identity.Password))
+            if (!userBusiness.Login(identity.UserName, identity.Password))
             {
                 ChallengeAuthRequest(actionContext);
                 return;

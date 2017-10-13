@@ -7,65 +7,8 @@ using System.Web;
 
 namespace CMP_Servive.Business
 {
-    public class MenuBusiness
+    public class MenuBusiness : BaseBusiness<dbContext>
     {
-        dbContext db = new dbContext();
-
-        public bool save(Menu obj)
-        {
-            using (db)
-            {
-                db.Menus.Add(obj);
-                db.SaveChanges();
-            }
-            return obj.MenuID > 0;
-        }
-
-        public bool update(Menu obj)
-        {
-            using (db)
-            {
-                db.Entry(obj).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            return obj.MenuID > 0;
-        }
-
-        public bool delete(int id)
-        {
-            Menu obj = db.Menus.Find(id);
-            if (obj != null)
-            {
-                db.Menus.Remove(obj);
-                db.SaveChanges();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public List<Menu> getList()
-        {
-            using (db)
-            {
-                return db.Menus.ToList();
-            }
-        }
-
-        public Menu getObject(int id)
-        {
-            using (db)
-            {
-                return db.Menus.Find(id);
-            }
-        }
-        public void Dispose()
-        {
-            db.Dispose();
-        }
-
         public bool addRole(int roleId, List<int> lstMenuId)
         {
             db.RoleMenus.AddRange(
