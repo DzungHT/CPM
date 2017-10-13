@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CybertronFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,8 @@ namespace CPM_Website
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            ApiClient.BaseAddress = "http://localhost:8880";
         }
     }
 }

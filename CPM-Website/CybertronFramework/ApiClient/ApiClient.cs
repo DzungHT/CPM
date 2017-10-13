@@ -11,6 +11,28 @@ namespace CybertronFramework
 {
     public class ApiClient : IApiClient
     {
+        #region Singleton
+        private static ApiClient apiClient;
+        public static string BaseAddress { get; set; }
+        public static ApiClient Instance
+        {
+            get
+            {
+                if (apiClient == null)
+                {
+                    return new ApiClient(BaseAddress);
+                }
+                else
+                {
+                    return apiClient;
+                }
+            }
+        }
+        #endregion
+
+
+
+
         private HttpClient client;
 
         public ApiClient(string basepath)

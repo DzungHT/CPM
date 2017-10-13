@@ -27,7 +27,7 @@ namespace CMP_Servive.Controllers
         [HttpGet]
         public IHttpActionResult GetUsers()
         {
-            List<User> lstResult = userBusiness.getList();
+            List<User> lstResult = userBusiness.GetList();
             if (lstResult == null)
             {
                 return NotFound();
@@ -40,7 +40,7 @@ namespace CMP_Servive.Controllers
         [HttpGet]
         public IHttpActionResult GetUser(int id)
         {
-            User user = userBusiness.getObject(id);
+            User user = userBusiness.GetObject(id);
             if (user == null)
             {
                 return NotFound();
@@ -135,7 +135,7 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                if (userBusiness.restartPassword(id))
+                if (userBusiness.RestartPassword(id))
                 {
                     return Ok("Success");
                 }
@@ -170,7 +170,7 @@ namespace CMP_Servive.Controllers
         {
             try
             {
-                if (userBusiness.addRole(userId, lstRoleId))
+                if (userBusiness.AddRole(userId, lstRoleId))
                 {
                     return Ok();
                 } else

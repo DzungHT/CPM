@@ -39,7 +39,7 @@ namespace CPM_Website.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel formData)
         {
-            IApiClient client = new ApiClient("http://localhost:8880");
+            IApiClient client = ApiClient.Instance;
 
             string s = await client.PostApiAsync<string, object>("/v1/api/Users/login", new { UserName = "123", Password = "123" });
             //FormsAuthentication.SetAuthCookie(acc.Username, formData.RememberMe);

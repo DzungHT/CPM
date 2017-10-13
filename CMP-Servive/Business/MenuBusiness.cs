@@ -9,7 +9,7 @@ namespace CMP_Servive.Business
 {
     public class MenuBusiness : BaseBusiness<dbContext>
     {
-        public bool addRole(int roleId, List<int> lstMenuId)
+        public bool AddRole(int roleId, List<int> lstMenuId)
         {
             db.RoleMenus.AddRange(
                     lstMenuId.Select(x=> new RoleMenu { MenuID = x, RoleID = roleId, IsActive = 1 })
@@ -17,7 +17,7 @@ namespace CMP_Servive.Business
             db.SaveChanges();
             return true;
         }
-        public List<Menu> getMenuByUser(int userId)
+        public List<Menu> GetMenuByUser(int userId)
         {
             var result = from ur in db.UserRoles
                          join rm in db.RoleMenus on ur.RoleID equals rm.RoleID

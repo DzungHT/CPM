@@ -12,56 +12,20 @@ namespace CMP_Servive.Business
     {
         public bool Login(string userName, string password)
         {
-            using (db)
+            string pas = password.ToMD5();
+            bool ckeckexit = db.Users.Any(user => user.LoginName.Equals(userName, StringComparison.OrdinalIgnoreCase));
+            if (ckeckexit)
             {
-                string pas = password.ToMD5();
-                bool ckeckexit = db.Users.Any(user => user.LoginName.Equals(userName, StringComparison.OrdinalIgnoreCase));
-                if (ckeckexit)
-                {
-                    return db.Users.Any(user => user.LoginName.Equals(userName, StringComparison.OrdinalIgnoreCase)
-                                             && user.Password.Equals(pas));
-                } else
-                {
-                    return false;
-                }
+                return db.Users.Any(user => user.LoginName.Equals(userName, StringComparison.OrdinalIgnoreCase)
+                                         && user.Password.Equals(pas));
             }
-        }
-
-        public bool save(User user)
-        {
-            using(db)
-            {
-                db.Users.Add(user);
-                db.SaveChanges();
-            }
-            return user.UserID > 0;
-        }
-
-        public bool update(User user)
-        {
-            using (db)
-            {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            return user.UserID > 0;
-        }
-
-        public bool delete(int id)
-        {
-            User user = db.Users.Find(id);
-            if (user != null)
-            {
-                db.Users.Remove(user);
-                db.SaveChanges();
-                return true;
-            } else
+            else
             {
                 return false;
             }
         }
 
-        public bool restartPassword(int id)
+        public bool RestartPassword(int id)
         {
             User user = db.Users.Find(id);
             if (user != null)
@@ -77,34 +41,13 @@ namespace CMP_Servive.Business
             }
         }
 
-        public List<User> getList()
-        {
-            using (db)
-            {
-                return db.Users.ToList();
-            }
-        }
-
-        public User getObject(int id)
-        {
-            using (db)
-            {
-                return db.Users.Find(id);
-            }
-        }
-
-        public bool addRole(int userId, List<int> lstRoleId)
+        public bool AddRole(int userId, List<int> lstRoleId)
         {
             db.UserRoles.AddRange(
                     lstRoleId.Select(x => new UserRole { UserID = userId, RoleID = x, IsActive = 1 })
                 );
             db.SaveChanges();
             return true;
-        }
-
-        public void Dispose()
-        {
-            db.Dispose();
         }
     }
 }
