@@ -18,6 +18,7 @@ namespace CMP_Servive.Controllers
 {
     
     [RoutePrefix("v1/api/Users")]
+    
     public class UsersController : ApiController
     {
         UserBusiness userBusiness = new UserBusiness();
@@ -25,6 +26,7 @@ namespace CMP_Servive.Controllers
         // GET: api/Users
         [Route("getList")]
         [HttpGet]
+        [BasicAuthentication]
         public IHttpActionResult GetUsers()
         {
             List<User> lstResult = userBusiness.GetList();
@@ -152,7 +154,7 @@ namespace CMP_Servive.Controllers
 
         [Route("login")]
         [HttpPost]
-        public IHttpActionResult Login(BasicAuthenticationIdentity user)
+        public IHttpActionResult Login([FromBody]BasicAuthenticationIdentity user)
         {
             UserBusiness userBusiness = new UserBusiness();
             if (userBusiness.Login(user.UserName, user.Password))

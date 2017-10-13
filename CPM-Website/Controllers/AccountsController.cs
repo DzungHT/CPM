@@ -1,4 +1,5 @@
-﻿using CPM_Website.Models;
+﻿using CPM_Website.CybertronFramework.Common;
+using CPM_Website.Models;
 using CybertronFramework;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,14 @@ namespace CPM_Website.Controllers
 {
     public class AccountsController : Controller
     {
+        private const string API_LOGIN = "/v1/api/Users/login";
+
         #region HttpGet
         // GET: Account
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Login(string ReturnUrl)
         {
+            Session["ReturnUrl"] = ReturnUrl ?? "/";
             return PartialView();
         }
 
@@ -27,7 +31,7 @@ namespace CPM_Website.Controllers
         [Authorize]
         public ActionResult Logout()
         {
-            //FormsAuthentication.SignOut();
+            FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Accounts");
         }
         #endregion
@@ -41,9 +45,14 @@ namespace CPM_Website.Controllers
         {
             IApiClient client = ApiClient.Instance;
 
-            string s = await client.PostApiAsync<string, object>("/v1/api/Users/login", new { UserName = "123", Password = "123" });
-            //FormsAuthentication.SetAuthCookie(acc.Username, formData.RememberMe);
-            return RedirectToAction("Index", "Home");
+            string s = await client.PostApiAsync<string, object>(API_LOGIN, new { UserName = formData.Username, Password = formData.Password });
+            if (s != "")
+            {
+                FormsAuthentication.SetAuthCookie(s, formData.RememberMe);
+            }
+            string ReturnUrl = Session["ReturnUrl"].ToString();
+            Session.Remove("ReturnUrl");
+            return Redirect(ReturnUrl);
         }
         #endregion
     }
