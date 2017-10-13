@@ -17,7 +17,9 @@ namespace CMP_Servive.Models.Entities
         public virtual DbSet<DomainData> DomainDatas { get; set; }
         public virtual DbSet<DomainType> DomainTypes { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
+        public virtual DbSet<OAuthAccessToken> OAuthAccessTokens { get; set; }
         public virtual DbSet<OAuthClientDetail> OAuthClientDetails { get; set; }
+        public virtual DbSet<OAuthRefreshToken> OAuthRefreshTokens { get; set; }
         public virtual DbSet<Operation> Operations { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Resource> Resources { get; set; }
@@ -50,6 +52,12 @@ namespace CMP_Servive.Models.Entities
             modelBuilder.Entity<OAuthClientDetail>()
                 .HasMany(e => e.OAuthDetails)
                 .WithRequired(e => e.OAuthClientDetail)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<OAuthRefreshToken>()
+                .HasMany(e => e.OAuthAccessTokens)
+                .WithRequired(e => e.OAuthRefreshToken)
+                .HasForeignKey(e => e.RefreshToken)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Permission>()

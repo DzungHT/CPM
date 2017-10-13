@@ -94,6 +94,16 @@ namespace CMP_Servive.Business
                 return db.Users.Find(id);
             }
         }
+
+        public bool addRole(int userId, List<int> lstRoleId)
+        {
+            db.UserRoles.AddRange(
+                    lstRoleId.Select(x => new UserRole { UserID = userId, RoleID = x, IsActive = 1 })
+                );
+            db.SaveChanges();
+            return true;
+        }
+
         public void Dispose()
         {
             db.Dispose();
