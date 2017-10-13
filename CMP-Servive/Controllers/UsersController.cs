@@ -155,7 +155,7 @@ namespace CMP_Servive.Controllers
         public IHttpActionResult Login(BasicAuthenticationIdentity user)
         {
             UserBusiness userBusiness = new UserBusiness();
-            if (userBusiness.login(user.UserName, user.Password))
+            if (userBusiness.Login(user.UserName, user.Password))
             {
                 return Ok("YWRtaW46MTIzNDU2");
             } else
