@@ -18,7 +18,7 @@ namespace CMP_Servive.Controllers
         [HttpGet]
         public IHttpActionResult GetList()
         {
-            List<Menu> lstResult = menuBusiness.getList();
+            List<Menu> lstResult = menuBusiness.GetAll<Menu>();
             if (lstResult == null)
             {
                 return NotFound();
@@ -30,7 +30,7 @@ namespace CMP_Servive.Controllers
         [HttpGet]
         public IHttpActionResult GetObject(int id)
         {
-            Menu obj = menuBusiness.getObject(id);
+            Menu obj = menuBusiness.Get<Menu>();
             if (obj == null)
             {
                 return NotFound();
@@ -42,7 +42,7 @@ namespace CMP_Servive.Controllers
         [HttpGet]
         public IHttpActionResult GetListByUser(int userId)
         {
-            List<Menu> lstResult = menuBusiness.getMenuByUser(userId);
+            List<Menu> lstResult = menuBusiness.GetMenuByUser(userId);
             if (lstResult == null)
             {
                 return NotFound();
@@ -60,14 +60,8 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                if (menuBusiness.update(obj))
-                {
-                    return Ok(obj);
-                }
-                else
-                {
-                    return BadRequest("Fail");
-                }
+                menuBusiness.Update<Menu>(obj);
+                return Ok(obj);
             }
             catch (Exception)
             {
@@ -85,14 +79,8 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                if (menuBusiness.save(obj))
-                {
-                    return Ok(obj);
-                }
-                else
-                {
-                    return BadRequest("Fail");
-                }
+                menuBusiness.Save<Menu>(obj);
+                return Ok(obj);
             }
             catch (Exception)
             {
@@ -110,14 +98,8 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                if (menuBusiness.delete(id))
-                {
-                    return Ok("Success");
-                }
-                else
-                {
-                    return BadRequest("Fail");
-                }
+                menuBusiness.Delete<Menu>(id);
+                return Ok("Success");
             }
             catch (Exception)
             {
