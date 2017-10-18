@@ -18,7 +18,7 @@ namespace CMP_Servive.Controllers
         [HttpGet]
         public IHttpActionResult GetList()
         {
-            List<Role> lstResult = roleBusiness.getList();
+            List<Role> lstResult = roleBusiness.GetAll<Role>();
             if (lstResult == null)
             {
                 return NotFound();
@@ -31,7 +31,7 @@ namespace CMP_Servive.Controllers
         [HttpGet]
         public IHttpActionResult GetObject(int id)
         {
-            Role obj = roleBusiness.getObject(id);
+            Role obj = roleBusiness.Get<Role>(id);
             if (obj == null)
             {
                 return NotFound();
@@ -47,16 +47,11 @@ namespace CMP_Servive.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             try
             {
-                if (roleBusiness.update(obj))
-                {
-                    return Ok(obj);
-                }
-                else
-                {
-                    return BadRequest("Fail");
-                }
+                roleBusiness.Update<Role>(obj);
+                return Ok(obj);
             }
             catch (Exception)
             {
@@ -74,14 +69,8 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                if (roleBusiness.save(obj))
-                {
-                    return Ok(obj);
-                }
-                else
-                {
-                    return BadRequest("Fail");
-                }
+                roleBusiness.Save<Role>(obj);
+                return Ok(obj);
             }
             catch (Exception)
             {
@@ -99,14 +88,8 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                if (roleBusiness.delete(id))
-                {
-                    return Ok("Success");
-                }
-                else
-                {
-                    return BadRequest("Fail");
-                }
+                roleBusiness.Delete<Role>(id);
+                return Ok("Success");
             }
             catch (Exception)
             {

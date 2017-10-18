@@ -29,7 +29,7 @@ namespace CMP_Servive.Controllers
         [BasicAuthentication]
         public IHttpActionResult GetUsers()
         {
-            List<User> lstResult = userBusiness.GetList();
+            List<User> lstResult = userBusiness.GetAll<User>();
             if (lstResult == null)
             {
                 return NotFound();
@@ -42,7 +42,7 @@ namespace CMP_Servive.Controllers
         [HttpGet]
         public IHttpActionResult GetUser(int id)
         {
-            User user = userBusiness.GetObject(id);
+            User user = userBusiness.Get<User>(id); 
             if (user == null)
             {
                 return NotFound();
@@ -53,7 +53,7 @@ namespace CMP_Servive.Controllers
         // PUT: api/Users/5
         [Route("update")]
         [HttpPost]
-        public IHttpActionResult PutUser(User user)
+        public IHttpActionResult PutUser([FromBody]User user)
         {
             if (!ModelState.IsValid)
             {
@@ -61,13 +61,8 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                if (userBusiness.update(user))
-                {
-                    return Ok(user);
-                } else
-                {
-                    return BadRequest("Fail");
-                }
+                userBusiness.Update<User>(user);
+                return Ok(user);
             }
             catch (Exception)
             {
@@ -78,7 +73,7 @@ namespace CMP_Servive.Controllers
         // POST: api/Users
         [Route("create")]
         [HttpPost]
-        public IHttpActionResult PostUser(User user)
+        public IHttpActionResult PostUser([FromBody]User user)
         {
             if (!ModelState.IsValid)
             {
@@ -86,14 +81,8 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                if (userBusiness.save(user))
-                {
-                    return Ok(user);
-                }
-                else
-                {
-                    return BadRequest("Fail");
-                }
+                userBusiness.Save<User>(user);
+                return Ok(user);
             }
             catch (Exception)
             {
@@ -104,7 +93,7 @@ namespace CMP_Servive.Controllers
         // DELETE: api/Users/5
         [Route("delete")]
         [HttpPost]
-        public IHttpActionResult DeleteUser(int id)
+        public IHttpActionResult DeleteUser([FromBody]int id)
         {
             if (!ModelState.IsValid)
             {
@@ -112,14 +101,8 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                if (userBusiness.delete(id))
-                {
-                    return Ok("Success");
-                }
-                else
-                {
-                    return BadRequest("Fail");
-                }
+                userBusiness.Delete<User>(id);
+                return Ok("Success");
             }
             catch (Exception)
             {
