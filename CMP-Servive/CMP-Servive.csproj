@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -215,7 +216,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Business\ApplicationBusiness.cs" />
-    <Compile Include="Business\BusinessBase.cs" />
+    <Compile Include="Business\BaseBusiness.cs" />
     <Compile Include="Business\MenuBusiness.cs" />
     <Compile Include="Business\RoleBusiness.cs" />
     <Compile Include="Business\UserBusiness.cs" />
