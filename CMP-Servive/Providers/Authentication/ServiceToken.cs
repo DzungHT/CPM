@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using CMP_Servive.Models;
-using CMP_Servive.Models.Common;
-using CMP_Servive.Models.Entities;
+using CMP_Servive.Repository.Entities;
+using CMP_Servive.Helper;
 
 namespace CMP_Servive.Providers.Authentication
 {

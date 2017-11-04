@@ -1,4 +1,4 @@
-namespace CMP_Servive.Models.Entities
+namespace CMP_Servive.Repository.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -6,19 +6,18 @@ namespace CMP_Servive.Models.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Role")]
-    public partial class Role
+    [Table("Application")]
+    public partial class Application
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public Application()
         {
-            ActionLogs = new HashSet<ActionLog>();
-            RoleMenus = new HashSet<RoleMenu>();
-            UserRoles = new HashSet<UserRole>();
-            Permissions = new HashSet<Permission>();
+            Menus = new HashSet<Menu>();
+            Resources = new HashSet<Resource>();
+            DomainTypes = new HashSet<DomainType>();
         }
 
-        public int RoleID { get; set; }
+        public int ApplicationID { get; set; }
 
         [StringLength(50)]
         public string Code { get; set; }
@@ -29,18 +28,13 @@ namespace CMP_Servive.Models.Entities
         [StringLength(500)]
         public string Description { get; set; }
 
-        public int? NewID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Menu> Menus { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ActionLog> ActionLogs { get; set; }
+        public virtual ICollection<Resource> Resources { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RoleMenu> RoleMenus { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserRole> UserRoles { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Permission> Permissions { get; set; }
+        public virtual ICollection<DomainType> DomainTypes { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-namespace CMP_Servive.Models.Entities
+namespace CMP_Servive.Repository.Entities
 {
     using System;
     using System.Collections.Generic;

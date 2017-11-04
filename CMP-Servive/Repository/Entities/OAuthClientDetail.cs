@@ -1,4 +1,4 @@
-namespace CMP_Servive.Models.Entities
+namespace CMP_Servive.Repository.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -8,12 +8,6 @@ namespace CMP_Servive.Models.Entities
 
     public partial class OAuthClientDetail
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OAuthClientDetail()
-        {
-            OAuthDetails = new HashSet<OAuthDetail>();
-        }
-
         [Key]
         [StringLength(50)]
         public string ClientId { get; set; }
@@ -40,7 +34,6 @@ namespace CMP_Servive.Models.Entities
 
         public int? RefreshTokenValidity { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OAuthDetail> OAuthDetails { get; set; }
+        public virtual OAuthDetail OAuthDetail { get; set; }
     }
 }

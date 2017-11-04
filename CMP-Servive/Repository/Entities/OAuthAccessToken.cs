@@ -1,4 +1,4 @@
-namespace CMP_Servive.Models.Entities
+namespace CMP_Servive.Repository.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace CMP_Servive.Models.Entities
         [StringLength(50)]
         public string TokenId { get; set; }
 
-        [StringLength(100)]
+        [StringLength(50)]
         public string Token { get; set; }
 
         [StringLength(50)]

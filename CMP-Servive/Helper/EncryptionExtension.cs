@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CMP_Servive.Models.Common
+namespace CMP_Servive.Helper
 {
     public static class EncryptionExtension
     {

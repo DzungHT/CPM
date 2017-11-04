@@ -229,30 +229,10 @@
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Entities\ActionLog.cs" />
-    <Compile Include="Models\Entities\Application.cs" />
-    <Compile Include="Models\Entities\dbContext.cs" />
-    <Compile Include="Models\Entities\DomainData.cs" />
-    <Compile Include="Models\Entities\DomainType.cs" />
-    <Compile Include="Models\Entities\Menu.cs" />
-    <Compile Include="Models\Entities\OAuthAccessToken.cs" />
-    <Compile Include="Models\Entities\OAuthClientDetail.cs" />
-    <Compile Include="Models\Entities\OAuthDetail.cs" />
-    <Compile Include="Models\Entities\OAuthRefreshToken.cs" />
-    <Compile Include="Models\Entities\Operation.cs" />
-    <Compile Include="Models\Entities\Permission.cs" />
-    <Compile Include="Models\Entities\Resource.cs" />
-    <Compile Include="Models\Entities\Role.cs" />
-    <Compile Include="Models\Entities\RoleMenu.cs" />
-    <Compile Include="Models\Entities\sysdiagram.cs" />
-    <Compile Include="Models\Entities\Token.cs" />
-    <Compile Include="Models\Entities\User.cs" />
-    <Compile Include="Models\Entities\UserRole.cs" />
-    <Compile Include="Models\Entities\UserRoleData.cs" />
     <Compile Include="Models\TokenIdentity.cs" />
     <Compile Include="Providers\Authentication\BasicAuthenticationAttribute.cs" />
-    <Compile Include="Models\Common\CommonUtil.cs" />
-    <Compile Include="Models\Common\EncryptionExtension.cs" />
+    <Compile Include="Helper\CommonUtil.cs" />
+    <Compile Include="Helper\EncryptionExtension.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -261,6 +241,26 @@
     <Compile Include="Providers\Authentication\ServiceToken.cs" />
     <Compile Include="Providers\CorsPolicyProvider.cs" />
     <Compile Include="Providers\RequireHttpsAttribute.cs" />
+    <Compile Include="Repository\Entities\ActionLog.cs" />
+    <Compile Include="Repository\Entities\Application.cs" />
+    <Compile Include="Repository\Entities\dbContext.cs" />
+    <Compile Include="Repository\Entities\DomainData.cs" />
+    <Compile Include="Repository\Entities\DomainType.cs" />
+    <Compile Include="Repository\Entities\Menu.cs" />
+    <Compile Include="Repository\Entities\OAuthAccessToken.cs" />
+    <Compile Include="Repository\Entities\OAuthClientDetail.cs" />
+    <Compile Include="Repository\Entities\OAuthDetail.cs" />
+    <Compile Include="Repository\Entities\OAuthRefreshToken.cs" />
+    <Compile Include="Repository\Entities\Operation.cs" />
+    <Compile Include="Repository\Entities\Permission.cs" />
+    <Compile Include="Repository\Entities\Resource.cs" />
+    <Compile Include="Repository\Entities\Role.cs" />
+    <Compile Include="Repository\Entities\RoleMenu.cs" />
+    <Compile Include="Repository\Entities\sysdiagram.cs" />
+    <Compile Include="Repository\Entities\Token.cs" />
+    <Compile Include="Repository\Entities\User.cs" />
+    <Compile Include="Repository\Entities\UserRole.cs" />
+    <Compile Include="Repository\Entities\UserRoleData.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -272,8 +272,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="HtmlPage1.html" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
@@ -293,6 +291,8 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -304,8 +304,11 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <None Include="Scripts\_references.js" />
     <Content Include="system.config.xml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -314,15 +317,16 @@
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\_references.js" />
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Common\" />
+    <Folder Include="Repository\DTO\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

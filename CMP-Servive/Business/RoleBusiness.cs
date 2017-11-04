@@ -1,9 +1,4 @@
-﻿using CMP_Servive.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
+﻿using CMP_Servive.Repository.Entities;
 
 namespace CMP_Servive.Business
 {

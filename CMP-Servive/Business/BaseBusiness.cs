@@ -14,6 +14,7 @@ namespace CMP_Servive.Business
         public BaseBusiness()
         {
             db = new TDbContext();
+            db.Configuration.LazyLoadingEnabled = false;
         }
 
         public void Save<T>(T entity) where T : class
@@ -51,7 +52,7 @@ namespace CMP_Servive.Business
         }
 
         public List<T> GetAll<T>() where T :class
-        {
+        { 
             return db.Set<T>().ToList();
         }
 

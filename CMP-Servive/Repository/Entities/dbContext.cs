@@ -1,4 +1,4 @@
-namespace CMP_Servive.Models.Entities
+namespace CMP_Servive.Repository.Entities
 {
     using System;
     using System.Data.Entity;
@@ -18,8 +18,7 @@ namespace CMP_Servive.Models.Entities
         public virtual DbSet<DomainType> DomainTypes { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<OAuthAccessToken> OAuthAccessTokens { get; set; }
-        public virtual DbSet<OAuthClientDetail> OAuthClientDetails { get; set; }
-        public virtual DbSet<OAuthRefreshToken> OAuthRefreshTokens { get; set; }
+        public virtual DbSet<OAuthDetail> OAuthDetails { get; set; }
         public virtual DbSet<Operation> Operations { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Resource> Resources { get; set; }
@@ -28,7 +27,8 @@ namespace CMP_Servive.Models.Entities
         public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
-        public virtual DbSet<OAuthDetail> OAuthDetails { get; set; }
+        public virtual DbSet<OAuthClientDetail> OAuthClientDetails { get; set; }
+        public virtual DbSet<OAuthRefreshToken> OAuthRefreshTokens { get; set; }
         public virtual DbSet<RoleMenu> RoleMenus { get; set; }
         public virtual DbSet<UserRoleData> UserRoleDatas { get; set; }
 
@@ -49,16 +49,13 @@ namespace CMP_Servive.Models.Entities
                 .WithRequired(e => e.Menu)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<OAuthClientDetail>()
-                .HasMany(e => e.OAuthDetails)
-                .WithRequired(e => e.OAuthClientDetail)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<OAuthAccessToken>()
+                .HasOptional(e => e.OAuthRefreshToken)
+                .WithRequired(e => e.OAuthAccessToken);
 
-            modelBuilder.Entity<OAuthRefreshToken>()
-                .HasMany(e => e.OAuthAccessTokens)
-                .WithRequired(e => e.OAuthRefreshToken)
-                .HasForeignKey(e => e.RefreshToken)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<OAuthDetail>()
+                .HasOptional(e => e.OAuthClientDetail)
+                .WithRequired(e => e.OAuthDetail);
 
             modelBuilder.Entity<Permission>()
                 .HasMany(e => e.Roles)
