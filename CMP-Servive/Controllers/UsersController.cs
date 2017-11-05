@@ -9,8 +9,7 @@ using CMP_Servive.Helper;
 namespace CMP_Servive.Controllers
 {
     
-    [RoutePrefix("v1/api/Users")]
-    
+    [RoutePrefix("api/v1/Users")]  
     public class UsersController : ApiController
     {
         UserBusiness userBusiness = new UserBusiness();
@@ -18,7 +17,7 @@ namespace CMP_Servive.Controllers
         // GET: api/Users
         [Route("getAll")]
         [HttpGet]
-        //[BasicAuthentication]
+        [Authorize]
         public IHttpActionResult GetUsers()
         {
             List<User> lstResult = userBusiness.GetAll<User>();
@@ -32,6 +31,7 @@ namespace CMP_Servive.Controllers
         // GET: api/Users/5
         [Route("get")]
         [HttpGet]
+        [Authorize(Roles = "ADMINISTRATOR")]
         public IHttpActionResult GetUser(int id)
         {
             User user = userBusiness.Get<User>(id); 

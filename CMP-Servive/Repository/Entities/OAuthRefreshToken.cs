@@ -10,13 +10,13 @@ namespace CMP_Servive.Repository.Entities
     public partial class OAuthRefreshToken
     {
         [Key]
-        [StringLength(50)]
+        [StringLength(500)]
         public string TokenId { get; set; }
 
-        [StringLength(50)]
+        [StringLength(500)]
         public string Token { get; set; }
 
-        [StringLength(50)]
+        [StringLength(500)]
         public string Authentication { get; set; }
 
         public virtual OAuthAccessToken OAuthAccessToken { get; set; }

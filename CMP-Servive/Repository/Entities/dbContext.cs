@@ -24,7 +24,6 @@ namespace CMP_Servive.Repository.Entities
         public virtual DbSet<Resource> Resources { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<OAuthClientDetail> OAuthClientDetails { get; set; }

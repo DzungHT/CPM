@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -62,6 +63,18 @@ namespace CMP_Servive.Business
             return set.Find(ids);
         }
 
+        public List<T> FindByProperty<T>(string propertyName, Object value, string order) where T: class
+        {
+            DbSet<T> set = db.Set<T>();
+            List<T> result = new List<T>();
+            string query = " SELECT * FROM " + typeof(T).Name + " t WHERE t." + propertyName + (value == null ? " IS NULL " : " = @value ") + (!String.IsNullOrEmpty(order) ? " ORDER BY " + order : "");
+            result = set.SqlQuery(query, new SqlParameter("value",value)).ToList();
+            return result;
+        }
+
+        public TDbContext getDbContext() {
+            return db;
+        }
         public void Dispose()
         {
             db.Dispose();

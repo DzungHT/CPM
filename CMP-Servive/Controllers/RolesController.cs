@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace CMP_Servive.Controllers
 {
-    [RoutePrefix("v1/api/Roles")]
+    [RoutePrefix("api/v1/Roles")]
     public class RolesController : ApiController
     {
         RoleBusiness roleBusiness = new RoleBusiness();

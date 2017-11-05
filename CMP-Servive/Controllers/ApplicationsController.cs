@@ -6,16 +6,16 @@ using System.Web.Http;
 
 namespace CMP_Servive.Controllers
 {
-    [RoutePrefix("v1/api/Applications")]
+    [RoutePrefix("api/v1/Applications")]
     public class ApplicationsController : ApiController
     {
-        ApplicationBusiness applicationBusiness = new ApplicationBusiness();
+        CommonBusiness commonBu = new CommonBusiness();
 
-        [Route("getList")]
+        [Route("getAll")]
         [HttpGet]
         public IHttpActionResult GetList()
         {
-            List<Application> lstResult = applicationBusiness.getList();
+            List<Application> lstResult = commonBu.GetAll<Application>();
             if (lstResult == null)
             {
                 return NotFound();
@@ -24,11 +24,11 @@ namespace CMP_Servive.Controllers
         }
 
         // GET: api/Users/5
-        [Route("getObject")]
+        [Route("get")]
         [HttpGet]
         public IHttpActionResult GetObject(int id)
         {
-            Application obj = applicationBusiness.getObject(id);
+            Application obj = commonBu.Get<Application>(id);
             if (obj == null)
             {
                 return NotFound();
@@ -46,14 +46,8 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                if (applicationBusiness.update(obj))
-                {
-                    return Ok(obj);
-                }
-                else
-                {
-                    return BadRequest("Fail");
-                }
+                commonBu.Update<Application>(obj);
+                return Ok(obj);
             }
             catch (Exception)
             {
@@ -71,14 +65,8 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                if (applicationBusiness.save(obj))
-                {
-                    return Ok(obj);
-                }
-                else
-                {
-                    return BadRequest("Fail");
-                }
+                commonBu.Save<Application>(obj);
+                return Ok(obj);
             }
             catch (Exception)
             {
@@ -96,14 +84,8 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                if (applicationBusiness.delete(id))
-                {
-                    return Ok("Success");
-                }
-                else
-                {
-                    return BadRequest("Fail");
-                }
+                commonBu.Delete<Application>(id);
+                return Ok(id);
             }
             catch (Exception)
             {
@@ -116,7 +98,7 @@ namespace CMP_Servive.Controllers
 
             if (disposing)
             {
-                applicationBusiness.Dispose();
+                commonBu.Dispose();
             }
             base.Dispose(disposing);
         }

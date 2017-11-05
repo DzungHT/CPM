@@ -6,7 +6,7 @@ using System.Web.Http;
 
 namespace CMP_Servive.Controllers
 {
-    [RoutePrefix("v1/api/Menu")]
+    [RoutePrefix("api/v1/Menu")]
     public class MenusController : ApiController
     {
         MenuBusiness menuBusiness = new MenuBusiness();
