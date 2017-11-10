@@ -2,7 +2,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { DataTablesModule } from 'angular-datatables';
 
 import { RoutingModule } from './routing.module'
 
@@ -16,7 +15,6 @@ import { InlineInputComponent } from '../../Components/inline-input.component'
         BrowserModule
         , FormsModule
         , RoutingModule
-        , DataTablesModule
     ],
     declarations: [
         IndexComponent

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CPM_Website.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -22,6 +23,12 @@ namespace CPM_Website.Controllers
         public ActionResult SearchView()
         {
             return PartialView();
+        }
+
+        [HttpPost]
+        public JsonResult Create(Application app)
+        {
+            return Json(new JsonResultObject());
         }
     }
 }

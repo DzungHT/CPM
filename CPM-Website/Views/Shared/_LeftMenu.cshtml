@@ -1,19 +1,16 @@
 ﻿@{ 
-    List<Menu> 
+    List<MenuViewModel> list = (List<MenuViewModel>)Session["lstMenu"];
 }
 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
     <div class="menu_section">
-        <h3>General</h3>
+        @*<h3>General</h3>*@
         <ul class="nav side-menu">
-            <li>
-                <a href="@Url.Action("index","home")"><i class="fa fa-home"></i> Home</a>
-            </li>
-            <li>
-                <a href="@Url.Action("index","test")"><i class="fa fa-bolt"></i> Test</a>
-            </li>
-            <li>
-                <a href="@Url.Action("index","applications")"><i class="fa fa-window-restore" aria-hidden="true"></i> Application</a>
-            </li>
+            @foreach (MenuViewModel obj in list)
+            {
+                <li>
+                    <a href="@Url.Action(obj.Action, obj.Controller)"><i class="@obj.MenuCss"></i> @obj.Name</a>
+                </li>
+            }
         </ul>
     </div>
 </div>

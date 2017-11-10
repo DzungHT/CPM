@@ -52,6 +52,13 @@ namespace CPM_Website.Controllers
             }
             string ReturnUrl = Session["ReturnUrl"].ToString();
             Session.Remove("ReturnUrl");
+
+            List<MenuViewModel> lstMenu = new List<MenuViewModel>();
+            lstMenu.Add(new MenuViewModel() { Name = "Trang chủ", Action = "index", Controller = "home", MenuCss = "fa fa-home" });
+            lstMenu.Add(new MenuViewModel() { Name = "Danh mục ứng dụng", Action = "index", Controller = "applications", MenuCss = "fa fa-window-restore" });
+
+
+            Session["lstMenu"] = lstMenu;
             return Redirect(ReturnUrl);
         }
         #endregion

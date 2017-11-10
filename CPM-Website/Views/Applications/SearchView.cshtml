@@ -50,15 +50,10 @@
     <div class="x_panel">
         <div class="x_title">
             <h2>Kết quả tìm kiếm</h2>
-            <ul class="nav navbar-right panel_toolbox">
-                <li>
-                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-            </ul>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <table datatable class="row-border hover">
+            <table id="searchResult" class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -80,6 +75,15 @@
                     </tr>
                 </tbody>
             </table>
+
+            <script>
+                $(document).ready(function () {
+                    alert('asdf');
+                });
+                $("#searchResult").dataTable({
+
+                });
+            </script>
         </div>
     </div>
 </div>

@@ -9,7 +9,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
-var angular_datatables_1 = require("angular-datatables");
 var routing_module_1 = require("./routing.module");
 var index_component_1 = require("./Components/index.component");
 var search_component_1 = require("./Components/search.component");
@@ -24,8 +23,7 @@ ApplicationModule = __decorate([
         imports: [
             platform_browser_1.BrowserModule,
             forms_1.FormsModule,
-            routing_module_1.RoutingModule,
-            angular_datatables_1.DataTablesModule
+            routing_module_1.RoutingModule
         ],
         declarations: [
             index_component_1.IndexComponent,

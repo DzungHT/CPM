@@ -16,6 +16,7 @@ var IndexComponent = (function () {
     }
     IndexComponent.prototype.ngAfterViewInit = function () {
         NProgress.done();
+        $("#searchResult").dataTable({});
     };
     return IndexComponent;
 }());

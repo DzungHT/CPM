@@ -11,5 +11,6 @@ export class IndexComponent implements AfterViewInit{
 
     ngAfterViewInit(): void {
         NProgress.done();
+        $("#searchResult").dataTable({});
     }
 }
