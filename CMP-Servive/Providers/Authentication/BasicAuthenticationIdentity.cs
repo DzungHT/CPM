@@ -14,7 +14,12 @@ namespace CMP_Servive.Providers.Authentication
         /// <summary>
         /// Get/Set for password
         /// </summary>
-        public string Password { get; set; }
+        private string password;
+        public string Password
+        {
+            get { return password; }
+            set { password = value; }
+        }
         /// <summary>
         /// Get/Set for UserName
         /// </summary>

@@ -1,5 +1,5 @@
-﻿using CMP_Servive.Models.Common;
-using CMP_Servive.Models.Entities;
+﻿using CMP_Servive.Helper;
+using CMP_Servive.Repository.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

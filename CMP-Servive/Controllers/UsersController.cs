@@ -1,32 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Description;
-using CMP_Servive.Models.Entities;
-using CMP_Servive.Authentication.Providers;
 using CMP_Servive.Business;
-using System.Text;
 using CMP_Servive.Providers.Authentication;
+using CMP_Servive.Repository.Entities;
+using CMP_Servive.Helper;
 
 namespace CMP_Servive.Controllers
 {
     
-    [RoutePrefix("v1/api/Users")]
-    
+    [RoutePrefix("api/v1/Users")]  
     public class UsersController : ApiController
     {
         UserBusiness userBusiness = new UserBusiness();
 
         // GET: api/Users
-        [Route("getList")]
+        [Route("getAll")]
         [HttpGet]
-        [BasicAuthentication]
+        [Authorize]
         public IHttpActionResult GetUsers()
         {
             List<User> lstResult = userBusiness.GetAll<User>();
@@ -34,12 +25,13 @@ namespace CMP_Servive.Controllers
             {
                 return NotFound();
             }
-            return Ok(lstResult);
+            return Ok(new {data = lstResult, status = "00", message ="" });
         }
 
         // GET: api/Users/5
-        [Route("getObject")]
+        [Route("get")]
         [HttpGet]
+        [Authorize(Roles = "ADMINISTRATOR")]
         public IHttpActionResult GetUser(int id)
         {
             User user = userBusiness.Get<User>(id); 
@@ -81,6 +73,7 @@ namespace CMP_Servive.Controllers
             }
             try
             {
+                user.Password = user.Password.ToMD5();
                 userBusiness.Save<User>(user);
                 return Ok(user);
             }
@@ -142,7 +135,7 @@ namespace CMP_Servive.Controllers
             UserBusiness userBusiness = new UserBusiness();
             if (userBusiness.Login(user.UserName, user.Password))
             {
-                return Ok("YWRtaW46MTIzNDU2");
+                return Ok(userBusiness.Get<User>(1));
             } else
             {
                 return NotFound();

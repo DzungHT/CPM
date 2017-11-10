@@ -1,5 +1,5 @@
 ﻿using CMP_Servive.Business;
-using CMP_Servive.Models.Entities;
+using CMP_Servive.Repository.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace CMP_Servive.Controllers
 {
-    [RoutePrefix("v1/api/Roles")]
+    [RoutePrefix("api/v1/Roles")]
     public class RolesController : ApiController
     {
         RoleBusiness roleBusiness = new RoleBusiness();

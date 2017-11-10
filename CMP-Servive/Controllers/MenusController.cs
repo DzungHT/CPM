@@ -1,15 +1,12 @@
 ﻿using CMP_Servive.Business;
-using CMP_Servive.Models.Entities;
+using CMP_Servive.Repository.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace CMP_Servive.Controllers
 {
-    [RoutePrefix("v1/api/Menu")]
+    [RoutePrefix("api/v1/Menu")]
     public class MenusController : ApiController
     {
         MenuBusiness menuBusiness = new MenuBusiness();
