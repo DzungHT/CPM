@@ -1,28 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using CPM_Website.Models;
 
 namespace CPM_Website.Controllers
 {
-    public class TestController : Controller
+    public class ApplicationsController : Controller
     {
-
-        // GET: Users
+        // GET: Applications
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Users
-        public ActionResult Angular4()
+        public ActionResult IndexView()
         {
-            return View();
+            return PartialView();
+        }
+
+        public ActionResult SearchView()
+        {
+            return PartialView();
         }
     }
 }

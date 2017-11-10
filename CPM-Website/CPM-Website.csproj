@@ -118,6 +118,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\Components\inline-input.component.html" />
+    <Content Include="systemjs-angular-loader.js" />
+    <Content Include="systemjs.config.js" />
     <Content Include="Content\Common\bootstrap.css" />
     <Content Include="Content\Common\bootstrap.min.css" />
     <Content Include="Content\Common\custom.css" />
@@ -140,7 +143,11 @@
     <Content Include="Scripts\Common\bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\Common\custom.js" />
     <Content Include="Scripts\Common\custom.min.js" />
+    <Content Include="package.json" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\Common\jquery\jquery-1.12.4.intellisense.js" />
+    <Content Include="vendors\datatables.net\i18n\en_US.js" />
+    <Content Include="vendors\datatables.net\i18n\vi_VN.js" />
     <Content Include="vendors\datatables.net\js\dataTables.defaults.js" />
     <Content Include="Scripts\Common\jquery\jquery-1.12.4.js" />
     <Content Include="Scripts\Common\jquery\jquery-1.12.4.min.js" />
@@ -1389,9 +1396,6 @@
     <Content Include="vendors\fullcalendar\dist\lang\zh-tw.js" />
     <Content Include="vendors\gauge.js\dist\gauge.js" />
     <Content Include="vendors\gauge.js\dist\gauge.min.js" />
-    <Content Include="vendors\google-code-prettify\bin\prettify.min.css" />
-    <Content Include="vendors\google-code-prettify\bin\prettify.min.js" />
-    <Content Include="vendors\google-code-prettify\bin\run_prettify.min.js" />
     <Content Include="vendors\iCheck\icheck.js" />
     <Content Include="vendors\iCheck\icheck.min.js" />
     <Content Include="vendors\iCheck\skins\all.css" />
@@ -2565,6 +2569,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\ApplicationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="CybertronFramework\Common\Constants.cs" />
@@ -2575,6 +2580,7 @@
     <Compile Include="CybertronFramework\Common\EncryptionExtension.cs" />
     <Compile Include="CybertronFramework\ApiClient\IApiClient.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
+    <Compile Include="Models\ViewModels\MenuViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2605,10 +2611,15 @@
     <Content Include="Scripts\Common\jquery\jquery-1.12.4.min.map" />
     <Content Include="Scripts\Common\jquery\jquery-3.1.1.min.map" />
     <Content Include="Scripts\Common\jquery\jquery-3.1.1.slim.min.map" />
-    <Content Include="vendors\datatables.net\i18n\vi_VN.lang" />
-    <Content Include="vendors\datatables.net\i18n\en_US.lang" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="system.config" />
+    <Content Include="Views\Test\Angular4.cshtml" />
+    <Content Include="tsconfig.json" />
+    <Content Include="Views\Applications\Index.cshtml" />
+    <Content Include="Views\Applications\IndexView.cshtml" />
+    <Content Include="Views\Applications\SearchView.cshtml" />
+    <Content Include="Views\Shared\_LeftMenu.cshtml" />
+    <Content Include="Views\Shared\_TopNavigation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2636,6 +2647,17 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\Modules\Applications\Components\index.component.ts" />
+    <TypeScriptCompile Include="Scripts\Modules\Applications\main.ts" />
+    <TypeScriptCompile Include="Scripts\Modules\Applications\module.ts" />
+    <TypeScriptCompile Include="Scripts\Modules\Applications\routing.module.ts" />
+    <TypeScriptCompile Include="Scripts\Modules\Applications\Components\search.component.ts" />
+    <TypeScriptCompile Include="Scripts\Components\inline-input.component.ts" />
+    <TypeScriptCompile Include="Scripts\Models\InputModel.ts" />
+    <TypeScriptCompile Include="Scripts\Models\application.ts" />
+    <TypeScriptCompile Include="Scripts\Modules\Applications\service.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
