@@ -33,8 +33,6 @@ namespace CPM_Website
             bundles.Add(new ScriptBundle("~/js/common")
                             .Include("~/Scripts/Common/jquery/jquery-1.12.4.min.js")
                             .Include("~/Scripts/Common/bootstrap/bootstrap.min.js")
-                            .Include("~/Scripts/Common/angularJS/angular.min.js")
-                            .Include("~/Scripts/Common/angularJS/app.js")
                             .Include("~/vendors/nprogress/nprogress.js")
                             .Include("~/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js")
                             .Include("~/vendors/iCheck/icheck.min.js")
@@ -43,8 +41,6 @@ namespace CPM_Website
                             .Include("~/vendors/bootstrap-daterangepicker/daterangepicker.js")
                             .Include("~/Scripts/Common/custom.js")
                         );
-
-
 
             bundles.Add(new ScriptBundle("~/js/fastClick")
                             .Include("~/vendors/fastclick/lib/fastclick.js")
@@ -78,10 +74,12 @@ namespace CPM_Website
                             .Include("~/vendors/datatables.net/js/dataTables.defaults.js")
                         );
 
-            #endregion
-            #region Controller
-            bundles.Add(new ScriptBundle("~/ctrl/test").Include("~/Scripts/Test/test.ctrl.js"));
-
+            bundles.Add(new ScriptBundle("~/js/angular.io")
+                            .Include("~/node_modules/core-js/client/shim.min.js")
+                            .Include("~/node_modules/zone.js/dist/zone.js")
+                            .Include("~/node_modules/systemjs/dist/system.src.js")
+                            .Include("~/systemjs.config.js")
+                        );
             #endregion
         }
     }

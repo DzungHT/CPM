@@ -1,0 +1,14 @@
+﻿<div class="form-group">
+    <label [class]="model.labelClass.join(' ')">{{ model.display }}</label>
+    <div [class]="model.inputClass.join(' ')">
+        <input class="form-control"
+               [(ngModel)]="model.value"
+               [id]="model.id" 
+               [name]="model.name" 
+               [type]="model.type"
+               [placeholder]="model.placeholder"
+               [disabled]="model.disabled"
+               [readonly]="model.readonly"
+               />
+    </div>
+</div>
