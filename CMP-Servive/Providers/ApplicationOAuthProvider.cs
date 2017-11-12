@@ -31,7 +31,6 @@ namespace CMP_Servive.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            
             //Kiểm tra thông tin user
             AuthorizationBusiness authorBusiness = new AuthorizationBusiness();
             OAuthDetail oAuthDetail = authorBusiness.getUser(context);

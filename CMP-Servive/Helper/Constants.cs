@@ -15,5 +15,11 @@ namespace CMP_Servive.Helper
             public static string ROLE_USER = "USER";
             public static string ROLE_ADMINISTRATOR = "ADMINISTRATOR";
         }
+
+        public static class STATUS_CODE
+        {
+            public static string SUCCESS = "00";
+            public static string FALSE = "01";
+        }
     }
 }

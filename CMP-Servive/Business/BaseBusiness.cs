@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace CMP_Servive.Business
@@ -69,6 +70,41 @@ namespace CMP_Servive.Business
             List<T> result = new List<T>();
             string query = " SELECT * FROM " + typeof(T).Name + " t WHERE t." + propertyName + (value == null ? " IS NULL " : " = @value ") + (!String.IsNullOrEmpty(order) ? " ORDER BY " + order : "");
             result = set.SqlQuery(query, new SqlParameter("value",value)).ToList();
+            return result;
+        }
+
+        public List<T> FindByProperty<T,K>(K KObject, string order) where T : class
+        {
+            DbSet<T> set = db.Set<T>();
+            List<T> result = new List<T>();
+            var proArrayT = typeof(T).GetProperties();
+            var proArrayK = typeof(K).GetProperties();
+            string query = " SELECT * FROM " + typeof(T).Name + " t WHERE 1=1";
+            string condition = "";
+            string strOrder = (!String.IsNullOrEmpty(order) ? " ORDER BY " + order : "");
+            object[] parameters = new object[] { };
+            foreach (PropertyInfo proK in proArrayK)
+            {
+                int i = 0;
+                var propT = proArrayT.FirstOrDefault(x => x.Name.Equals(proK.Name));
+                if (propT != null)
+                {
+                    object value = proK.GetValue(KObject);
+                    Type type = proK.GetType();
+                    if (type == typeof(int) && (int)value != 0)
+                    {
+                        condition += " AND t." + proK.Name + " = @value" + i.ToString();
+                        parameters[i] = new SqlParameter("value" + i.ToString(), (int)value);
+                        i++;
+                    } else if (type == typeof(string) && value.ToString().Trim() != "")
+                    {
+                        condition += " AND LOWER(t." + proK.Name + ") like @value" + i.ToString();
+                        parameters[i] = new SqlParameter("value" + i.ToString(), "%" + value.ToString().Trim().ToLower() + "%");
+                        i++;
+                    }
+                }
+            }
+            result = set.SqlQuery( query + condition + strOrder, parameters).ToList();
             return result;
         }
 

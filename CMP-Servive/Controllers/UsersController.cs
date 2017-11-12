@@ -5,19 +5,20 @@ using CMP_Servive.Business;
 using CMP_Servive.Providers.Authentication;
 using CMP_Servive.Repository.Entities;
 using CMP_Servive.Helper;
+using CMP_Servive.Repository.DTO;
+using static CMP_Servive.Repository.DTO.UserLoginDTO;
 
 namespace CMP_Servive.Controllers
 {
     
-    [RoutePrefix("api/v1/Users")]  
+    [RoutePrefix("api/v1/Users")]
+    [Authorize]
     public class UsersController : ApiController
     {
         UserBusiness userBusiness = new UserBusiness();
 
-        // GET: api/Users
         [Route("getAll")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetUsers()
         {
             List<User> lstResult = userBusiness.GetAll<User>();
@@ -28,10 +29,8 @@ namespace CMP_Servive.Controllers
             return Ok(new {data = lstResult, status = "00", message ="" });
         }
 
-        // GET: api/Users/5
         [Route("get")]
         [HttpGet]
-        [Authorize(Roles = "ADMINISTRATOR")]
         public IHttpActionResult GetUser(int id)
         {
             User user = userBusiness.Get<User>(id); 
@@ -42,10 +41,9 @@ namespace CMP_Servive.Controllers
             return Ok(user);
         }
 
-        // PUT: api/Users/5
-        [Route("update")]
+        [Route("save")]
         [HttpPost]
-        public IHttpActionResult PutUser([FromBody]User user)
+        public IHttpActionResult SaveUser([FromBody]UserDTO userDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -53,8 +51,28 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                userBusiness.Update<User>(user);
-                return Ok(user);
+                User entities = new User();
+                if (userDTO.UserID != 0)
+                {
+                    entities = userBusiness.Get<User>(userDTO.UserID);
+                    if (entities != null)
+                    {
+                        entities.GetTransferData(userDTO);
+                        userBusiness.Update(entities);
+                        return Ok(entities);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                else
+                {
+                    entities.GetTransferData(userDTO);
+                    entities.Password = entities.Password.Encrypt(Constants.ENCRYPT_KEY);
+                    userBusiness.Save(entities);
+                    return Ok(entities);
+                }
             }
             catch (Exception)
             {
@@ -62,28 +80,6 @@ namespace CMP_Servive.Controllers
             }
         }
 
-        // POST: api/Users
-        [Route("create")]
-        [HttpPost]
-        public IHttpActionResult PostUser([FromBody]User user)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                user.Password = user.Password.ToMD5();
-                userBusiness.Save<User>(user);
-                return Ok(user);
-            }
-            catch (Exception)
-            {
-                return BadRequest("Have something wrong!");
-            }
-        }
-
-        // DELETE: api/Users/5
         [Route("delete")]
         [HttpPost]
         public IHttpActionResult DeleteUser([FromBody]int id)
@@ -103,7 +99,7 @@ namespace CMP_Servive.Controllers
             }
         }
 
-        [Route("restart")]
+        [Route("restart-password")]
         [HttpPost]
         public IHttpActionResult Restart(int id)
         {
@@ -113,9 +109,10 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                if (userBusiness.RestartPassword(id))
+                User user = userBusiness.RestartPassword(id);
+                if (user != null)
                 {
-                    return Ok("Success");
+                    return Ok(user);
                 }
                 else
                 {
@@ -130,15 +127,28 @@ namespace CMP_Servive.Controllers
 
         [Route("login")]
         [HttpPost]
-        public IHttpActionResult Login([FromBody]BasicAuthenticationIdentity user)
+        public IHttpActionResult Login([FromBody]UserLoginInput user)
         {
-            UserBusiness userBusiness = new UserBusiness();
-            if (userBusiness.Login(user.UserName, user.Password))
+            
+            if (!ModelState.IsValid)
             {
-                return Ok(userBusiness.Get<User>(1));
-            } else
+                return BadRequest(ModelState);
+            }
+            try
             {
-                return NotFound();
+                UserLoginOutput output = userBusiness.Login(user);
+                if (output != null)
+                {
+                    return Ok(new { data = output, status = "00", message = "" });
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception)
+            {
+                return BadRequest("Have something wrong!");
             }
         }
 

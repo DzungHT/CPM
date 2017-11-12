@@ -7,11 +7,12 @@ using System.Web.Http;
 namespace CMP_Servive.Controllers
 {
     [RoutePrefix("api/v1/Menu")]
+    [Authorize]
     public class MenusController : ApiController
     {
         MenuBusiness menuBusiness = new MenuBusiness();
 
-        [Route("getList")]
+        [Route("getAll")]
         [HttpGet]
         public IHttpActionResult GetList()
         {
@@ -23,7 +24,7 @@ namespace CMP_Servive.Controllers
             return Ok(lstResult);
         }
 
-        [Route("getObject")]
+        [Route("get")]
         [HttpGet]
         public IHttpActionResult GetObject(int id)
         {
