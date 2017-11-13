@@ -10,11 +10,12 @@ using System.Web.Http;
 namespace CMP_Servive.Controllers
 {
     [RoutePrefix("api/v1/Roles")]
+    [Authorize]
     public class RolesController : ApiController
     {
         RoleBusiness roleBusiness = new RoleBusiness();
 
-        [Route("getList")]
+        [Route("getAll")]
         [HttpGet]
         public IHttpActionResult GetList()
         {
@@ -26,8 +27,7 @@ namespace CMP_Servive.Controllers
             return Ok(lstResult);
         }
 
-        // GET: api/Users/5
-        [Route("getObject")]
+        [Route("get")]
         [HttpGet]
         public IHttpActionResult GetObject(int id)
         {

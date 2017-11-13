@@ -50,6 +50,12 @@ namespace CMP_Servive.Repository.Entities
         [StringLength(500)]
         public string MenuCss { get; set; }
 
+        [StringLength(50)]
+        public string Action { get; set; }
+
+        [StringLength(50)]
+        public string Controller { get; set; }
+
         public virtual Application Application { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -225,8 +225,8 @@
     <Compile Include="Business\MenuBusiness.cs" />
     <Compile Include="Business\RoleBusiness.cs" />
     <Compile Include="Business\UserBusiness.cs" />
-    <Compile Include="Controllers\ApplicationsController.cs" />
     <Compile Include="Controllers\AuthorizationController.cs" />
+    <Compile Include="Controllers\CategorysController.cs" />
     <Compile Include="Controllers\MenusController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -234,7 +234,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\Constants.cs" />
+    <Compile Include="Helper\TransferData.cs" />
     <Compile Include="Providers\ApplicationRefreshTokenProvider.cs" />
+    <Compile Include="Repository\DTO\ApplicationDTO.cs" />
     <Compile Include="Repository\DTO\OAuthDTO.cs" />
     <Compile Include="Providers\Authentication\BasicAuthenticationAttribute.cs" />
     <Compile Include="Helper\CommonUtil.cs" />
@@ -244,6 +246,8 @@
     <Compile Include="Providers\Authentication\BasicAuthenticationIdentity.cs" />
     <Compile Include="Providers\CorsPolicyProvider.cs" />
     <Compile Include="Providers\RequireHttpsAttribute.cs" />
+    <Compile Include="Repository\DTO\UserDTO.cs" />
+    <Compile Include="Repository\DTO\UserLoginDTO.cs" />
     <Compile Include="Repository\Entities\ActionLog.cs" />
     <Compile Include="Repository\Entities\Application.cs" />
     <Compile Include="Repository\Entities\dbContext.cs" />
@@ -327,6 +331,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="image\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
