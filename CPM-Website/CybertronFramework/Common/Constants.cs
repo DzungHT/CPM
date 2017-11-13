@@ -8,6 +8,6 @@ namespace CPM_Website.CybertronFramework.Common
 {
     public static class Constants
     {
-        public static string API_BASE_ADRESS { get{ return ConfigurationManager.AppSettings["ApiBaseAdress"]; } }
+        public const string ROLE_STRING_SEPERATE = ";";
     }
 }

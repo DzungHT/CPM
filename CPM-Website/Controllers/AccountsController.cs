@@ -49,16 +49,25 @@ namespace CPM_Website.Controllers
             if (s != "")
             {
                 FormsAuthentication.SetAuthCookie(s, formData.RememberMe);
+                // Lấy danh sách quyền
+                string[] roles = new string[] { "Admin" };
+
+                var authTicket = new FormsAuthenticationTicket(1, formData.Username, DateTime.Now, DateTime.Now.AddMinutes(20), formData.RememberMe, string.Join(Constants.ROLE_STRING_SEPERATE, roles));
+
+                string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
+                FormsAuthentication.SetAuthCookie(encryptedTicket, false);
             }
+
             string ReturnUrl = Session["ReturnUrl"].ToString();
             Session.Remove("ReturnUrl");
 
+            // Lấy danh sách menu
             List<MenuViewModel> lstMenu = new List<MenuViewModel>();
             lstMenu.Add(new MenuViewModel() { Name = "Trang chủ", Action = "index", Controller = "home", MenuCss = "fa fa-home" });
             lstMenu.Add(new MenuViewModel() { Name = "Danh mục ứng dụng", Action = "index", Controller = "applications", MenuCss = "fa fa-window-restore" });
-
-
             Session["lstMenu"] = lstMenu;
+
+
             return Redirect(ReturnUrl);
         }
         #endregion

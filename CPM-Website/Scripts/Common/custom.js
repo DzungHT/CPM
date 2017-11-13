@@ -1796,28 +1796,25 @@ function init_PNotify() {
     console.log('init_PNotify');
     PNotify.prototype.options.delay = 3000; // notify hiện trong 3s
 
-    new PNotify({
-        title: "PNotify",
-        type: "info",
-        text: "Welcome. Try hovering over me. You can click things behind me, because I'm non-blocking.",
-        nonblock: {
-            nonblock: true
-        },
-        addclass: 'dark',
-        styling: 'bootstrap3',
-        hide: true,
-        before_close: function (PNotify) {
-            PNotify.update({
-                title: PNotify.options.title + " - Enjoy your Stay",
-                before_close: null
-            });
+    window.alert = function (text, title) {
+        new PNotify({
+            title: title || "Cảnh báo",
+            text: text,
+            addclass: 'dark',
+            styling: 'bootstrap3',
+            hide: true,
+        });
+    }
 
-            PNotify.queueRemove();
-
-            return false;
-        }
-    });
-
+    window.error = function (text, title) {
+        new PNotify({
+            title: title || "Lỗi",
+            text: text,
+            type: 'error',
+            styling: 'bootstrap3',
+            hide: true,
+        });
+    }
 };
 
 

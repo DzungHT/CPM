@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Security;
 
 namespace CPM_Website
 {
@@ -19,6 +20,32 @@ namespace CPM_Website
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             ApiClient.BaseAddress = "http://localhost:8880";
+        }
+
+        /// <summary>
+        /// Sự kiện xảy ra khi xác thực đăng nhập trước khi thực hiện action.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void FormsAuthentication_OnAuthenticate(Object sender, FormsAuthenticationEventArgs e)
+        {
+            if (FormsAuthentication.CookiesSupported == true)
+            {
+                var authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
+                if (authCookie != null)
+                {
+                    try
+                    {
+                        FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                        var roles = authTicket.UserData.Split(';');
+                        e.User = new System.Security.Principal.GenericPrincipal(new FormsIdentity(authTicket), roles);
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }
+                }
+            }
         }
     }
 }

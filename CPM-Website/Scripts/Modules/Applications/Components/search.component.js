@@ -17,6 +17,9 @@ var SearchComponent = (function () {
         this.application = new application_1.Application();
         this.codeInput = new inputModel_1.InputModel('Mã ứng dụng', this.application.Code, 'text', 'CodeSearch', 'Code');
     }
+    SearchComponent.prototype.ngOnInit = function () {
+        $("#searchResult").DataTable({});
+    };
     return SearchComponent;
 }());
 SearchComponent = __decorate([

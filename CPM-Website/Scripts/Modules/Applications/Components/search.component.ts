@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 
 import { Application } from '../../../Models/application'
 import { InputModel } from '../../../Models/inputModel'
@@ -7,7 +7,12 @@ import { InputModel } from '../../../Models/inputModel'
     selector: 'search-application',
     templateUrl: '/applications/searchview',
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit {
+    ngOnInit(): void {
+        $("#searchResult").DataTable({
+            
+        });
+    }
     application: Application;
     codeInput: InputModel;
     constructor() {
