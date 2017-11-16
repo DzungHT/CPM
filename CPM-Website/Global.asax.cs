@@ -1,4 +1,5 @@
-﻿using CybertronFramework;
+﻿using CPM_Website.CybertronFramework.Common;
+using CybertronFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace CPM_Website
                     try
                     {
                         FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-                        var roles = authTicket.UserData.Split(';');
+                        string[] roles = authTicket.UserData.Split(Constants.ROLE_STRING_SEPERATE.ToArray());
                         e.User = new System.Security.Principal.GenericPrincipal(new FormsIdentity(authTicket), roles);
                     }
                     catch(Exception ex)

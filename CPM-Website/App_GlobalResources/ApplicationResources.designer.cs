@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cybertron Policy Managment.
+        ///   Looks up a localized string similar to Cybertron Policies Managment.
         /// </summary>
         internal static string AppName {
             get {

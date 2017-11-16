@@ -3,18 +3,11 @@ namespace CPM_Website.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
-    [Table("ActionLog")]
     public partial class ActionLog
     {
         public int ActionLogID { get; set; }
 
-        [StringLength(250)]
-        public string UserName { get; set; }
-
-        [Column(TypeName = "date")]
         public DateTime? ActionTime { get; set; }
 
         [StringLength(250)]

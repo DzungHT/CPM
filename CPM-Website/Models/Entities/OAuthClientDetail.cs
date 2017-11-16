@@ -6,7 +6,6 @@ namespace CPM_Website.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("OAuthClientDetail")]
     public partial class OAuthClientDetail
     {
         [Key]

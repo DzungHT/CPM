@@ -1,5 +1,6 @@
 ﻿using CPM_Website.CybertronFramework.Common;
 using CPM_Website.Models;
+using CPM_Website.Respositories;
 using CybertronFramework;
 using System;
 using System.Collections.Generic;
@@ -45,30 +46,32 @@ namespace CPM_Website.Controllers
         {
             IApiClient client = ApiClient.Instance;
 
-            string s = await client.PostApiAsync<string, object>(API_LOGIN, new { UserName = formData.Username, Password = formData.Password });
-            if (s != "")
+            //string s = await client.PostApiAsync<string, object>(API_LOGIN, new { UserName = formData.Username, Password = formData.Password });
+            if (DataFactory.Users.Any(x => x.LoginName.Equals(formData.Username) && x.Password.Equals(formData.Password)))
             {
-                FormsAuthentication.SetAuthCookie(s, formData.RememberMe);
                 // Lấy danh sách quyền
-                string[] roles = new string[] { "Admin" };
+                string roles = string.Join(",", DataFactory.Users.FirstOrDefault(x => x.LoginName.Equals(formData.Username) && x.Password.Equals(formData.Password)).Roles);
 
-                var authTicket = new FormsAuthenticationTicket(1, formData.Username, DateTime.Now, DateTime.Now.AddMinutes(20), formData.RememberMe, string.Join(Constants.ROLE_STRING_SEPERATE, roles));
+                var authTicket = new FormsAuthenticationTicket(1, formData.Username, DateTime.Now, DateTime.Now.AddMinutes(20), formData.RememberMe, roles);
 
                 string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
                 FormsAuthentication.SetAuthCookie(encryptedTicket, false);
+
+
+                // Lấy danh sách menu
+                List<MenuViewModel> lstMenu = new List<MenuViewModel>();
+                lstMenu.Add(new MenuViewModel() { Name = "Trang chủ", Action = "index", Controller = "home", MenuCss = "fa fa-home" });
+                lstMenu.Add(new MenuViewModel() { Name = "Danh mục ứng dụng", Action = "index", Controller = "applications", MenuCss = "fa fa-window-restore" });
+                Session["lstMenu"] = lstMenu;
+
+
+                string ReturnUrl = Session["ReturnUrl"].ToString();
+                return Redirect(ReturnUrl);
             }
-
-            string ReturnUrl = Session["ReturnUrl"].ToString();
-            Session.Remove("ReturnUrl");
-
-            // Lấy danh sách menu
-            List<MenuViewModel> lstMenu = new List<MenuViewModel>();
-            lstMenu.Add(new MenuViewModel() { Name = "Trang chủ", Action = "index", Controller = "home", MenuCss = "fa fa-home" });
-            lstMenu.Add(new MenuViewModel() { Name = "Danh mục ứng dụng", Action = "index", Controller = "applications", MenuCss = "fa fa-window-restore" });
-            Session["lstMenu"] = lstMenu;
-
-
-            return Redirect(ReturnUrl);
+            else
+            {
+                return RedirectToAction("login");
+            }
         }
         #endregion
     }
