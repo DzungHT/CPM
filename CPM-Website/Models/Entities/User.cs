@@ -27,12 +27,7 @@ namespace CPM_Website.Models
 
         public DateTime? RequestDate { get; set; }
 
-        public List<Role> Roles { get; set; }
-
-        public User()
-        {
-            Roles = new List<Role>();
-        }
+        public string[] Roles { get; set; }
 
     }
 }

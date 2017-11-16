@@ -14,9 +14,13 @@ var application_1 = require("../../../Models/application");
 var inputModel_1 = require("../../../Models/inputModel");
 var SearchComponent = (function () {
     function SearchComponent() {
+        NProgress.start();
         this.application = new application_1.Application();
         this.codeInput = new inputModel_1.InputModel('Mã ứng dụng', this.application.Code, 'text', 'CodeSearch', 'Code');
     }
+    SearchComponent.prototype.ngAfterViewInit = function () {
+        NProgress.done();
+    };
     SearchComponent.prototype.ngOnInit = function () {
         $("#searchResult").DataTable({});
     };

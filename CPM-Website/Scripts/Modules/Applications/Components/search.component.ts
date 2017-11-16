@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 import { Application } from '../../../Models/application'
 import { InputModel } from '../../../Models/inputModel'
@@ -7,7 +7,10 @@ import { InputModel } from '../../../Models/inputModel'
     selector: 'search-application',
     templateUrl: '/applications/searchview',
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, AfterViewInit {
+    ngAfterViewInit(): void {
+        NProgress.done();
+    }
     ngOnInit(): void {
         $("#searchResult").DataTable({
             
@@ -16,6 +19,7 @@ export class SearchComponent implements OnInit {
     application: Application;
     codeInput: InputModel;
     constructor() {
+        NProgress.start();
         this.application = new Application();
         this.codeInput = new InputModel('Mã ứng dụng', this.application.Code, 'text', 'CodeSearch', 'Code');
     }

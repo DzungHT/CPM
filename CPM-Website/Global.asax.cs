@@ -37,7 +37,8 @@ namespace CPM_Website
                 {
                     try
                     {
-                        FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                        FormsAuthenticationTicket ticketCookie = FormsAuthentication.Decrypt(authCookie.Value);
+                        FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(ticketCookie.Name);
                         string[] roles = authTicket.UserData.Split(Constants.ROLE_STRING_SEPERATE.ToArray());
                         e.User = new System.Security.Principal.GenericPrincipal(new FormsIdentity(authTicket), roles);
                     }

@@ -292,9 +292,9 @@ if (typeof NProgress != 'undefined') {
         NProgress.start();
     });
 
-    $(window).load(function () {
-        NProgress.done();
-    });
+    //$(window).load(function () {
+    //    NProgress.done();
+    //});
 }
 
 

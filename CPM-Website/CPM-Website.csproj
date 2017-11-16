@@ -17,7 +17,7 @@
     <RootNamespace>CPM_Website</RootNamespace>
     <AssemblyName>CPM-Website</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -2573,22 +2573,11 @@
     <Compile Include="CybertronFramework\Common\EncryptionExtension.cs" />
     <Compile Include="CybertronFramework\ApiClient\IApiClient.cs" />
     <Compile Include="Models\Common\JsonResultObject.cs" />
-    <Compile Include="Models\Entities\ActionLog.cs" />
     <Compile Include="Models\Entities\Application.cs" />
-    <Compile Include="Models\Entities\DomainData.cs" />
-    <Compile Include="Models\Entities\DomainType.cs" />
     <Compile Include="Models\Entities\Menu.cs" />
-    <Compile Include="Models\Entities\OAuthAccessToken.cs" />
-    <Compile Include="Models\Entities\OAuthClientDetail.cs" />
-    <Compile Include="Models\Entities\OAuthDetail.cs" />
-    <Compile Include="Models\Entities\OAuthRefreshToken.cs" />
-    <Compile Include="Models\Entities\Operation.cs" />
-    <Compile Include="Models\Entities\Permission.cs" />
-    <Compile Include="Models\Entities\Resource.cs" />
     <Compile Include="Models\Entities\Role.cs" />
-    <Compile Include="Models\Entities\RoleMenu.cs" />
-    <Compile Include="Models\Entities\Token.cs" />
     <Compile Include="Models\Entities\User.cs" />
+    <Compile Include="Models\RoleCodes.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\ViewModels\MenuViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2686,7 +2675,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>54060</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:54060/</IISUrl>
+          <IISUrl>http://cpm.cybertron:12354/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
