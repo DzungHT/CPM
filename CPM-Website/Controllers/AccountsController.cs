@@ -55,13 +55,13 @@ namespace CPM_Website.Controllers
                 var authTicket = new FormsAuthenticationTicket(1, formData.Username, DateTime.Now, DateTime.Now.AddMinutes(20), formData.RememberMe, roles);
 
                 string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
-                FormsAuthentication.SetAuthCookie(encryptedTicket, false);
+                FormsAuthentication.SetAuthCookie(encryptedTicket, formData.RememberMe);
 
 
                 // Lấy danh sách menu
-                List<MenuViewModel> lstMenu = new List<MenuViewModel>();
-                lstMenu.Add(new MenuViewModel() { Name = "Trang chủ", Action = "index", Controller = "home", MenuCss = "fa fa-home" });
-                lstMenu.Add(new MenuViewModel() { Name = "Danh mục ứng dụng", Action = "index", Controller = "applications", MenuCss = "fa fa-window-restore" });
+                List<Menu> lstMenu = new List<Menu>();
+                lstMenu.Add(new Menu() { Name = "Trang chủ", Action = "index", Controller = "home", FontIcon = "fa fa-home" });
+                lstMenu.Add(new Menu() { Name = "Danh mục ứng dụng", Action = "index", Controller = "applications", FontIcon = "fa fa-window-restore" });
                 Session["lstMenu"] = lstMenu;
 
 

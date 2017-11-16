@@ -12,7 +12,7 @@ namespace CPM_Website.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-        [Authorize(Roles = "")]
+        [Authorize(Roles = RoleCodes.Home.INDEX)]
         public ActionResult Index()
         {
             return View();

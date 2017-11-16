@@ -14,9 +14,6 @@ var IndexComponent = (function () {
     function IndexComponent() {
         NProgress.start();
     }
-    IndexComponent.prototype.ngAfterViewInit = function () {
-        NProgress.done();
-    };
     return IndexComponent;
 }());
 IndexComponent = __decorate([

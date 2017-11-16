@@ -1,15 +1,11 @@
-﻿import { Component, AfterViewInit } from '@angular/core';
+﻿import { Component } from '@angular/core';
 
 @Component({
     selector: 'application',
     templateUrl: '/applications/indexview',
 })
-export class IndexComponent implements AfterViewInit{
+export class IndexComponent{
     constructor() {
         NProgress.start();
-    }
-
-    ngAfterViewInit(): void {
-        NProgress.done();
     }
 }

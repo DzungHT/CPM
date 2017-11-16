@@ -9,7 +9,6 @@ namespace CPM_Website.Models
     {
         public Menu()
         {
-            RoleMenus = new HashSet<RoleMenu>();
         }
 
         public int MenuID { get; set; }
@@ -48,6 +47,5 @@ namespace CPM_Website.Models
 
         public virtual Application Application { get; set; }
 
-        public virtual ICollection<RoleMenu> RoleMenus { get; set; }
     }
 }

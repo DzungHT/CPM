@@ -10,8 +10,6 @@ namespace CPM_Website.Models
         public Application()
         {
             Menus = new HashSet<Menu>();
-            Resources = new HashSet<Resource>();
-            DomainTypes = new HashSet<DomainType>();
         }
 
         public int ApplicationID { get; set; }
@@ -27,8 +25,5 @@ namespace CPM_Website.Models
 
         public virtual ICollection<Menu> Menus { get; set; }
 
-        public virtual ICollection<Resource> Resources { get; set; }
-
-        public virtual ICollection<DomainType> DomainTypes { get; set; }
     }
 }
