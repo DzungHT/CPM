@@ -16,38 +16,61 @@ namespace CMP_Servive.Controllers
     public class UsersController : ApiController
     {
         UserBusiness userBusiness = new UserBusiness();
+        CommonBusiness commonBu = new CommonBusiness();
 
         [Route("getAll")]
         [HttpGet]
-        public IHttpActionResult GetUsers()
+        public OutPutDTO GetUsers()
         {
-            List<User> lstResult = userBusiness.GetAll<User>();
-            if (lstResult == null)
+            try
             {
-                return NotFound();
+                List<User> lstResult = userBusiness.GetAll<User>();
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, lstResult);
             }
-            return Ok(new {data = lstResult, status = "00", message ="" });
+            catch(Exception ex)
+            {
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
         }
 
         [Route("get")]
         [HttpGet]
-        public IHttpActionResult GetUser(int id)
+        public OutPutDTO GetUser(int id)
         {
-            User user = userBusiness.Get<User>(id); 
-            if (user == null)
+            try
             {
-                return NotFound();
+                User user = userBusiness.Get<User>(id);
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, user);
             }
-            return Ok(user);
+            catch (Exception ex)
+            {
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
         }
+
+        [Route("search")]
+        [HttpGet]
+        public OutPutDTO GetUser([FromBody] UserDTO objSearch)
+        {
+            try
+            {
+                List<User> result = commonBu.FindByProperty<User, UserDTO>(objSearch, "UserID asc");
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
+        }
+
 
         [Route("save")]
         [HttpPost]
-        public IHttpActionResult SaveUser([FromBody]UserDTO userDTO)
+        public OutPutDTO SaveUser([FromBody]UserDTO userDTO)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
@@ -59,11 +82,11 @@ namespace CMP_Servive.Controllers
                     {
                         entities.GetTransferData(userDTO);
                         userBusiness.Update(entities);
-                        return Ok(entities);
+                        return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
                     }
                     else
                     {
-                        return NotFound();
+                        return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, entities);
                     }
                 }
                 else
@@ -71,104 +94,108 @@ namespace CMP_Servive.Controllers
                     entities.GetTransferData(userDTO);
                     entities.Password = entities.Password.Encrypt(Constants.ENCRYPT_KEY);
                     userBusiness.Save(entities);
-                    return Ok(entities);
+                    return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
         [Route("delete")]
         [HttpPost]
-        public IHttpActionResult DeleteUser([FromBody]int id)
+        public OutPutDTO DeleteUser([FromBody]int id)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
                 userBusiness.Delete<User>(id);
-                return Ok("Success");
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
         [Route("restart-password")]
         [HttpPost]
-        public IHttpActionResult Restart(int id)
+        public OutPutDTO Restart(int id)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
                 User user = userBusiness.RestartPassword(id);
                 if (user != null)
                 {
-                    return Ok(user);
+                    return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, user);
                 }
                 else
                 {
-                    return BadRequest("Fail");
+                    return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, user);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
         [Route("login")]
         [HttpPost]
-        public IHttpActionResult Login([FromBody]UserLoginInput user)
+        public OutPutDTO Login([FromBody]UserLoginInput user)
         {
             
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
                 UserLoginOutput output = userBusiness.Login(user);
                 if (output != null)
                 {
-                    return Ok(new { data = output, status = "00", message = "" });
+                    return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, output);
                 }
                 else
                 {
-                    return NotFound();
+                    return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
         [Route("addRole")]
         [HttpPost]
-        public IHttpActionResult addRole(int userId, List<int> lstRoleId)
+        public OutPutDTO addRole(int userId, List<int> lstRoleId)
         {
+            if (!ModelState.IsValid)
+            {
+                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+            }
             try
             {
                 if (userBusiness.AddRole(userId, lstRoleId))
                 {
-                    return Ok();
+                    return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
                 } else
                 {
-                    return NotFound();
+                    return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return NotFound();
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 

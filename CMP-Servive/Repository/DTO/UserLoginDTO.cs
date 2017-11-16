@@ -16,9 +16,8 @@ namespace CMP_Servive.Repository.DTO
         public class UserLoginOutput
         {
             public int UserID { get; set; }
-            public string FullName { get; set; }
-            public List<int> ListRole { get; set; }
-            public List<int> ListMenu { get; set; }
+            public string EmployeeCode { get; set; }
+            public List<string> ListRole { get; set; }
         }
     }
 }

@@ -22,10 +22,6 @@ namespace CMP_Servive.Controllers
         public IHttpActionResult GetListApplications()
         {
             List<Application> lstResult = commonBu.GetAll<Application>();
-            if (lstResult == null)
-            {
-                return NotFound();
-            }
             return Ok(new { data = lstResult, status = Constants.STATUS_CODE.SUCCESS, message = "" });
         }
 
@@ -34,10 +30,6 @@ namespace CMP_Servive.Controllers
         public IHttpActionResult GetObjectApplications(int id)
         {
             Application obj = commonBu.Get<Application>(id);
-            if (obj == null)
-            {
-                return NotFound();
-            }
             return Ok(new { data = obj, status = Constants.STATUS_CODE.SUCCESS, message = "" });
         }
 
@@ -46,10 +38,6 @@ namespace CMP_Servive.Controllers
         public IHttpActionResult SearchListApplications([FromBody] ApplicationDTO objSearch)
         {
             List<Application> lstResult = commonBu.FindByProperty<Application, ApplicationDTO>(objSearch,"");
-            if (lstResult == null)
-            {
-                return NotFound();
-            }
             return Ok(new { data = lstResult, status = Constants.STATUS_CODE.SUCCESS, message = "" });
         }
 
@@ -118,10 +106,6 @@ namespace CMP_Servive.Controllers
         public IHttpActionResult GetListDomainTypes()
         {
             List<DomainType> lstResult = commonBu.GetAll<DomainType>();
-            if (lstResult == null)
-            {
-                return NotFound();
-            }
             return Ok(new { data = lstResult, status = Constants.STATUS_CODE.SUCCESS, message = "" });
         }
 
@@ -130,10 +114,6 @@ namespace CMP_Servive.Controllers
         public IHttpActionResult GetObjectDomainTypes(int id)
         {
             DomainType obj = commonBu.Get<DomainType>(id);
-            if (obj == null)
-            {
-                return NotFound();
-            }
             return Ok(new { data = obj, status = Constants.STATUS_CODE.SUCCESS, message = "" });
         }
 
@@ -203,10 +183,6 @@ namespace CMP_Servive.Controllers
         public IHttpActionResult GetListOperation()
         {
             List<Operation> lstResult = commonBu.GetAll<Operation>();
-            if (lstResult == null)
-            {
-                return NotFound();
-            }
             return Ok(new { data = lstResult, status = Constants.STATUS_CODE.SUCCESS, message = "" });
         }
 
@@ -215,10 +191,6 @@ namespace CMP_Servive.Controllers
         public IHttpActionResult GetObjectOperation(int id)
         {
             Operation obj = commonBu.Get<Operation>(id);
-            if (obj == null)
-            {
-                return NotFound();
-            }
             return Ok(new { data = obj, status = Constants.STATUS_CODE.SUCCESS, message = "" });
         }
 
