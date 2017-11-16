@@ -27,11 +27,5 @@ namespace CPM_Website.Controllers
         {
             return PartialView();
         }
-
-        [HttpPost]
-        public JsonResult Create(Application app)
-        {
-            return Json(new JsonResultObject());
-        }
     }
 }

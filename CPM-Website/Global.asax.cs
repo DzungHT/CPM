@@ -20,7 +20,7 @@ namespace CPM_Website
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            ApiClient.BaseAddress = "http://localhost:8880";
+            ApiClient.BaseAddress = "http://localhost:12144";
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace CPM_Website
                     {
                         FormsAuthenticationTicket ticketCookie = FormsAuthentication.Decrypt(authCookie.Value);
                         FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(ticketCookie.Name);
-                        string[] roles = authTicket.UserData.Split(Constants.ROLE_STRING_SEPERATE.ToArray());
+                        string[] roles = authTicket.UserData.Split(new string[] { Constants.ROLE_STRING_SEPERATE }, StringSplitOptions.RemoveEmptyEntries);
                         e.User = new System.Security.Principal.GenericPrincipal(new FormsIdentity(authTicket), roles);
                     }
                     catch(Exception ex)

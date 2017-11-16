@@ -4,6 +4,7 @@ using CMP_Servive.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -11,13 +12,6 @@ namespace CMP_Servive.Business
 {
     public class UserBusiness : BaseBusiness<dbContext>
     {
-        public UserLoginOutput Login(UserLoginInput userInput)
-        {
-            UserLoginOutput result = new UserLoginOutput();
-            // check user
-            
-            return result;
-        }
 
         public User RestartPassword(int id)
         {
@@ -43,6 +37,24 @@ namespace CMP_Servive.Business
                 );
             db.SaveChanges();
             return true;
+        }
+
+        public UserLoginOutput GetUserInformation(UserLoginInput userInput)
+        {
+            UserLoginOutput result = new UserLoginOutput();
+            // check user
+            db.Configuration.LazyLoadingEnabled = true;
+            var user = db.Users.FirstOrDefault(x => x.LoginName == userInput.UserName && x.Password == userInput.Password);
+            result.GetTransferData(user);
+
+            result.Roles = db.Database.SqlQuery<string>("sp_GetUserPermission @UserID, @ApplicationID", new SqlParameter("UserID", user.UserID), new SqlParameter("ApplicationID", userInput.ApplicationID)).ToList();
+            return result;
+        }
+
+        public bool CheckLogin(UserLoginInput userInput)
+        {
+            bool isLoginSuccess = db.Users.Any(x => x.LoginName == userInput.UserName && x.Password == userInput.Password);
+            return isLoginSuccess;
         }
     }
 }

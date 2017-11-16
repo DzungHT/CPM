@@ -17,7 +17,7 @@ namespace CPM_Website.Controllers
 {
     public class AccountsController : Controller
     {
-        private const string API_LOGIN = "/v1/api/Users/login";
+        private const string API_LOGIN = "/api/v1/Users/login";
 
         #region HttpGet
         // GET: Account
@@ -46,13 +46,13 @@ namespace CPM_Website.Controllers
         {
             IApiClient client = ApiClient.Instance;
 
-            //string s = await client.PostApiAsync<string, object>(API_LOGIN, new { UserName = formData.Username, Password = formData.Password });
-            if (DataFactory.Users.Any(x => x.LoginName.Equals(formData.Username) && x.Password.Equals(formData.Password)))
+            var apiResult = await client.PostApiAsync<JsonResultObject<User>, object>(API_LOGIN, new { UserName = formData.Username, Password = formData.Password, ApplicationID = 1 });
+            if (apiResult.IsSuccess)
             {
                 // Lấy danh sách quyền
-                string roles = string.Join(",", DataFactory.Users.FirstOrDefault(x => x.LoginName.Equals(formData.Username) && x.Password.Equals(formData.Password)).Roles);
+                string roleStr = string.Join(Constants.ROLE_STRING_SEPERATE, apiResult.Data.Roles);
 
-                var authTicket = new FormsAuthenticationTicket(1, formData.Username, DateTime.Now, DateTime.Now.AddMinutes(20), formData.RememberMe, roles);
+                var authTicket = new FormsAuthenticationTicket(1, formData.Username, DateTime.Now, DateTime.Now.AddMinutes(20), formData.RememberMe, roleStr);
 
                 string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
                 FormsAuthentication.SetAuthCookie(encryptedTicket, formData.RememberMe);

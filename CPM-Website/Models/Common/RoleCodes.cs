@@ -15,19 +15,19 @@ namespace CPM_Website.Models
             /// <summary>
             /// Tác động xem dữ liệu
             /// </summary>
-            protected const string V = "view";
+            protected const string V = "VIEW";
             /// <summary>
             /// Tác động tạo mới dữ liệu
             /// </summary>
-            protected const string C = "create";
+            protected const string C = "CREATE";
             /// <summary>
             /// Tác động cập nhật dữ liệu
             /// </summary>
-            protected const string U = "update";
+            protected const string U = "UPDATE";
             /// <summary>
             /// Tác động xóa dữ liệu
             /// </summary>
-            protected const string D = "delete";
+            protected const string D = "DELETE";
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace CPM_Website.Models
             /// <summary>
             /// Mã tài nguyên
             /// </summary>
-            private const string RESOURCE = "_home";
+            private const string RESOURCE = "_HOME";
 
             /// <summary>
             /// Quyền tác động vào action index
@@ -54,7 +54,7 @@ namespace CPM_Website.Models
             /// <summary>
             /// Mã tài nguyên
             /// </summary>
-            private const string RESOURCE = "_application";
+            private const string RESOURCE = "_APPLICATION";
 
             /// <summary>
             /// Quyền tác động vào action index
