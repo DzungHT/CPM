@@ -1,4 +1,4 @@
-namespace CMP_Servive.Repository.Entities
+namespace CMP_Servive.Models.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -15,6 +15,7 @@ namespace CMP_Servive.Repository.Entities
             ActionLogs = new HashSet<ActionLog>();
             RoleMenus = new HashSet<RoleMenu>();
             UserRoles = new HashSet<UserRole>();
+            UserRoleDatas = new HashSet<UserRoleData>();
             Permissions = new HashSet<Permission>();
         }
 
@@ -29,8 +30,6 @@ namespace CMP_Servive.Repository.Entities
         [StringLength(500)]
         public string Description { get; set; }
 
-        public int? NewID { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActionLog> ActionLogs { get; set; }
 
@@ -39,6 +38,9 @@ namespace CMP_Servive.Repository.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRoles { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserRoleData> UserRoleDatas { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Permission> Permissions { get; set; }

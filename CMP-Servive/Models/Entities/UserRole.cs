@@ -1,4 +1,4 @@
-namespace CMP_Servive.Repository.Entities
+namespace CMP_Servive.Models.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -6,23 +6,23 @@ namespace CMP_Servive.Repository.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("UserRoleData")]
-    public partial class UserRoleData
+    [Table("UserRole")]
+    public partial class UserRole
     {
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int UserRoleID { get; set; }
+        public int UserID { get; set; }
 
         [Key]
         [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int DomainDataID { get; set; }
+        public int RoleID { get; set; }
 
-        public int? IsDefault { get; set; }
+        public int? IsActive { get; set; }
 
-        public virtual DomainData DomainData { get; set; }
+        public virtual Role Role { get; set; }
 
-        public virtual UserRole UserRole { get; set; }
+        public virtual User User { get; set; }
     }
 }

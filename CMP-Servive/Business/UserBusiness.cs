@@ -1,11 +1,11 @@
 ﻿using CMP_Servive.Helper;
-using CMP_Servive.Repository.Entities;
+using CMP_Servive.Models.DTO;
+using CMP_Servive.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
-using static CMP_Servive.Repository.DTO.UserLoginDTO;
 
 namespace CMP_Servive.Business
 {

@@ -1,6 +1,6 @@
 ﻿using CMP_Servive.Business;
 using CMP_Servive.Helper;
-using CMP_Servive.Repository.Entities;
+using CMP_Servive.Models.Entities;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Infrastructure;
 using System;

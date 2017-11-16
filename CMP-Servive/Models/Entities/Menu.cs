@@ -1,4 +1,4 @@
-namespace CMP_Servive.Repository.Entities
+namespace CMP_Servive.Models.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -17,7 +17,9 @@ namespace CMP_Servive.Repository.Entities
 
         public int MenuID { get; set; }
 
-        public int? ParentID { get; set; }
+        public int? MenuPID { get; set; }
+
+        public int? ApplicationID { get; set; }
 
         [StringLength(50)]
         public string Code { get; set; }
@@ -28,33 +30,24 @@ namespace CMP_Servive.Repository.Entities
         [StringLength(500)]
         public string Description { get; set; }
 
+        [StringLength(50)]
+        public string FontIcon { get; set; }
+
         [StringLength(500)]
         public string Url { get; set; }
-
-        public int? Sort_Order { get; set; }
-
-        [StringLength(100)]
-        public string Path { get; set; }
-
-        [StringLength(1000)]
-        public string FullPart { get; set; }
-
-        public int? ApplicationID { get; set; }
-
-        public int? NewID { get; set; }
-
-        public int? Status { get; set; }
-
-        public int? Key { get; set; }
-
-        [StringLength(500)]
-        public string MenuCss { get; set; }
 
         [StringLength(50)]
         public string Action { get; set; }
 
         [StringLength(50)]
         public string Controller { get; set; }
+
+        public int? Sort_Order { get; set; }
+
+        [StringLength(100)]
+        public string Path { get; set; }
+
+        public int? Status { get; set; }
 
         public virtual Application Application { get; set; }
 

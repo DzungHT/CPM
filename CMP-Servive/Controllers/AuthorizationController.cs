@@ -1,7 +1,7 @@
 ﻿using CMP_Servive.Business;
 using CMP_Servive.Helper;
-using CMP_Servive.Repository.DTO;
-using CMP_Servive.Repository.Entities;
+using CMP_Servive.Models.DTO;
+using CMP_Servive.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

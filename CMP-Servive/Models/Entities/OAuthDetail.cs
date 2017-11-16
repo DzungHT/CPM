@@ -1,4 +1,4 @@
-namespace CMP_Servive.Repository.Entities
+namespace CMP_Servive.Models.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,6 @@ namespace CMP_Servive.Repository.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("OAuthDetail")]
     public partial class OAuthDetail
     {
         [Required]

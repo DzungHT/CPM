@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.Owin;
 
-namespace CMP_Servive.Repository.DTO
+namespace CMP_Servive.Models.DTO
 {
     public class OAuthDetailDTO
     {

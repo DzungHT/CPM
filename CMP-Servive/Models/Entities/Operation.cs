@@ -1,4 +1,4 @@
-namespace CMP_Servive.Repository.Entities
+namespace CMP_Servive.Models.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -6,16 +6,16 @@ namespace CMP_Servive.Repository.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Resource")]
-    public partial class Resource
+    [Table("Operation")]
+    public partial class Operation
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Resource()
+        public Operation()
         {
             Permissions = new HashSet<Permission>();
         }
 
-        public int ResourceID { get; set; }
+        public int OperationID { get; set; }
 
         [StringLength(50)]
         public string Code { get; set; }
@@ -25,10 +25,6 @@ namespace CMP_Servive.Repository.Entities
 
         [StringLength(500)]
         public string Description { get; set; }
-
-        public int? ApplicationID { get; set; }
-
-        public virtual Application Application { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Permission> Permissions { get; set; }

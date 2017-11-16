@@ -1,4 +1,4 @@
-namespace CMP_Servive.Repository.Entities
+namespace CMP_Servive.Models.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -14,6 +14,7 @@ namespace CMP_Servive.Repository.Entities
         {
             ActionLogs = new HashSet<ActionLog>();
             UserRoles = new HashSet<UserRole>();
+            UserRoleDatas = new HashSet<UserRoleData>();
         }
 
         public int UserID { get; set; }
@@ -21,14 +22,15 @@ namespace CMP_Servive.Repository.Entities
         [StringLength(50)]
         public string LoginName { get; set; }
 
-        [StringLength(200)]
-        public string FullName { get; set; }
-
-        [StringLength(200)]
+        [StringLength(50)]
         public string Password { get; set; }
 
-        [StringLength(50)]
-        public string EmployeeCode { get; set; }
+        public bool? NeedChangePassword { get; set; }
+
+        public DateTime? ChangePasswordTime { get; set; }
+
+        [StringLength(200)]
+        public string FullName { get; set; }
 
         [StringLength(100)]
         public string Email { get; set; }
@@ -38,20 +40,9 @@ namespace CMP_Servive.Repository.Entities
 
         public int? Status { get; set; }
 
-        public int? NewID { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime? ChangePasswordDate { get; set; }
-
-        public int? NeedChangePassword { get; set; }
-
-        [StringLength(200)]
-        public string EncryptedPassword { get; set; }
-
         [StringLength(100)]
         public string ActiveCode { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? RequestDate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -59,5 +50,8 @@ namespace CMP_Servive.Repository.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRoles { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserRoleData> UserRoleDatas { get; set; }
     }
 }

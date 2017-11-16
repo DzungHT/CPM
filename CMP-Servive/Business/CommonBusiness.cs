@@ -1,4 +1,4 @@
-﻿using CMP_Servive.Repository.Entities;
+﻿using CMP_Servive.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

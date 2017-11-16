@@ -10,7 +10,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using CMP_Servive.Business;
-using CMP_Servive.Repository.Entities;
+using CMP_Servive.Models.Entities;
 
 namespace CMP_Servive.Providers
 {

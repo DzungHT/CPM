@@ -1,4 +1,4 @@
-namespace CMP_Servive.Repository.Entities
+namespace CMP_Servive.Models.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -11,10 +11,6 @@ namespace CMP_Servive.Repository.Entities
     {
         public int ActionLogID { get; set; }
 
-        [StringLength(250)]
-        public string UserName { get; set; }
-
-        [Column(TypeName = "date")]
         public DateTime? ActionTime { get; set; }
 
         [StringLength(250)]

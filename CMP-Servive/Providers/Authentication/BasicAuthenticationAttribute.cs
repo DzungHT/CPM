@@ -1,4 +1,5 @@
 ﻿using CMP_Servive.Business;
+using CMP_Servive.Models.DTO;
 using CMP_Servive.Providers.Authentication;
 using System;
 using System.Net;
@@ -47,7 +48,10 @@ namespace CMP_Servive.Authentication.Providers
             }
 
             UserBusiness userBusiness = new UserBusiness();
-            if (!userBusiness.Login(identity.UserName, identity.Password))
+            UserLoginInput usip = new UserLoginInput();
+            usip.UserName = identity.UserName;
+            usip.Password = identity.Password;
+            if (true)
             {
                 ChallengeAuthRequest(actionContext);
                 return;

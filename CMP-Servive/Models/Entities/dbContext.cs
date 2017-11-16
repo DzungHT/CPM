@@ -1,4 +1,4 @@
-namespace CMP_Servive.Repository.Entities
+namespace CMP_Servive.Models.Entities
 {
     using System;
     using System.Data.Entity;
@@ -24,12 +24,13 @@ namespace CMP_Servive.Repository.Entities
         public virtual DbSet<Resource> Resources { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<UserRoleData> UserRoleDatas { get; set; }
         public virtual DbSet<OAuthClientDetail> OAuthClientDetails { get; set; }
         public virtual DbSet<OAuthRefreshToken> OAuthRefreshTokens { get; set; }
         public virtual DbSet<RoleMenu> RoleMenus { get; set; }
-        public virtual DbSet<UserRoleData> UserRoleDatas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -42,6 +43,30 @@ namespace CMP_Servive.Repository.Entities
                 .HasMany(e => e.UserRoleDatas)
                 .WithRequired(e => e.DomainData)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Menu>()
+                .Property(e => e.Code)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Menu>()
+                .Property(e => e.FontIcon)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Menu>()
+                .Property(e => e.Url)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Menu>()
+                .Property(e => e.Action)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Menu>()
+                .Property(e => e.Controller)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Menu>()
+                .Property(e => e.Path)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Menu>()
                 .HasMany(e => e.RoleMenus)
@@ -66,9 +91,36 @@ namespace CMP_Servive.Repository.Entities
                 .WithRequired(e => e.Role)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<UserRole>()
+            modelBuilder.Entity<Role>()
+                .HasMany(e => e.UserRoles)
+                .WithRequired(e => e.Role)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Role>()
                 .HasMany(e => e.UserRoleDatas)
-                .WithRequired(e => e.UserRole)
+                .WithRequired(e => e.Role)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<User>()
+                .Property(e => e.Password)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<User>()
+                .Property(e => e.Email)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<User>()
+                .Property(e => e.PhoneNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.UserRoles)
+                .WithRequired(e => e.User)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.UserRoleDatas)
+                .WithRequired(e => e.User)
                 .WillCascadeOnDelete(false);
         }
     }

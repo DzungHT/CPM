@@ -1,5 +1,5 @@
 ﻿using CMP_Servive.Helper;
-using CMP_Servive.Repository.Entities;
+using CMP_Servive.Models.Entities;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Collections.Generic;

@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Web.Http;
 using CMP_Servive.Business;
 using CMP_Servive.Providers.Authentication;
-using CMP_Servive.Repository.Entities;
+using CMP_Servive.Models.Entities;
 using CMP_Servive.Helper;
-using CMP_Servive.Repository.DTO;
-using static CMP_Servive.Repository.DTO.UserLoginDTO;
+using CMP_Servive.Models.DTO;
 
 namespace CMP_Servive.Controllers
 {

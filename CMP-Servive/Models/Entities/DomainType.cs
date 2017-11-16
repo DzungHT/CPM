@@ -1,4 +1,4 @@
-namespace CMP_Servive.Repository.Entities
+namespace CMP_Servive.Models.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -6,16 +6,17 @@ namespace CMP_Servive.Repository.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Operation")]
-    public partial class Operation
+    [Table("DomainType")]
+    public partial class DomainType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Operation()
+        public DomainType()
         {
-            Permissions = new HashSet<Permission>();
+            DomainDatas = new HashSet<DomainData>();
+            Applications = new HashSet<Application>();
         }
 
-        public int OperationID { get; set; }
+        public int DomainTypeID { get; set; }
 
         [StringLength(50)]
         public string Code { get; set; }
@@ -26,7 +27,12 @@ namespace CMP_Servive.Repository.Entities
         [StringLength(500)]
         public string Description { get; set; }
 
+        public int? Type { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Permission> Permissions { get; set; }
+        public virtual ICollection<DomainData> DomainDatas { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Application> Applications { get; set; }
     }
 }
