@@ -1,4 +1,6 @@
 ﻿using CMP_Servive.Business;
+using CMP_Servive.Helper;
+using CMP_Servive.Models.DTO;
 using CMP_Servive.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,97 +13,122 @@ namespace CMP_Servive.Controllers
     public class MenusController : ApiController
     {
         MenuBusiness menuBusiness = new MenuBusiness();
+        CommonBusiness commonBu = new CommonBusiness();
 
         [Route("getAll")]
         [HttpGet]
-        public IHttpActionResult GetList()
+        public OutPutDTO GetList()
         {
-            List<Menu> lstResult = menuBusiness.GetAll<Menu>();
-            if (lstResult == null)
+            try
             {
-                return NotFound();
+                List<Menu> lstResult = menuBusiness.GetAll<Menu>();
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, lstResult);
             }
-            return Ok(lstResult);
+            catch (Exception ex)
+            {
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
         }
 
         [Route("get")]
         [HttpGet]
-        public IHttpActionResult GetObject(int id)
+        public OutPutDTO GetObject(int id)
         {
-            Menu obj = menuBusiness.Get<Menu>();
-            if (obj == null)
+            try
             {
-                return NotFound();
+                Menu obj = menuBusiness.Get<Menu>(id);
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
             }
-            return Ok(obj);
+            catch (Exception ex)
+            {
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
+        }
+
+        [Route("search")]
+        [HttpGet]
+        public OutPutDTO GetUser([FromBody] Menu objSearch)
+        {
+            try
+            {
+                List<Menu> result = commonBu.FindByProperty<Menu, Menu>(objSearch, "MenuID asc");
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
         }
 
         [Route("getListByUser")]
         [HttpGet]
-        public IHttpActionResult GetListByUser(int userId)
+        public OutPutDTO GetListByUser(int userId)
         {
-            List<Menu> lstResult = menuBusiness.GetMenuByUser(userId);
-            if (lstResult == null)
-            {
-                return NotFound();
-            }
-            return Ok(lstResult);
-        }
-
-        [Route("update")]
-        [HttpPost]
-        public IHttpActionResult Update(Menu obj)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             try
             {
-                menuBusiness.Update<Menu>(obj);
-                return Ok(obj);
+                List<Menu> lstResult = menuBusiness.GetMenuByUser(userId);
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, lstResult);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
-        [Route("create")]
+        [Route("save")]
         [HttpPost]
-        public IHttpActionResult Create(Menu obj)
+        public OutPutDTO Update([FromBody]Menu obj)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
-                menuBusiness.Save<Menu>(obj);
-                return Ok(obj);
+                Menu entities = new Menu();
+                if (obj.MenuID != 0)
+                {
+                    entities = menuBusiness.Get<Menu>(obj.MenuID);
+                    if (entities != null)
+                    {
+                        entities.GetTransferData(obj);
+                        menuBusiness.Update(entities);
+                        return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
+                    }
+                    else
+                    {
+                        return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, entities);
+                    }
+                }
+                else
+                {
+                    entities.GetTransferData(obj);
+                    menuBusiness.Save(entities);
+                    return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
         [Route("delete")]
         [HttpPost]
-        public IHttpActionResult Delete(int id)
+        public OutPutDTO Delete(int id)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
                 menuBusiness.Delete<Menu>(id);
-                return Ok("Success");
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 

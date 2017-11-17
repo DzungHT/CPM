@@ -19,35 +19,56 @@ namespace CMP_Servive.Controllers
         #region danh mục ứng dụng
         [Route("Applications/getAll")]
         [HttpGet]
-        public IHttpActionResult GetListApplications()
+        public OutPutDTO GetListApplications()
         {
-            List<Application> lstResult = commonBu.GetAll<Application>();
-            return Ok(new { data = lstResult, status = Constants.STATUS_CODE.SUCCESS, message = "" });
+            try
+            {
+                List<Application> lstResult = commonBu.GetAll<Application>();
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, lstResult);
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
         }
 
         [Route("Applications/get")]
         [HttpGet]
-        public IHttpActionResult GetObjectApplications(int id)
+        public OutPutDTO GetObjectApplications(int id)
         {
-            Application obj = commonBu.Get<Application>(id);
-            return Ok(new { data = obj, status = Constants.STATUS_CODE.SUCCESS, message = "" });
+            try
+            {
+                Application obj = commonBu.Get<Application>(id);
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
         }
 
         [Route("Applications/search")]
         [HttpGet]
-        public IHttpActionResult SearchListApplications([FromBody] ApplicationDTO objSearch)
+        public OutPutDTO SearchListApplications([FromBody] ApplicationDTO objSearch)
         {
-            List<Application> lstResult = commonBu.FindByProperty<Application, ApplicationDTO>(objSearch,"");
-            return Ok(new { data = lstResult, status = Constants.STATUS_CODE.SUCCESS, message = "" });
+            try
+            {
+                List<Application> result = commonBu.FindByProperty<Application, ApplicationDTO>(objSearch, "ApplicationID asc");
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
         }
 
         [Route("Applications/save")]
         [HttpPost]
-        public IHttpActionResult SaveApplications([FromBody]Application obj)
+        public OutPutDTO SaveApplications([FromBody]Application obj)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
 
             try
@@ -60,41 +81,41 @@ namespace CMP_Servive.Controllers
                     {
                         entities.GetTransferData(obj);
                         commonBu.Update(entities);
-                        return Ok(new { data = entities, status = Constants.STATUS_CODE.SUCCESS, message = "" });
+                        return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
                     }
                     else
                     {
-                        return NotFound();
+                        return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                     }
                 }
                 else
                 {
                     commonBu.Save(obj);
-                    return Ok(new { data = obj, status = Constants.STATUS_CODE.SUCCESS, message = "" });
+                    return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
                 }
             }
-            catch (Exception)
+            catch (Exception ex )
             {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
         [Route("Applications/delete")]
         [HttpPost]
-        public IHttpActionResult DeleteApplications(int id)
+        public OutPutDTO DeleteApplications(int id)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
                 commonBu.Delete<Application>(id);
-                return Ok(new { data = "", status = Constants.STATUS_CODE.SUCCESS, message = "" });
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
@@ -103,27 +124,42 @@ namespace CMP_Servive.Controllers
         #region danh mục loại miền dữ liệu
         [Route("DomainTypes/getAll")]
         [HttpGet]
-        public IHttpActionResult GetListDomainTypes()
+        public OutPutDTO GetListDomainTypes()
         {
             List<DomainType> lstResult = commonBu.GetAll<DomainType>();
-            return Ok(new { data = lstResult, status = Constants.STATUS_CODE.SUCCESS, message = "" });
+            return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, lstResult);
         }
 
         [Route("DomainTypes/get")]
         [HttpGet]
-        public IHttpActionResult GetObjectDomainTypes(int id)
+        public OutPutDTO GetObjectDomainTypes(int id)
         {
             DomainType obj = commonBu.Get<DomainType>(id);
-            return Ok(new { data = obj, status = Constants.STATUS_CODE.SUCCESS, message = "" });
+            return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
+        }
+
+        [Route("DomainTypes/search")]
+        [HttpGet]
+        public OutPutDTO SearchListDomainTypes([FromBody] DomainType objSearch)
+        {
+            try
+            {
+                List<DomainType> result = commonBu.FindByProperty<DomainType, DomainType>(objSearch, "DomainTypeID asc");
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
         }
 
         [Route("DomainTypes/save")]
         [HttpPost]
-        public IHttpActionResult SaveDomainTypes([FromBody]DomainType obj)
+        public OutPutDTO SaveDomainTypes([FromBody]DomainType obj)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
 
             try
@@ -136,41 +172,41 @@ namespace CMP_Servive.Controllers
                     {
                         entities.GetTransferData(obj);
                         commonBu.Update(entities);
-                        return Ok(new { data = entities, status = Constants.STATUS_CODE.SUCCESS, message = "" });
+                        return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
                     }
                     else
                     {
-                        return NotFound();
+                        return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                     }
                 }
                 else
                 {
                     commonBu.Save(obj);
-                    return Ok(new { data = obj, status = Constants.STATUS_CODE.SUCCESS, message = "" });
+                    return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
         [Route("DomainTypes/delete")]
         [HttpPost]
-        public IHttpActionResult DeleteDomainTypes(int id)
+        public OutPutDTO DeleteDomainTypes(int id)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
                 commonBu.Delete<DomainType>(id);
-                return Ok(id);
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
@@ -180,27 +216,42 @@ namespace CMP_Servive.Controllers
 
         [Route("Operations/getAll")]
         [HttpGet]
-        public IHttpActionResult GetListOperation()
+        public OutPutDTO GetListOperation()
         {
             List<Operation> lstResult = commonBu.GetAll<Operation>();
-            return Ok(new { data = lstResult, status = Constants.STATUS_CODE.SUCCESS, message = "" });
+            return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, lstResult);
         }
 
         [Route("Operations/get")]
         [HttpGet]
-        public IHttpActionResult GetObjectOperation(int id)
+        public OutPutDTO GetObjectOperation(int id)
         {
             Operation obj = commonBu.Get<Operation>(id);
-            return Ok(new { data = obj, status = Constants.STATUS_CODE.SUCCESS, message = "" });
+            return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
+        }
+
+        [Route("Operations/search")]
+        [HttpGet]
+        public OutPutDTO SearchListOperations([FromBody] Operation objSearch)
+        {
+            try
+            {
+                List<Operation> result = commonBu.FindByProperty<Operation, Operation>(objSearch, "OperationID asc");
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
         }
 
         [Route("Operations/save")]
         [HttpPost]
-        public IHttpActionResult SaveOperation([FromBody]Operation obj)
+        public OutPutDTO SaveOperation([FromBody]Operation obj)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
 
             try
@@ -213,41 +264,41 @@ namespace CMP_Servive.Controllers
                     {
                         entities.GetTransferData(obj);
                         commonBu.Update(entities);
-                        return Ok(new { data = entities, status = Constants.STATUS_CODE.SUCCESS, message = "" });
+                        return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
                     }
                     else
                     {
-                        return NotFound();
+                        return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                     }
                 }
                 else
                 {
                     commonBu.Save(obj);
-                    return Ok(new { data = obj, status = Constants.STATUS_CODE.SUCCESS, message = "" });
+                    return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
         [Route("Operations/delete")]
         [HttpPost]
-        public IHttpActionResult DeleteOperation(int id)
+        public OutPutDTO DeleteOperation(int id)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
                 commonBu.Delete<Operation>(id);
-                return Ok(id);
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 

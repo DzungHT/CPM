@@ -28,11 +28,11 @@ namespace CMP_Servive.Controllers
         /// <returns></returns>
         [Route("Register")]
         [HttpPost]
-        public IHttpActionResult CreateUser([FromBody] OAuthDetailDTO oAuthDetailDTO)
+        public OutPutDTO CreateUser([FromBody] OAuthDetailDTO oAuthDetailDTO)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
@@ -41,15 +41,18 @@ namespace CMP_Servive.Controllers
                 string clientSecret = CommonUtil.RandomString(32);
                 // validate
                 List<OAuthDetail> lst = commonBu.FindByProperty<OAuthDetail>("UserName", oAuthDetailDTO.UserName,"");
+                // check user name
                 if (!CommonUtil.IsNullOrEmpty<OAuthDetail>(lst)) {
-                    return BadRequest("UserName is exist");
+                    return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                 }
+                // check client id
                 lst = commonBu.FindByProperty<OAuthDetail>("ClientId", clientId, "");
                 if (!CommonUtil.IsNullOrEmpty<OAuthDetail>(lst)) {
-                    return BadRequest("ClientId is exist");
+                    return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                 }
+                // check quyen
                 if (oAuthDetailDTO.Role.Contains(Constants.AUTHENTICATION.ROLE_ADMINISTRATOR)) {
-                    return BadRequest("Do not have permission to add role : ROLE_ADMINISTRATOR ");
+                    return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                 }
                 // save OAuthDetail
                 OAuthDetail oAuthDetail = new OAuthDetail();
@@ -75,11 +78,11 @@ namespace CMP_Servive.Controllers
                 OAuthDetailDTO outPut = oAuthDetailDTO;
                 outPut.ClientId = clientId;
                 outPut.ClientSecret = clientSecret;
-                return Ok(new { status = "00", message = "", data = outPut });
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, outPut);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 

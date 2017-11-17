@@ -1,4 +1,6 @@
 ﻿using CMP_Servive.Business;
+using CMP_Servive.Helper;
+using CMP_Servive.Models.DTO;
 using CMP_Servive.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,86 +16,93 @@ namespace CMP_Servive.Controllers
     public class RolesController : ApiController
     {
         RoleBusiness roleBusiness = new RoleBusiness();
+        CommonBusiness commonBu = new CommonBusiness();
 
         [Route("getAll")]
         [HttpGet]
-        public IHttpActionResult GetList()
+        public OutPutDTO GetList()
         {
             List<Role> lstResult = roleBusiness.GetAll<Role>();
-            if (lstResult == null)
-            {
-                return NotFound();
-            }
-            return Ok(lstResult);
+            return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, lstResult);
         }
 
         [Route("get")]
         [HttpGet]
-        public IHttpActionResult GetObject(int id)
+        public OutPutDTO GetObject(int id)
         {
             Role obj = roleBusiness.Get<Role>(id);
-            if (obj == null)
-            {
-                return NotFound();
-            }
-            return Ok(obj);
+            return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
         }
 
-        [Route("update")]
+        [Route("search")]
+        [HttpGet]
+        public OutPutDTO SearchList([FromBody] Role objSearch)
+        {
+            try
+            {
+                List<Role> result = commonBu.FindByProperty<Role, Role>(objSearch, "ApplicationID asc");
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
+        }
+
+        [Route("save")]
         [HttpPost]
-        public IHttpActionResult Update(Role obj)
+        public OutPutDTO Save([FromBody]Role obj)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
 
             try
             {
-                roleBusiness.Update<Role>(obj);
-                return Ok(obj);
+                Role entities = new Role();
+                if (obj.RoleID != 0)
+                {
+                    entities = commonBu.Get<Role>(obj.RoleID);
+                    if (entities != null)
+                    {
+                        entities.GetTransferData(obj);
+                        commonBu.Update(entities);
+                        return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
+                    }
+                    else
+                    {
+                        return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                    }
+                }
+                else
+                {
+                    commonBu.Save(obj);
+                    return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Have something wrong!");
-            }
-        }
-
-        [Route("create")]
-        [HttpPost]
-        public IHttpActionResult Create(Role obj)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                roleBusiness.Save<Role>(obj);
-                return Ok(obj);
-            }
-            catch (Exception)
-            {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
         [Route("delete")]
         [HttpPost]
-        public IHttpActionResult Delete(int id)
+        public OutPutDTO Delete(int id)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
                 roleBusiness.Delete<Role>(id);
-                return Ok("Success");
+                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Have something wrong!");
+                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
