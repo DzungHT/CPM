@@ -4,11 +4,39 @@
 }
 
 <h2>Blank Page</h2>
+<table id="searchResult" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>ApplicationID</th>
+            <th>Code</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
 
 @section script{
     <script>
         $(window).load(function () {
             NProgress.done();
+        });
+
+        $("#searchResult").DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: 'http://cpm.cybertron:12354/applications/searchProcess',
+                //dataSrc: 'data',
+                data: function (data) {
+                    data = {}
+                    return data;
+                }
+            },
+            columns: [
+                { data: 'ApplicationID' },
+                { data: 'Code' },
+                { data: 'Name' }
+            ]
         });
     </script>
 }

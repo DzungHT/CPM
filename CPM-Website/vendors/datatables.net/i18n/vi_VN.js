@@ -3,7 +3,7 @@
     "emptyTable": "Không có dữ liệu.",
     "info": "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
     "infoEmpty": "Đang hiển thị từ 0 đến 0 của 0 bản ghi",
-    "infoFiltered": "(Tìm kiếm được từ _MAX_ tổng số bản ghi)",
+    "infoFiltered": "(Tìm kiếm được từ tổng số _MAX_ bản ghi)",
     "infoPostFix": "",
     "thousands": ".",
     "lengthMenu": "Hiển thị _MENU_ bản ghi/trang",
