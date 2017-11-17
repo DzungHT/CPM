@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CPM_Website.Models
 {
-    public class JsonResultObject
+    public class JsonResultObject<TData>
     {
         /// <summary>
         /// Trạng thái của kết quả trả về có thành công không?
@@ -20,6 +20,6 @@ namespace CPM_Website.Models
         /// <summary>
         /// Dữ liệu trả về nếu hành động thành công
         /// </summary>
-        public object Data { get; set; }
+        public TData Data { get; set; }
     }
 }

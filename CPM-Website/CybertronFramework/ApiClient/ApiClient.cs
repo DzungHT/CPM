@@ -12,20 +12,20 @@ namespace CybertronFramework
     public class ApiClient : IApiClient
     {
         #region Singleton
-        private static ApiClient apiClient;
+        //private static ApiClient apiClient;
         public static string BaseAddress { get; set; }
         public static ApiClient Instance
         {
             get
             {
-                if (apiClient == null)
-                {
-                    return new ApiClient(BaseAddress);
-                }
-                else
-                {
-                    return apiClient;
-                }
+                //if (apiClient == null)
+                //{
+                return new ApiClient(BaseAddress);
+                //}
+                //else
+                //{
+                //    return apiClient;
+                //}
             }
         }
         #endregion
@@ -95,7 +95,7 @@ namespace CybertronFramework
             {
                 response.EnsureSuccessStatusCode();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ex = e;
             }
@@ -107,22 +107,21 @@ namespace CybertronFramework
         }
         public async Task<TResult> PostApiAsync<TResult, TData>(string path, TData data)
         {
+            TResult result = default(TResult);
             HttpResponseMessage response = await client.PostAsJsonAsync(path, data);
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadAsAsync<TResult>();
-            }
-
-            Exception ex = new Exception();
             try
             {
-                response.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
+                {
+                    result = await response.Content.ReadAsAsync<TResult>();
+                }
+                else
+                {
+                    response.EnsureSuccessStatusCode();
+                }
+                return result;
             }
-            catch (Exception e)
-            {
-                ex = e;
-            }
-            finally
+            catch (Exception ex)
             {
                 throw ex;
             }
