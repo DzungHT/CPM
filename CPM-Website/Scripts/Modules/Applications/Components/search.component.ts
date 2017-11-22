@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 import { Application } from '../../../Models/application'
-import { InputModel } from '../../../Models/inputModel'
 
 import { ApplicationService } from '../service'
 
@@ -11,6 +11,8 @@ import { ApplicationService } from '../service'
 })
 export class SearchComponent implements OnInit, AfterViewInit {
     applications: Application[];
+    application: Application;
+    searchForm: FormGroup;
 
     ngAfterViewInit(): void {
         NProgress.done();
@@ -19,7 +21,11 @@ export class SearchComponent implements OnInit, AfterViewInit {
         var customerTbl = $("#searchResult").DataTable({
             ajax: {
                 url: '/applications/searchProcess',
-                type: 'POST'
+                type: 'POST',
+                data: function (d) {
+                    //console.log(this);
+                    return { Code: 'sdf', Name: '123', DataTable: d };
+                }
             },
             columns: [
                 {
@@ -27,7 +33,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
                     orderable: false,
                     data: null,
                     //targets: 0,
-                    className: "alignCenter",
+                    className: "text-center",
                     render: function (data, type, row, cell) {
                         var info = customerTbl.page.info();
                         var stt = 1 + (info.page * info.length) + cell.row;
@@ -35,16 +41,25 @@ export class SearchComponent implements OnInit, AfterViewInit {
                     }
                 },
                 //{ data: 'ApplicationID' },
-                { data: 'Code' },
+                {
+                    data: 'Code',
+                    className: "text-center"
+                },
                 { data: 'Name', name: 'Tên ứng dụng' }
             ]
         });
     }
-    application: Application;
-    codeInput: InputModel;
     constructor() {
         NProgress.start();
         this.application = new Application();
-        this.codeInput = new InputModel('Mã ứng dụng', this.application.Code, 'text', 'CodeSearch', 'Code');
+
+        this.searchForm = new FormGroup({
+            Code: new FormControl(),
+            Name: new FormControl()
+        });
+    }
+
+    search(): void {
+        console.log(this.searchForm.value);
     }
 }

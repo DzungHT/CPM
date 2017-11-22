@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CybertronFramework
+namespace CybertronFramework.Libraries
 {
     public static class EncryptionExtension
     {

@@ -9,10 +9,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
+var http_1 = require("@angular/common/http");
 var routing_module_1 = require("./routing.module");
 var index_component_1 = require("./Components/index.component");
 var search_component_1 = require("./Components/search.component");
-var inline_input_component_1 = require("../../Components/inline-input.component");
 //import { ApplicationService } from './service'
 var ApplicationModule = (function () {
     function ApplicationModule() {
@@ -24,12 +24,13 @@ ApplicationModule = __decorate([
         imports: [
             platform_browser_1.BrowserModule,
             forms_1.FormsModule,
-            routing_module_1.RoutingModule
+            forms_1.ReactiveFormsModule,
+            routing_module_1.RoutingModule,
+            http_1.HttpClientModule
         ],
         declarations: [
             index_component_1.IndexComponent,
-            search_component_1.SearchComponent,
-            inline_input_component_1.InlineInputComponent
+            search_component_1.SearchComponent
         ],
         //providers: [ApplicationService],
         bootstrap: [index_component_1.IndexComponent]

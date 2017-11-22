@@ -2,7 +2,7 @@
 
 namespace CPM_Website.Models
 {
-    public class LoginViewModel
+    public class AccountViewModel
     {
         public string Username { get; set; }
         public string Password { get; set; }

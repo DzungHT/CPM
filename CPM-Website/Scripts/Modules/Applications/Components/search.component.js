@@ -10,13 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var forms_1 = require("@angular/forms");
 var application_1 = require("../../../Models/application");
-var inputModel_1 = require("../../../Models/inputModel");
 var SearchComponent = (function () {
     function SearchComponent() {
         NProgress.start();
         this.application = new application_1.Application();
-        this.codeInput = new inputModel_1.InputModel('Mã ứng dụng', this.application.Code, 'text', 'CodeSearch', 'Code');
+        this.searchForm = new forms_1.FormGroup({
+            Code: new forms_1.FormControl(),
+            Name: new forms_1.FormControl()
+        });
     }
     SearchComponent.prototype.ngAfterViewInit = function () {
         NProgress.done();
@@ -25,7 +28,11 @@ var SearchComponent = (function () {
         var customerTbl = $("#searchResult").DataTable({
             ajax: {
                 url: '/applications/searchProcess',
-                type: 'POST'
+                type: 'POST',
+                data: function (d) {
+                    //console.log(this);
+                    return { Code: 'sdf', Name: '123', DataTable: d };
+                }
             },
             columns: [
                 {
@@ -33,7 +40,7 @@ var SearchComponent = (function () {
                     orderable: false,
                     data: null,
                     //targets: 0,
-                    className: "alignCenter",
+                    className: "text-center",
                     render: function (data, type, row, cell) {
                         var info = customerTbl.page.info();
                         var stt = 1 + (info.page * info.length) + cell.row;
@@ -41,10 +48,16 @@ var SearchComponent = (function () {
                     }
                 },
                 //{ data: 'ApplicationID' },
-                { data: 'Code' },
+                {
+                    data: 'Code',
+                    className: "text-center"
+                },
                 { data: 'Name', name: 'Tên ứng dụng' }
             ]
         });
+    };
+    SearchComponent.prototype.search = function () {
+        console.log(this.searchForm.value);
     };
     return SearchComponent;
 }());
