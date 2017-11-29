@@ -1,4 +1,5 @@
 ﻿using CPM_Website.Models;
+using CPM_Website.Models.Common;
 using CybertronFramework;
 using CybertronFramework.Models;
 using System;
@@ -19,32 +20,34 @@ namespace CPM_Website.Controllers
             };
 
         // GET: Applications
-        [Authorize(Roles = RoleCodes.Applications.INDEX)]
+        [CybertronAuthorize(Roles = RoleCodes.Applications.INDEX)]
         public ActionResult Index()
         {
             return View();
         }
 
-        [Authorize(Roles = RoleCodes.Applications.INDEX)]
+        [CybertronAuthorize(Roles = RoleCodes.Applications.INDEX)]
         public ActionResult IndexView()
         {
             return PartialView();
         }
 
-        [Authorize(Roles = RoleCodes.Applications.SEARCH)]
+        [CybertronAuthorize(Roles = RoleCodes.Applications.SEARCH)]
         public ActionResult SearchView()
         {
             return PartialView();
         }
 
-        [Authorize(Roles = RoleCodes.Applications.SEARCH)]
+        [CybertronAuthorize(Roles = RoleCodes.Applications.SEARCH)]
         public JsonResult SearchProcess(ApplicationsViewModel formData)
         {
+            List<Application> data = lst.Where(x => x.Code == formData.Code).ToList();
             DataTableResponse dataTableResponse = new DataTableResponse();
-            dataTableResponse.data = lst;
+            dataTableResponse.data = data;
             dataTableResponse.recordsTotal = lst.Count;
-            dataTableResponse.recordsFiltered = lst.Count;
+            dataTableResponse.recordsFiltered = data.Count;
             dataTableResponse.error = null;
+            dataTableResponse.draw = formData.DataTable.draw;
             return Json(dataTableResponse, JsonRequestBehavior.AllowGet);
         }
     }

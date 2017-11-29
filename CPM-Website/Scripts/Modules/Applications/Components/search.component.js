@@ -10,28 +10,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var forms_1 = require("@angular/forms");
-var application_1 = require("../../../Models/application");
+var http_1 = require("@angular/common/http");
+//import { ApplicationService } from '../service';
+var URL_SEARCH = 'applications/searchProcess';
 var SearchComponent = (function () {
-    function SearchComponent() {
+    function SearchComponent(http) {
+        this.http = http;
         NProgress.start();
-        this.application = new application_1.Application();
-        this.searchForm = new forms_1.FormGroup({
-            Code: new forms_1.FormControl(),
-            Name: new forms_1.FormControl()
-        });
+        this.frmData = new FormData();
     }
     SearchComponent.prototype.ngAfterViewInit = function () {
         NProgress.done();
     };
     SearchComponent.prototype.ngOnInit = function () {
-        var customerTbl = $("#searchResult").DataTable({
+        var frmData = this.frmData;
+        var dataTable = $("#searchResult").DataTable({
+            order: [[2, "asc"]],
             ajax: {
                 url: '/applications/searchProcess',
                 type: 'POST',
                 data: function (d) {
-                    //console.log(this);
-                    return { Code: 'sdf', Name: '123', DataTable: d };
+                    frmData.DataTable = d;
+                    return frmData;
                 }
             },
             columns: [
@@ -39,25 +39,30 @@ var SearchComponent = (function () {
                     searchable: false,
                     orderable: false,
                     data: null,
-                    //targets: 0,
                     className: "text-center",
                     render: function (data, type, row, cell) {
-                        var info = customerTbl.page.info();
+                        var info = dataTable.page.info();
                         var stt = 1 + (info.page * info.length) + cell.row;
                         return stt;
                     }
                 },
-                //{ data: 'ApplicationID' },
                 {
-                    data: 'Code',
-                    className: "text-center"
+                    searchable: false,
+                    orderable: false,
+                    data: null,
+                    className: "text-center",
+                    render: function (data, type, row, cell) {
+                        return "<a href=\"javascript:;\" class=\"text-success\" style=\"margin-right: 7px\">\n                                    <i class=\"fa fa-edit fa-2x\" title=\"S\u1EEDa\"></i>\n                                </a>\n                                <a href=\"javascript:;\" class=\"red\">\n                                    <i class=\"fa fa-remove fa-2x\" title=\"X\u00F3a\"></i>\n                                </a>";
+                    }
                 },
-                { data: 'Name', name: 'Tên ứng dụng' }
+                { data: 'Code', className: "text-center" },
+                { data: 'Name' }
             ]
         });
+        this.dataTable = dataTable;
     };
     SearchComponent.prototype.search = function () {
-        console.log(this.searchForm.value);
+        this.dataTable.ajax.reload();
     };
     return SearchComponent;
 }());
@@ -66,7 +71,12 @@ SearchComponent = __decorate([
         selector: 'search-application',
         templateUrl: '/applications/searchview',
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [http_1.HttpClient])
 ], SearchComponent);
 exports.SearchComponent = SearchComponent;
+var FormData = (function () {
+    function FormData() {
+    }
+    return FormData;
+}());
 //# sourceMappingURL=search.component.js.map

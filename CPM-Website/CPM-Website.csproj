@@ -2575,6 +2575,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Common\JsonResultObject.cs" />
+    <Compile Include="Models\Common\MyAuthorizeAttribute.cs" />
     <Compile Include="Models\Entities\Application.cs" />
     <Compile Include="Models\Entities\Menu.cs" />
     <Compile Include="Models\Entities\Role.cs" />
@@ -2623,6 +2624,7 @@
     <Content Include="Views\Applications\SearchView.cshtml" />
     <Content Include="Views\Shared\_LeftMenu.cshtml" />
     <Content Include="Views\Shared\_TopNavigation.cshtml" />
+    <Content Include="Views\Shared\_Unauthorized.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -6,7 +6,7 @@
         </div>
         <div class="x_content">
             <br />
-            <form [formGroup]="searchForm" class="form-horizontal form-label-left" (ngSubmit)="search()" >
+            <form class="form-horizontal form-label-left" (ngSubmit)="search()" >
 
                 <div class="row">
                     <div class="col-md-5 col-md-offset-1">
@@ -15,7 +15,7 @@
                                 Mã ứng dụng
                             </label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input name="Code" formControlName="Code" type="text" class="form-control" placeholder="Mã ứng dụng">
+                                <input id="Code" name="Code" [(ngModel)]="frmData.Code" type="text" class="form-control" placeholder="Mã ứng dụng">
                             </div>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                                 Tên ứng dụng
                             </label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input name="Name" formControlName="Name" type="text" class="form-control" placeholder="Tên ứng dụng">
+                                <input id="Name" name="Name" [(ngModel)]="frmData.Name" type="text" class="form-control" placeholder="Tên ứng dụng">
                             </div>
                         </div>
                     </div>
@@ -59,6 +59,7 @@
                 <thead>
                     <tr>
                         <th>STT</th>
+                        <th>Thao tác</th>
                         <th>Mã ứng dụng</th>
                         <th>Tên ứng dụng</th>
                     </tr>
