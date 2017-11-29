@@ -6,7 +6,6 @@ namespace CPM_Website.Models
 
     public partial class Application
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Application()
         {
             Menus = new HashSet<Menu>();

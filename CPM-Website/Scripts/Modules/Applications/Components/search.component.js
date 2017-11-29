@@ -22,7 +22,29 @@ var SearchComponent = (function () {
         NProgress.done();
     };
     SearchComponent.prototype.ngOnInit = function () {
-        $("#searchResult").DataTable({});
+        var customerTbl = $("#searchResult").DataTable({
+            ajax: {
+                url: '/applications/searchProcess',
+                type: 'POST'
+            },
+            columns: [
+                {
+                    searchable: false,
+                    orderable: false,
+                    data: null,
+                    //targets: 0,
+                    className: "alignCenter",
+                    render: function (data, type, row, cell) {
+                        var info = customerTbl.page.info();
+                        var stt = 1 + (info.page * info.length) + cell.row;
+                        return stt;
+                    }
+                },
+                //{ data: 'ApplicationID' },
+                { data: 'Code' },
+                { data: 'Name', name: 'Tên ứng dụng' }
+            ]
+        });
     };
     return SearchComponent;
 }());

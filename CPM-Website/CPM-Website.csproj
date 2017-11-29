@@ -2565,6 +2565,7 @@
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\ApplicationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="CybertronFramework\Common\DataTableResponse.cs" />
     <Compile Include="Models\Common\Constants.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2572,6 +2573,7 @@
     <Compile Include="CybertronFramework\ApiClient\ApiClient.cs" />
     <Compile Include="CybertronFramework\Common\EncryptionExtension.cs" />
     <Compile Include="CybertronFramework\ApiClient\IApiClient.cs" />
+    <Compile Include="CybertronFramework\Common\DataTableRequest.cs" />
     <Compile Include="Models\Common\JsonResultObject.cs" />
     <Compile Include="Models\Entities\Application.cs" />
     <Compile Include="Models\Entities\Menu.cs" />
@@ -2675,7 +2677,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>54060</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://cpm.cybertron:12354/</IISUrl>
+          <IISUrl>http://vaio:12354/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

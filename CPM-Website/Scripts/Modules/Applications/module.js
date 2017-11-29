@@ -13,6 +13,7 @@ var routing_module_1 = require("./routing.module");
 var index_component_1 = require("./Components/index.component");
 var search_component_1 = require("./Components/search.component");
 var inline_input_component_1 = require("../../Components/inline-input.component");
+//import { ApplicationService } from './service'
 var ApplicationModule = (function () {
     function ApplicationModule() {
     }
@@ -30,6 +31,7 @@ ApplicationModule = __decorate([
             search_component_1.SearchComponent,
             inline_input_component_1.InlineInputComponent
         ],
+        //providers: [ApplicationService],
         bootstrap: [index_component_1.IndexComponent]
     })
 ], ApplicationModule);

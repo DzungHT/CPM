@@ -16,7 +16,7 @@ CREATE PROCEDURE sp_GetUserPermission
 	@applicationCode nvarchar(50)
 AS
 BEGIN
-	SELECT p.Code FROM UserRole ur
+	SELECT DISTINCT p.Code FROM UserRole ur
 	INNER JOIN RolePermission rp ON ur.RoleID = rp.RoleID
 	INNER JOIN Permission p ON p.PermissionID = rp.PermissionID
 	INNER JOIN Resource r ON r.ResourceID = p.ResourceID
