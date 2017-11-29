@@ -22,4 +22,4 @@ var InputModel = (function () {
     return InputModel;
 }());
 exports.InputModel = InputModel;
-//# sourceMappingURL=inputModel.js.map
+//# sourceMappingURL=InputModel.js.map

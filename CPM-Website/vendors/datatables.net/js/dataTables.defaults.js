@@ -3,6 +3,7 @@
     ordering: true,
     processing: true,
     serverSide: true,
+    order: [[1, "asc"]],
     language: {
         url: '/vendors/datatables.net/i18n/vi_VN.js'
     },

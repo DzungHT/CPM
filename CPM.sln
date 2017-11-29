@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMP-Servive", "CMP-Servive\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestAPI", "UnitTestAPI\UnitTestAPI.csproj", "{2A8E04E0-4859-4513-BF4E-F03285948340}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CybertronFramework", "CybertronFramework\CybertronFramework.csproj", "{23C4638E-9AA4-4417-9558-0FDC145E54F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2A8E04E0-4859-4513-BF4E-F03285948340}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A8E04E0-4859-4513-BF4E-F03285948340}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A8E04E0-4859-4513-BF4E-F03285948340}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23C4638E-9AA4-4417-9558-0FDC145E54F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23C4638E-9AA4-4417-9558-0FDC145E54F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23C4638E-9AA4-4417-9558-0FDC145E54F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23C4638E-9AA4-4417-9558-0FDC145E54F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

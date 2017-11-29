@@ -1,7 +1,8 @@
 ﻿using CPM_Website.CybertronFramework.Common;
 using CPM_Website.Models;
 using CPM_Website.Respositories;
-using CybertronFramework;
+using CybertronFramework.Libraries;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,6 @@ namespace CPM_Website.Controllers
 {
     public class AccountsController : Controller
     {
-        private const string API_LOGIN = "/api/v1/Users/login";
-
         #region HttpGet
         // GET: Account
         [HttpGet]
@@ -42,11 +41,11 @@ namespace CPM_Website.Controllers
         #region HttpPost
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel formData)
+        public async Task<ActionResult> Login(AccountViewModel formData)
         {
-            IApiClient client = ApiClient.Instance;
+            ApiClient client = ApiClient.Instance;
 
-            var apiResult = await client.PostApiAsync<JsonResultObject<User>, object>(API_LOGIN, new { UserName = formData.Username, Password = formData.Password, ApplicationID = 1 });
+            var apiResult = await client.PostApiAsync<JsonResultObject<User>, object>(URLResources.LOGIN_API, new { UserName = formData.Username, Password = formData.Password, ApplicationID = 1 });
             if (apiResult.IsSuccess)
             {
                 // Lấy danh sách quyền

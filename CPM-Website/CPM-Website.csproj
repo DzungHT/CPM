@@ -2560,27 +2560,29 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ApplicationResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\URLResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>URLResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\ApplicationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="CybertronFramework\Common\DataTableResponse.cs" />
     <Compile Include="Models\Common\Constants.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="CybertronFramework\ApiClient\ApiClient.cs" />
-    <Compile Include="CybertronFramework\Common\EncryptionExtension.cs" />
-    <Compile Include="CybertronFramework\ApiClient\IApiClient.cs" />
-    <Compile Include="CybertronFramework\Common\DataTableRequest.cs" />
     <Compile Include="Models\Common\JsonResultObject.cs" />
+    <Compile Include="Models\Common\MyAuthorizeAttribute.cs" />
     <Compile Include="Models\Entities\Application.cs" />
     <Compile Include="Models\Entities\Menu.cs" />
     <Compile Include="Models\Entities\Role.cs" />
     <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\Common\RoleCodes.cs" />
-    <Compile Include="Models\ViewModels\LoginViewModel.cs" />
+    <Compile Include="Models\ViewModels\AccountViewModel.cs" />
+    <Compile Include="Models\ViewModels\ApplicationsViewModel.cs" />
     <Compile Include="Models\ViewModels\MenuViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Respositories\DataFactory.cs" />
@@ -2622,6 +2624,7 @@
     <Content Include="Views\Applications\SearchView.cshtml" />
     <Content Include="Views\Shared\_LeftMenu.cshtml" />
     <Content Include="Views\Shared\_TopNavigation.cshtml" />
+    <Content Include="Views\Shared\_Unauthorized.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2660,6 +2663,18 @@
     <TypeScriptCompile Include="Scripts\Models\InputModel.ts" />
     <TypeScriptCompile Include="Scripts\Models\application.ts" />
     <TypeScriptCompile Include="Scripts\Modules\Applications\service.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CybertronFramework\CybertronFramework.csproj">
+      <Project>{23c4638e-9aa4-4417-9558-0fdc145e54f0}</Project>
+      <Name>CybertronFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\URLResources.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>URLResources.Designer.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

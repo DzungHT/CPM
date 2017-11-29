@@ -4,39 +4,92 @@
 }
 
 <h2>Blank Page</h2>
-<table id="searchResult" class="table table-bordered table-striped table-hover">
-    <thead>
-        <tr>
-            <th>ApplicationID</th>
-            <th>Code</th>
-            <th>Name</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Điều kiện tìm kiếm</h2>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <br />
+        <form id="search-form" class="form-horizontal form-label-left" action="@Url.Action("SearchProcess", "Applications")" method="post">
+
+            <div class="row">
+                <div class="col-md-5 col-md-offset-1">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Mã ứng dụng
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input name="Code" type="text" class="form-control" placeholder="Mã ứng dụng">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Tên ứng dụng
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input name="Name" type="text" class="form-control" placeholder="Tên ứng dụng">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ln_solid"></div>
+            <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 text-center">
+                    <button type="submit" class="btn btn-success submit">
+                        <span class="glyphicons glyphicons-search"></span>
+                        Tìm kiếm
+                    </button>
+                    <a class="btn btn-primary" routerLink="/addnew">Thêm mới</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Kết quả tìm kiếm</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <table id="searchResult" class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Thao tác</th>
+                        <th>Mã ứng dụng</th>
+                        <th>Tên ứng dụng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td class="text-center">
+                            <a href="javascript:;" class="text-success" style="margin-right: 7px">
+                                <i class="fa fa-edit fa-2x" title="Sửa"></i>
+                            </a>
+                            <a href="javascript:;" class="red">
+                                <i class="fa fa-remove fa-2x" title="Xóa"></i>
+                            </a>
+                        </td>
+                        <td>CPM</td>
+                        <td>Cybertron Policies Management</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 @section script{
     <script>
         $(window).load(function () {
             NProgress.done();
-        });
-
-        $("#searchResult").DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: 'http://cpm.cybertron:12354/applications/searchProcess',
-                //dataSrc: 'data',
-                data: function (data) {
-                    data = {}
-                    return data;
-                }
-            },
-            columns: [
-                { data: 'ApplicationID' },
-                { data: 'Code' },
-                { data: 'Name' }
-            ]
         });
     </script>
 }

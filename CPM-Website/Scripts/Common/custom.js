@@ -1806,15 +1806,15 @@ function init_PNotify() {
         });
     }
 
-    window.error = function (text, title) {
-        new PNotify({
-            title: title || "Lỗi",
-            text: text,
-            type: 'error',
-            styling: 'bootstrap3',
-            hide: true,
-        });
-    }
+    //window.error = function (text, title) {
+    //    new PNotify({
+    //        title: title || "Lỗi",
+    //        text: text,
+    //        type: 'error',
+    //        styling: 'bootstrap3',
+    //        hide: true,
+    //    });
+    //}
 };
 
 

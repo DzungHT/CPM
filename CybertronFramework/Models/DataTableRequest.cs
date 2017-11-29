@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CybertronFramework
+namespace CybertronFramework.Models
 {
     /// <summary>
     /// Mô tả đối tượng mà dataTable submit lên server xử lý

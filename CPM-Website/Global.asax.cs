@@ -1,5 +1,7 @@
 ﻿using CPM_Website.CybertronFramework.Common;
 using CybertronFramework;
+using CybertronFramework.Libraries;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +22,7 @@ namespace CPM_Website
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            ApiClient.BaseAddress = "http://localhost:12144";
+            ApiClient.BaseURI = URLResources.BASE_URI;
         }
 
         /// <summary>
@@ -42,7 +44,7 @@ namespace CPM_Website
                         string[] roles = authTicket.UserData.Split(new string[] { Constants.ROLE_STRING_SEPERATE }, StringSplitOptions.RemoveEmptyEntries);
                         e.User = new System.Security.Principal.GenericPrincipal(new FormsIdentity(authTicket), roles);
                     }
-                    catch(Exception ex)
+                    catch(Exception)
                     {
 
                     }
