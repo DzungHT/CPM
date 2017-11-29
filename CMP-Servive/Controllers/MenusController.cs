@@ -2,6 +2,7 @@
 using CMP_Servive.Helper;
 using CMP_Servive.Models.DTO;
 using CMP_Servive.Models.Entities;
+using CMP_Servive.Providers.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -10,6 +11,7 @@ namespace CMP_Servive.Controllers
 {
     [RoutePrefix("api/v1/Menu")]
     [Authorize]
+    [BasicAuthentication]
     public class MenusController : ApiController
     {
         MenuBusiness menuBusiness = new MenuBusiness();

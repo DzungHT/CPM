@@ -32,6 +32,9 @@ namespace CMP_Servive.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
+            // Kiểm tra thông tin ứng dụng
+            if (!context.ClientId.Contains("CPM"))
+                return;
             //Kiểm tra thông tin user
             AuthorizationBusiness authorBusiness = new AuthorizationBusiness();
             UserLoginOutput user = authorBusiness.getUser(context);
@@ -118,6 +121,6 @@ namespace CMP_Servive.Providers
             //return base.TokenEndpointResponse(context);
             return Task.FromResult<object>(null);
         }
-
+       
     }
 }

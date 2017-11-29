@@ -14,6 +14,7 @@ namespace CMP_Servive.Controllers
 {
     
     [RoutePrefix("api/v1/Users")]
+    [BasicAuthentication]
     public class UsersController : ApiController
     {
         UserBusiness userBusiness = new UserBusiness();
@@ -21,7 +22,7 @@ namespace CMP_Servive.Controllers
 
         [Route("getAll")]
         [HttpGet]
-        [BasicAuthentication(true, RoleCodes.Users.VIEW)]
+        //[BasicAuthentication(true, RoleCodes.Users.VIEW)]
         public OutPutDTO GetUsers()
         {
             try
@@ -37,7 +38,7 @@ namespace CMP_Servive.Controllers
 
         [Route("get")]
         [HttpGet]
-        [BasicAuthentication(true, RoleCodes.Users.VIEW)]
+        //[BasicAuthentication(true, RoleCodes.Users.VIEW)]
         public OutPutDTO GetUser(int id)
         {
             try
@@ -53,7 +54,7 @@ namespace CMP_Servive.Controllers
 
         [Route("search")]
         [HttpGet]
-        [BasicAuthentication(true, RoleCodes.Users.VIEW)]
+        //[BasicAuthentication(true, RoleCodes.Users.VIEW)]
         public OutPutDTO GetUser([FromBody] UserDTO objSearch)
         {
             try
@@ -70,7 +71,7 @@ namespace CMP_Servive.Controllers
 
         [Route("save")]
         [HttpPost]
-        [BasicAuthentication(true,"")]
+        //[BasicAuthentication(true,"")]
         public OutPutDTO SaveUser([FromBody]UserDTO userDTO)
         {
             if (!ModelState.IsValid)
@@ -119,7 +120,7 @@ namespace CMP_Servive.Controllers
 
         [Route("delete")]
         [HttpPost]
-        [BasicAuthentication(true, RoleCodes.Users.DELETE)]
+        //[BasicAuthentication(true, RoleCodes.Users.DELETE)]
         public OutPutDTO DeleteUser([FromBody]int id)
         {
             if (!ModelState.IsValid)

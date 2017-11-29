@@ -22,6 +22,7 @@ namespace CMP_Servive.Providers.Authentication
         /// </summary>
         public BasicAuthenticationAttribute()
         {
+            roles = "";
         }
 
         private readonly bool isActive = true;
