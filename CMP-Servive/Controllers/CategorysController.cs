@@ -12,6 +12,7 @@ using System.Web.Http;
 namespace CMP_Servive.Controllers
 {
     [RoutePrefix("api/v1/Category")]
+    [Authorize]
     public class CategorysController : ApiController
     {
         CommonBusiness commonBu = new CommonBusiness();
@@ -24,11 +25,11 @@ namespace CMP_Servive.Controllers
             try
             {
                 List<Application> lstResult = commonBu.GetAll<Application>();
-                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, lstResult);
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, lstResult);
             }
             catch (Exception ex)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
@@ -39,11 +40,11 @@ namespace CMP_Servive.Controllers
             try
             {
                 Application obj = commonBu.Get<Application>(id);
-                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
             }
             catch (Exception ex)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
@@ -54,11 +55,11 @@ namespace CMP_Servive.Controllers
             try
             {
                 List<Application> result = commonBu.FindByProperty<Application, ApplicationDTO>(objSearch, "ApplicationID asc");
-                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
             }
             catch (Exception ex)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
@@ -68,7 +69,7 @@ namespace CMP_Servive.Controllers
         {
             if (!ModelState.IsValid)
             {
-                new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
 
             try
@@ -81,22 +82,22 @@ namespace CMP_Servive.Controllers
                     {
                         entities.GetTransferData(obj);
                         commonBu.Update(entities);
-                        return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
+                        return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
                     }
                     else
                     {
-                        return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                        return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                     }
                 }
                 else
                 {
                     commonBu.Save(obj);
-                    return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
+                    return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
                 }
             }
             catch (Exception ex )
             {
-                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
@@ -106,16 +107,16 @@ namespace CMP_Servive.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
                 commonBu.Delete<Application>(id);
-                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
             }
             catch (Exception ex)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
@@ -127,7 +128,7 @@ namespace CMP_Servive.Controllers
         public OutPutDTO GetListDomainTypes()
         {
             List<DomainType> lstResult = commonBu.GetAll<DomainType>();
-            return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, lstResult);
+            return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, lstResult);
         }
 
         [Route("DomainTypes/get")]
@@ -135,7 +136,7 @@ namespace CMP_Servive.Controllers
         public OutPutDTO GetObjectDomainTypes(int id)
         {
             DomainType obj = commonBu.Get<DomainType>(id);
-            return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
+            return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
         }
 
         [Route("DomainTypes/search")]
@@ -145,11 +146,11 @@ namespace CMP_Servive.Controllers
             try
             {
                 List<DomainType> result = commonBu.FindByProperty<DomainType, DomainType>(objSearch, "DomainTypeID asc");
-                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
             }
             catch (Exception ex)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
@@ -159,7 +160,7 @@ namespace CMP_Servive.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
 
             try
@@ -172,22 +173,22 @@ namespace CMP_Servive.Controllers
                     {
                         entities.GetTransferData(obj);
                         commonBu.Update(entities);
-                        return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
+                        return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
                     }
                     else
                     {
-                        return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                        return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                     }
                 }
                 else
                 {
                     commonBu.Save(obj);
-                    return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
+                    return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
                 }
             }
             catch (Exception ex)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
@@ -197,16 +198,16 @@ namespace CMP_Servive.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
                 commonBu.Delete<DomainType>(id);
-                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
             }
             catch (Exception ex)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
@@ -216,18 +217,18 @@ namespace CMP_Servive.Controllers
 
         [Route("Operations/getAll")]
         [HttpGet]
-        public OutPutDTO GetListOperation()
+        public OutPutDTO GetListOperations()
         {
             List<Operation> lstResult = commonBu.GetAll<Operation>();
-            return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, lstResult);
+            return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, lstResult);
         }
 
         [Route("Operations/get")]
         [HttpGet]
-        public OutPutDTO GetObjectOperation(int id)
+        public OutPutDTO GetObjectOperations(int id)
         {
             Operation obj = commonBu.Get<Operation>(id);
-            return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
+            return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
         }
 
         [Route("Operations/search")]
@@ -237,21 +238,21 @@ namespace CMP_Servive.Controllers
             try
             {
                 List<Operation> result = commonBu.FindByProperty<Operation, Operation>(objSearch, "OperationID asc");
-                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
             }
             catch (Exception ex)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
         [Route("Operations/save")]
         [HttpPost]
-        public OutPutDTO SaveOperation([FromBody]Operation obj)
+        public OutPutDTO SaveOperations([FromBody]Operation obj)
         {
             if (!ModelState.IsValid)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
 
             try
@@ -264,44 +265,134 @@ namespace CMP_Servive.Controllers
                     {
                         entities.GetTransferData(obj);
                         commonBu.Update(entities);
-                        return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
+                        return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
                     }
                     else
                     {
-                        return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                        return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                     }
                 }
                 else
                 {
                     commonBu.Save(obj);
-                    return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
+                    return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
                 }
             }
             catch (Exception ex)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
         [Route("Operations/delete")]
         [HttpPost]
-        public OutPutDTO DeleteOperation(int id)
+        public OutPutDTO DeleteOperations(int id)
         {
             if (!ModelState.IsValid)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
                 commonBu.Delete<Operation>(id);
-                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
             }
             catch (Exception ex)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
+        #endregion
+
+        #region Danh mục tài nguyên
+        [Route("Resources/getAll")]
+        [HttpGet]
+        public OutPutDTO GetListResources()
+        {
+            List<Resource> lstResult = commonBu.GetAll<Resource>();
+            return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, lstResult);
+        }
+
+        [Route("Resources/get")]
+        [HttpGet]
+        public OutPutDTO GetObjectResources(int id)
+        {
+            Resource obj = commonBu.Get<Resource>(id);
+            return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
+        }
+
+        [Route("Resources/search")]
+        [HttpGet]
+        public OutPutDTO SearchListResources([FromBody] Resource objSearch)
+        {
+            try
+            {
+                List<Resource> result = commonBu.FindByProperty<Resource, Resource>(objSearch, "ResourceID asc");
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
+        }
+
+        [Route("Resources/save")]
+        [HttpPost]
+        public OutPutDTO SaveResources([FromBody]Resource obj)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+            }
+
+            try
+            {
+                Resource entities = new Resource();
+                if (obj.ResourceID != 0)
+                {
+                    entities = commonBu.Get<Resource>(obj.ResourceID);
+                    if (entities != null)
+                    {
+                        entities.GetTransferData(obj);
+                        commonBu.Update(entities);
+                        return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
+                    }
+                    else
+                    {
+                        return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                    }
+                }
+                else
+                {
+                    commonBu.Save(obj);
+                    return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
+        }
+
+        [Route("Resources/delete")]
+        [HttpPost]
+        public OutPutDTO DeleteResources(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+            }
+            try
+            {
+                commonBu.Delete<Resource>(id);
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
+        }
         #endregion
 
         protected override void Dispose(bool disposing)

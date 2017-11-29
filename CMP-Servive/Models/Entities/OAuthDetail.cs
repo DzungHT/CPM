@@ -6,6 +6,7 @@ namespace CMP_Servive.Models.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    [Table("OAuthDetail")]
     public partial class OAuthDetail
     {
         [Required]

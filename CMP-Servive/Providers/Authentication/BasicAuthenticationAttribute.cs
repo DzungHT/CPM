@@ -1,19 +1,22 @@
 ﻿using CMP_Servive.Business;
 using CMP_Servive.Models.DTO;
-using CMP_Servive.Providers.Authentication;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
+using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
-namespace CMP_Servive.Authentication.Providers
+namespace CMP_Servive.Providers.Authentication
 {
     public class BasicAuthenticationAttribute : AuthorizationFilterAttribute
     {
+        private string application { get; set; }
+        private string roles { get; set; }
+
         /// <summary>
         /// Public default Constructor
         /// </summary>
@@ -27,9 +30,10 @@ namespace CMP_Servive.Authentication.Providers
         /// parameter isActive explicitly enables/disables this filetr.
         /// </summary>
         /// <param name="isActive"></param>
-        public BasicAuthenticationAttribute(bool _isActive)
+        public BasicAuthenticationAttribute(bool _isActive, string _role)
         {
             isActive = _isActive;
+            roles = _role;
         }
 
         /// <summary>
@@ -38,57 +42,30 @@ namespace CMP_Servive.Authentication.Providers
         /// <param name="actionContext"></param>
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            if (!isActive) return;
-
-            var identity = FetchAuthHeader(actionContext);
-            if (identity == null)
+            base.OnAuthorization(actionContext); // Should this be here?
+            OutPutDTO outPut = new OutPutDTO();
+            
+            var owinContext = HttpContext.Current.GetOwinContext();
+            var authenticated = owinContext.Authentication.User.Identity.IsAuthenticated;
+            var request = HttpContext.Current.Request;
+            var roleAccess = roles.Equals("") ? true : owinContext.Authentication.User.IsInRole(roles);
+            
+            if (!authenticated)
             {
-                ChallengeAuthRequest(actionContext);
-                return;
-            }
-
-            UserBusiness userBusiness = new UserBusiness();
-            UserLoginInput usip = new UserLoginInput();
-            usip.UserName = identity.UserName;
-            usip.Password = identity.Password;
-            if (true)
-            {
-                ChallengeAuthRequest(actionContext);
-                return;
+                // Challenge user for crednetials
+                if (!request.IsAuthenticated)
+                {
+                    actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+                }
             }
             else
             {
-                var genericPrincipal = new GenericPrincipal(identity, null);
-                Thread.CurrentPrincipal = genericPrincipal;
+                if (!roleAccess)
+                {
+                    actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden);
+                }
+                return;
             }
-        }
-
-        /// <summary>
-        /// Checks for autrhorization header in the request and parses it, creates user credentials and returns as BasicAuthenticationIdentity
-        /// </summary>
-        /// <param name="actionContext"></param>
-        protected virtual BasicAuthenticationIdentity FetchAuthHeader(HttpActionContext actionContext)
-        {
-            string authHeaderValue = null;
-            var authRequest = actionContext.Request.Headers.Authorization;
-            if (authRequest != null && !String.IsNullOrEmpty(authRequest.Scheme) && authRequest.Scheme == "Basic")
-                authHeaderValue = authRequest.Parameter;
-            if (string.IsNullOrEmpty(authHeaderValue))
-                return null;
-            authHeaderValue = Encoding.UTF8.GetString(Convert.FromBase64String(authHeaderValue));
-            var credentials = authHeaderValue.Split(':');
-            return credentials.Length < 2 ? null : new BasicAuthenticationIdentity(credentials[0], credentials[1]);
-        }
-
-        /// <summary>
-        /// Send the Authentication Challenge request
-        /// </summary>
-        /// <param name="filterContext"></param>
-        private static void ChallengeAuthRequest(HttpActionContext filterContext)
-        {
-            var dnsHost = filterContext.Request.RequestUri.DnsSafeHost;
-            filterContext.Response = filterContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
-            filterContext.Response.Headers.Add("WWW-Authenticate", string.Format("Basic realm=\"{0}\"", dnsHost));
         }
     }
 }

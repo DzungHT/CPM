@@ -30,7 +30,7 @@ namespace CMP_Servive.Models.Entities
         public string Authentication { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(500)]
         public string RefreshToken { get; set; }
 
         public virtual OAuthRefreshToken OAuthRefreshToken { get; set; }

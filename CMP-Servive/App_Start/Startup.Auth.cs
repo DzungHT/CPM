@@ -31,7 +31,7 @@ namespace CMP_Servive
             {
                 TokenEndpointPath = new PathString("/Token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(3),
                 AllowInsecureHttp = true,
                 RefreshTokenProvider = new ApplicationRefreshTokenProvider()
             };

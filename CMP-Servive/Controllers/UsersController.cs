@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Web.Http;
 using CMP_Servive.Business;
-using CMP_Servive.Providers.Authentication;
 using CMP_Servive.Models.Entities;
 using CMP_Servive.Helper;
 using CMP_Servive.Models.DTO;
+using CMP_Servive.Providers.Authentication;
+using CMP_Servive.Providers;
+using CPM_Website.Helper;
+using System.Web;
 
 namespace CMP_Servive.Controllers
 {
@@ -18,6 +21,7 @@ namespace CMP_Servive.Controllers
 
         [Route("getAll")]
         [HttpGet]
+        [BasicAuthentication(true, RoleCodes.Users.VIEW)]
         public OutPutDTO GetUsers()
         {
             try
@@ -33,12 +37,13 @@ namespace CMP_Servive.Controllers
 
         [Route("get")]
         [HttpGet]
+        [BasicAuthentication(true, RoleCodes.Users.VIEW)]
         public OutPutDTO GetUser(int id)
         {
             try
             {
                 User user = userBusiness.Get<User>(id);
-                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, user);
+                return new OutPutDTO( true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, user);
             }
             catch (Exception ex)
             {
@@ -48,12 +53,13 @@ namespace CMP_Servive.Controllers
 
         [Route("search")]
         [HttpGet]
+        [BasicAuthentication(true, RoleCodes.Users.VIEW)]
         public OutPutDTO GetUser([FromBody] UserDTO objSearch)
         {
             try
             {
                 List<User> result = commonBu.FindByProperty<User, UserDTO>(objSearch, "UserID asc");
-                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+                return new OutPutDTO( true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
             }
             catch (Exception ex)
             {
@@ -64,6 +70,7 @@ namespace CMP_Servive.Controllers
 
         [Route("save")]
         [HttpPost]
+        [BasicAuthentication(true,"")]
         public OutPutDTO SaveUser([FromBody]UserDTO userDTO)
         {
             if (!ModelState.IsValid)
@@ -72,15 +79,20 @@ namespace CMP_Servive.Controllers
             }
             try
             {
+                var owinContext = HttpContext.Current.GetOwinContext();
                 User entities = new User();
                 if (userDTO.UserID != 0)
                 {
+                    if (!owinContext.Authentication.User.IsInRole(RoleCodes.Users.UPDATE))
+                    {
+                        return new OutPutDTO(false, Constants.STATUS_CODE.NOT_PERMISSION, Constants.STATUS_MESSAGE.NOT_PERMISSION, "");
+                    }
                     entities = userBusiness.Get<User>(userDTO.UserID);
                     if (entities != null)
                     {
                         entities.GetTransferData(userDTO);
                         userBusiness.Update(entities);
-                        return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
+                        return new OutPutDTO( true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
                     }
                     else
                     {
@@ -89,10 +101,14 @@ namespace CMP_Servive.Controllers
                 }
                 else
                 {
+                    if (!owinContext.Authentication.User.IsInRole(RoleCodes.Users.INSERT))
+                    {
+                        return new OutPutDTO(false, Constants.STATUS_CODE.NOT_PERMISSION, Constants.STATUS_MESSAGE.NOT_PERMISSION, "");
+                    }
                     entities.GetTransferData(userDTO);
                     entities.Password = entities.Password.Encrypt(Constants.ENCRYPT_KEY);
                     userBusiness.Save(entities);
-                    return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
+                    return new OutPutDTO( true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
                 }
             }
             catch (Exception ex)
@@ -103,6 +119,7 @@ namespace CMP_Servive.Controllers
 
         [Route("delete")]
         [HttpPost]
+        [BasicAuthentication(true, RoleCodes.Users.DELETE)]
         public OutPutDTO DeleteUser([FromBody]int id)
         {
             if (!ModelState.IsValid)
@@ -112,7 +129,7 @@ namespace CMP_Servive.Controllers
             try
             {
                 userBusiness.Delete<User>(id);
-                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
+                return new OutPutDTO( true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
             }
             catch (Exception ex)
             {
@@ -133,7 +150,7 @@ namespace CMP_Servive.Controllers
                 User user = userBusiness.RestartPassword(id);
                 if (user != null)
                 {
-                    return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, user);
+                    return new OutPutDTO( true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, user);
                 }
                 else
                 {
@@ -153,23 +170,23 @@ namespace CMP_Servive.Controllers
             
             if (!ModelState.IsValid)
             {
-                return new OutPutDTO(false,Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
                 if (userBusiness.CheckLogin(user))
                 {
                     var output = userBusiness.GetUserInformation(user);
-                    return new OutPutDTO(true,Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, output);
+                    return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, output);
                 }
                 else
                 {
-                    return new OutPutDTO(false,Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                    return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                 }
             }
             catch (Exception ex)
             {
-                return new OutPutDTO(false,Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
@@ -185,7 +202,7 @@ namespace CMP_Servive.Controllers
             {
                 if (userBusiness.AddRole(userId, lstRoleId))
                 {
-                    return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
+                    return new OutPutDTO( true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
                 } else
                 {
                     return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);

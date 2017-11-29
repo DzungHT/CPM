@@ -11,6 +11,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using CMP_Servive.Business;
 using CMP_Servive.Models.Entities;
+using CMP_Servive.Models.DTO;
 
 namespace CMP_Servive.Providers
 {
@@ -33,8 +34,8 @@ namespace CMP_Servive.Providers
         {
             //Kiểm tra thông tin user
             AuthorizationBusiness authorBusiness = new AuthorizationBusiness();
-            OAuthDetail oAuthDetail = authorBusiness.getUser(context);
-            if (oAuthDetail == null)
+            UserLoginOutput user = authorBusiness.getUser(context);
+            if (user == null)
             {
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;
@@ -42,7 +43,13 @@ namespace CMP_Servive.Providers
             //Set thông tin user tạo token
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.Role, oAuthDetail.OAuthClientDetail.Authorities));
+            if (user.Roles != null)
+            {
+                foreach(string role in user.Roles)
+                {
+                    identity.AddClaim(new Claim(ClaimTypes.Role, role.Trim()));
+                }
+            }
             identity.AddClaim(new Claim("sub", context.UserName));
             
             var props = new AuthenticationProperties(new Dictionary<string, string>
@@ -107,8 +114,10 @@ namespace CMP_Servive.Providers
             {
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
             }
-
+            //context.AdditionalResponseParameters.Add("Key", "Value");
+            //return base.TokenEndpointResponse(context);
             return Task.FromResult<object>(null);
         }
+
     }
 }

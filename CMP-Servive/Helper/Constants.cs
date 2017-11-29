@@ -21,7 +21,8 @@ namespace CMP_Servive.Helper
             public static string SUCCESS = "00"; // Trạng thái thực hiện service thành công
             public static string FAILURE = "01"; // Trạng thái thực hiện service thất bại
             public static string EXCEPTION = "03"; // Exception khi thực hiện service
-            public static string NOT_EMPTY = "04"; // Validate bắt buộc nhập 
+            public static string NOT_EMPTY = "04"; // Validate bắt buộc nhập
+            public static string NOT_PERMISSION = "05"; // Không có quyền
         }
 
         public static class STATUS_MESSAGE
@@ -29,7 +30,8 @@ namespace CMP_Servive.Helper
             public static string SUCCESS = "Thực hiện thành công"; // Trạng thái thực hiện service thành công
             public static string FAILURE = "Thực hiện thất bại"; // Trạng thái thực hiện service thất bại
             public static string EXCEPTION = "Có lỗi xảy ra: "; // Exception khi thực hiện service
-            public static string NOT_EMPTY = "Dữ liệu không được để trống"; // Validate bắt buộc nhập 
+            public static string NOT_EMPTY = "Dữ liệu không được để trống"; // Validate bắt buộc nhập
+            public static string NOT_PERMISSION = "Bạn không có quyền thực hiện chức năng này"; // Validate quyền
         }
     }
 }

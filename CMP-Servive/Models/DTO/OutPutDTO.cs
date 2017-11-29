@@ -21,5 +21,11 @@ namespace CMP_Servive.Models.DTO
             Message = message;
             Data = data;
         }
+        //public OutPutDTO(string status, string message, object data)
+        //{
+        //    Status = status;
+        //    Message = message;
+        //    Data = data;
+        //}
     }
 }

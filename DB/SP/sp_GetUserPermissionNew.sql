@@ -1,0 +1,1 @@
+sp_GetUserPermission 1,'CPM'

@@ -1,8 +1,10 @@
 ﻿using CMP_Servive.Helper;
+using CMP_Servive.Models.DTO;
 using CMP_Servive.Models.Entities;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -15,15 +17,20 @@ namespace CMP_Servive.Business
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public OAuthDetail getUser(OAuthGrantResourceOwnerCredentialsContext context)
+        public UserLoginOutput getUser(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            OAuthDetail result = new OAuthDetail();
+            UserLoginOutput result = new UserLoginOutput();
             db.Configuration.LazyLoadingEnabled = true;
+            string loginName = context.UserName.Trim();
             string pass = context.Password.Encrypt(Constants.ENCRYPT_KEY);
-            result = db.OAuthDetails.FirstOrDefault(
-                x =>  x.UserName.Contains(context.UserName)
-                  && x.Password.Contains(pass)
-                  && x.ClientId.Contains(context.ClientId));
+            string appCode = context.ClientId.Trim();
+            var user = db.Users.FirstOrDefault(x => x.LoginName.Equals(loginName) && x.Password.Equals(pass));
+            if (user == null)
+            {
+                return null;
+            }
+            result.GetTransferData(user);
+            result.Roles = db.Database.SqlQuery<string>("sp_GetUserPermission @UserID, @ApplicationID", new SqlParameter("UserID", user.UserID), new SqlParameter("ApplicationCode", appCode)).ToList();
             return result;
         }
 

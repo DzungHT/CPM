@@ -28,11 +28,12 @@ namespace CMP_Servive.Controllers
         /// <returns></returns>
         [Route("Register")]
         [HttpPost]
+        [Authorize(Roles = "ADMINISTRATOR")]
         public OutPutDTO CreateUser([FromBody] OAuthDetailDTO oAuthDetailDTO)
         {
             if (!ModelState.IsValid)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
             try
             {
@@ -43,16 +44,16 @@ namespace CMP_Servive.Controllers
                 List<OAuthDetail> lst = commonBu.FindByProperty<OAuthDetail>("UserName", oAuthDetailDTO.UserName,"");
                 // check user name
                 if (!CommonUtil.IsNullOrEmpty<OAuthDetail>(lst)) {
-                    return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                    return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                 }
                 // check client id
                 lst = commonBu.FindByProperty<OAuthDetail>("ClientId", clientId, "");
                 if (!CommonUtil.IsNullOrEmpty<OAuthDetail>(lst)) {
-                    return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                    return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                 }
                 // check quyen
                 if (oAuthDetailDTO.Role.Contains(Constants.AUTHENTICATION.ROLE_ADMINISTRATOR)) {
-                    return new OutPutDTO(Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                    return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                 }
                 // save OAuthDetail
                 OAuthDetail oAuthDetail = new OAuthDetail();
@@ -60,7 +61,8 @@ namespace CMP_Servive.Controllers
                 oAuthDetail.Password = oAuthDetailDTO.Password.Encrypt(Constants.ENCRYPT_KEY);
                 oAuthDetail.IpAccess = oAuthDetailDTO.IpAccess;
                 oAuthDetail.ClientId = clientId;
-                commonBu.Save(oAuthDetail);
+                commonBu.getDbContext().OAuthDetails.Add(oAuthDetail);
+                //commonBu.Save(oAuthDetail);
                 commonBu.getDbContext().SaveChanges();
                 // save OAuthClientDetail
                 OAuthClientDetail oAuthClientDetail = new OAuthClientDetail();
@@ -78,11 +80,11 @@ namespace CMP_Servive.Controllers
                 OAuthDetailDTO outPut = oAuthDetailDTO;
                 outPut.ClientId = clientId;
                 outPut.ClientSecret = clientSecret;
-                return new OutPutDTO(Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, outPut);
+                return new OutPutDTO(true, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.SUCCESS, outPut);
             }
             catch (Exception ex)
             {
-                return new OutPutDTO(Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
 
