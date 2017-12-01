@@ -1,8 +1,7 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <base href="/" />
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,12 +13,6 @@
     @Styles.Render("~/css/pnotify")
     @Styles.Render("~/css/dataTable")
 
-    <!-- Polyfill(s) for older browsers -->
-    @Scripts.Render("~/js/angular.io")
-    <script>
-        // Khởi chạy module.
-        System.import('@ViewBag.AngularModule').catch(function (err) { console.error(err); });
-    </script>
 </head>
 <body class="nav-md footer_fixed">
     <div class="container body">

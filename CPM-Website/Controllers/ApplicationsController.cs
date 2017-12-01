@@ -26,18 +26,6 @@ namespace CPM_Website.Controllers
             return View();
         }
 
-        [CybertronAuthorize(Roles = RoleCodes.Applications.INDEX)]
-        public ActionResult IndexView()
-        {
-            return PartialView();
-        }
-
-        [CybertronAuthorize(Roles = RoleCodes.Applications.SEARCH)]
-        public ActionResult SearchView()
-        {
-            return PartialView();
-        }
-
         [CybertronAuthorize(Roles = RoleCodes.Applications.SEARCH)]
         public JsonResult SearchProcess(ApplicationsViewModel formData)
         {
