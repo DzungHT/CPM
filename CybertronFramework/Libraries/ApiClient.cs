@@ -1,9 +1,12 @@
-﻿using System;
+﻿using CybertronFramework.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -118,6 +121,8 @@ namespace CybertronFramework.Libraries
             TResult result = default(TResult);
             try
             {
+                AuthenticationLogin inp = new AuthenticationLogin();
+                string s = await GetAccessToken(inp);
                 HttpResponseMessage response = await client.PostAsJsonAsync(url, data);
                 if (response.IsSuccessStatusCode)
                 {
@@ -164,5 +169,32 @@ namespace CybertronFramework.Libraries
                 throw ex;
             }
         }
+
+        #region xác thực
+        private async Task<string> GetAccessToken(AuthenticationLogin input)
+        {
+            try
+            {
+                input.grant_type = "password";
+                input.username = "admin";
+                input.password = "123456";
+                input.client_id = "CPM";
+                input.client_secret = "123455";
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://localhost:8880/");
+                var response = client.PostAsync("Token", new StringContent(StringUtil.ObjectToFormString<AuthenticationLogin>(input), Encoding.UTF8)).Result;
+                if (response.IsSuccessStatusCode != true && response.StatusCode != HttpStatusCode.OK)
+                {
+                    return "";
+                }
+                var result = await response.Content.ReadAsAsync<AuthenticationToken>();
+                return result.access_token;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        #endregion
     }
 }

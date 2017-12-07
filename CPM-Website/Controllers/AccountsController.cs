@@ -44,7 +44,6 @@ namespace CPM_Website.Controllers
         public async Task<ActionResult> Login(AccountViewModel formData)
         {
             ApiClient client = ApiClient.Instance;
-
             var apiResult = await client.PostApiAsync<JsonResultObject<User>, object>(URLResources.LOGIN_API, new { UserName = formData.Username, Password = formData.Password, ApplicationID = 1 });
             if (apiResult.IsSuccess)
             {
