@@ -17,7 +17,7 @@
     <RootNamespace>CPM_Website</RootNamespace>
     <AssemblyName>CPM-Website</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -112,9 +112,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\Components\inline-input.component.html" />
-    <Content Include="systemjs-angular-loader.js" />
-    <Content Include="systemjs.config.js" />
     <Content Include="Content\Common\bootstrap.css" />
     <Content Include="Content\Common\bootstrap.min.css" />
     <Content Include="Content\Common\custom.css" />
@@ -137,7 +134,6 @@
     <Content Include="Scripts\Common\bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\Common\custom.js" />
     <Content Include="Scripts\Common\custom.min.js" />
-    <Content Include="package.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\Common\jquery\jquery-1.12.4.intellisense.js" />
     <Content Include="vendors\datatables.net\i18n\en_US.js" />
@@ -2616,12 +2612,8 @@
     <Content Include="Scripts\Common\jquery\jquery-3.1.1.min.map" />
     <Content Include="Scripts\Common\jquery\jquery-3.1.1.slim.min.map" />
     <Content Include="Views\Test\Index.cshtml" />
-    <Content Include="system.config" />
     <Content Include="Views\Test\Angular4.cshtml" />
-    <Content Include="tsconfig.json" />
     <Content Include="Views\Applications\Index.cshtml" />
-    <Content Include="Views\Applications\IndexView.cshtml" />
-    <Content Include="Views\Applications\SearchView.cshtml" />
     <Content Include="Views\Shared\_LeftMenu.cshtml" />
     <Content Include="Views\Shared\_TopNavigation.cshtml" />
     <Content Include="Views\Shared\_Unauthorized.cshtml" />
@@ -2654,17 +2646,6 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\Modules\Applications\Components\index.component.ts" />
-    <TypeScriptCompile Include="Scripts\Modules\Applications\main.ts" />
-    <TypeScriptCompile Include="Scripts\Modules\Applications\module.ts" />
-    <TypeScriptCompile Include="Scripts\Modules\Applications\routing.module.ts" />
-    <TypeScriptCompile Include="Scripts\Modules\Applications\Components\search.component.ts" />
-    <TypeScriptCompile Include="Scripts\Components\inline-input.component.ts" />
-    <TypeScriptCompile Include="Scripts\Models\InputModel.ts" />
-    <TypeScriptCompile Include="Scripts\Models\application.ts" />
-    <TypeScriptCompile Include="Scripts\Modules\Applications\service.ts" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CybertronFramework\CybertronFramework.csproj">
       <Project>{23c4638e-9aa4-4417-9558-0fdc145e54f0}</Project>
       <Name>CybertronFramework</Name>
@@ -2692,7 +2673,7 @@
           <AutoAssignPort>false</AutoAssignPort>
           <DevelopmentServerPort>54060</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://vaio:12354/</IISUrl>
+          <IISUrl>http://localhost:54060/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

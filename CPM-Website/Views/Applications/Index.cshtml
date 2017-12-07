@@ -2,8 +2,138 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.AngularModule = "Scripts/Modules/Applications/main.js";
 }
+<div class="row" ng-controller="TestController">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Application</h3>
+        </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<application>Loading...</application>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Điều kiện tìm kiếm</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                <form class="form-horizontal form-label-left" (ngSubmit)="search()">
 
+                    <div class="row">
+                        <div class="col-md-5 col-md-offset-1">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Mã ứng dụng
+                                </label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <input id="Code" name="Code" type="text" class="form-control" placeholder="Mã ứng dụng">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Tên ứng dụng
+                                </label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <input id="Name" name="Name" type="text" class="form-control" placeholder="Tên ứng dụng">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 text-center">
+                            <button type="submit"
+                                    class="btn btn-success">
+                                <span class="glyphicons glyphicons-search"></span>
+                                Tìm kiếm
+                            </button>
+                            <a class="btn btn-primary" routerLink="/addnew">Thêm mới</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Kết quả tìm kiếm</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <table id="searchResult" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Thao tác</th>
+                            <th>Mã ứng dụng</th>
+                            <th>Tên ứng dụng</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script>
+        var ctrl = app.controller('TestController', ['$scope', function ($scope) {
+            $scope.dataTable = $("#searchResult").DataTable({
+                order: [[2, "asc"]],
+                ajax: {
+                    url: '/applications/searchProcess',
+                    type: 'POST',
+                    data: function (d) {
+                        return { Code: $('#Code').val(), Name: $('#Name').val(), DataTable: d };
+                    }
+                },
+                columns: [
+                    {
+                        searchable: false,
+                        orderable: false,
+                        data: null,
+                        className: "text-center",
+                        render: function (data, type, row, cell) {
+                            var info = dataTable.page.info();
+                            var stt = 1 + (info.page * info.length) + cell.row;
+                            return stt;
+                        }
+                    },
+                    {
+                        searchable: false,
+                        orderable: false,
+                        data: null,
+                        className: "text-center",
+                        render: function (data, type, row, cell) {
+                            return `<a href="javascript:;" class="text-success" style="margin-right: 7px">
+                                    <i class="fa fa-edit fa-2x" title="Sửa"></i>
+                                </a>
+                                <a href="javascript:;" class="red">
+                                    <i class="fa fa-remove fa-2x" title="Xóa"></i>
+                                </a>`;
+                        }
+                    },
+                    { data: 'Code', className: "text-center" },
+                    { data: 'Name' }
+                ]
+            });
+        }]);
+    </script>
+}
