@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row" ng-controller="TestController">
+<div class="row" ng-controller="ApplicationController">
     <div class="page-title">
         <div class="title_left">
             <h3>Application</h3>
@@ -28,7 +28,7 @@
             </div>
             <div class="x_content">
                 <br />
-                <form class="form-horizontal form-label-left" (ngSubmit)="search()">
+                <form id="searchForm" class="form-horizontal form-label-left">
 
                     <div class="row">
                         <div class="col-md-5 col-md-offset-1">
@@ -52,12 +52,40 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-md-5 col-md-offset-1">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    checkbox
+                                </label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <input name="checkbox" type="checkbox" class="form-control" value="1">
+                                    <input name="checkbox" type="checkbox" class="form-control" value="2">
+                                    <input name="checkbox" type="checkbox" class="form-control" value="3">
+                                    <input name="checkbox" type="checkbox" class="form-control" value="4">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    radio
+                                </label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <input name="radio" type="radio" class="form-control" value="1">
+                                    <input name="radio" type="radio" class="form-control" value="2">
+                                    <input name="radio" type="radio" class="form-control" value="3">
+                                    <input name="radio" type="radio" class="form-control" value="4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 text-center">
                             <button type="submit"
-                                    class="btn btn-success">
+                                    class="btn btn-success"
+                                    ng-click="search()">
                                 <span class="glyphicons glyphicons-search"></span>
                                 Tìm kiếm
                             </button>
@@ -75,7 +103,7 @@
                 <h2>Kết quả tìm kiếm</h2>
                 <div class="clearfix"></div>
             </div>
-            <div class="x_content">
+            <div class="x_content table-responsive">
                 <table id="searchResult" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
@@ -93,9 +121,11 @@
 </div>
 
 @section script{
+    <script src="~/Scripts/Common/CybertronLibrary.js"></script>
     <script>
-        var ctrl = app.controller('TestController', ['$scope', function ($scope) {
+        var ctrl = app.controller('ApplicationController', ['$scope', function ($scope) {
             $scope.dataTable = $("#searchResult").DataTable({
+                responsive: true,
                 order: [[2, "asc"]],
                 ajax: {
                     url: '/applications/searchProcess',
@@ -111,7 +141,7 @@
                         data: null,
                         className: "text-center",
                         render: function (data, type, row, cell) {
-                            var info = dataTable.page.info();
+                            var info = $scope.dataTable.page.info();
                             var stt = 1 + (info.page * info.length) + cell.row;
                             return stt;
                         }
@@ -134,6 +164,13 @@
                     { data: 'Name' }
                 ]
             });
+            angular.element(document).ready(function () {
+                NProgress.done();
+            });
+
+            $scope.search = function () {
+                $scope.dataTable.ajax.reload();
+            }
         }]);
     </script>
 }

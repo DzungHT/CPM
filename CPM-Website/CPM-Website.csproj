@@ -136,6 +136,7 @@
     <Content Include="Scripts\Common\custom.min.js" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\Common\jquery\jquery-1.12.4.intellisense.js" />
+    <Content Include="Scripts\Common\CybertronLibrary.js" />
     <Content Include="vendors\datatables.net\i18n\en_US.js" />
     <Content Include="vendors\datatables.net\i18n\vi_VN.js" />
     <Content Include="vendors\datatables.net\js\dataTables.defaults.js" />

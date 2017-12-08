@@ -74,11 +74,15 @@ namespace CPM_Website
                             .Include("~/vendors/datatables.net/js/dataTables.defaults.js")
                         );
 
-            bundles.Add(new ScriptBundle("~/js/angular.io")
+            bundles.Add(new ScriptBundle("~/js/angular")
                             .Include("~/node_modules/core-js/client/shim.min.js")
                             .Include("~/node_modules/zone.js/dist/zone.js")
                             .Include("~/node_modules/systemjs/dist/system.src.js")
                             .Include("~/systemjs.config.js")
+                        );
+            bundles.Add(new ScriptBundle("~/js/angularJS")
+                            .Include("~/Scripts/Common/angularJS/angular.js")
+                            .Include("~/Scripts/Common/angularJS/app.js")
                         );
             #endregion
         }

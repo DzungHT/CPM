@@ -20,13 +20,11 @@ namespace CPM_Website.Controllers
             };
 
         // GET: Applications
-        [CybertronAuthorize(Roles = RoleCodes.Applications.INDEX)]
         public ActionResult Index()
         {
             return View();
         }
 
-        [CybertronAuthorize(Roles = RoleCodes.Applications.SEARCH)]
         public JsonResult SearchProcess(ApplicationsViewModel formData)
         {
             List<Application> data = lst.Where(x => x.Code == formData.Code).ToList();

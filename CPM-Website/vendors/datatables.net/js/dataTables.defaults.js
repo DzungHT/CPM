@@ -1,4 +1,5 @@
 ﻿$.extend( $.fn.dataTable.defaults, {
+    responsive: true,
     searching: false,
     ordering: true,
     processing: true,
