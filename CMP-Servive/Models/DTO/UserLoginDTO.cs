@@ -41,7 +41,7 @@ namespace CMP_Servive.Models.DTO
         public string Password
         {
             get { return password; }
-            set { password = value.ToMD5(); }
+            set { password = value.EncryptPassword(Constants.ENCRYPT_KEY); }
         }
 
         public string ApplicationCode { get; set; }

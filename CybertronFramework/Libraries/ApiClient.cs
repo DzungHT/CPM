@@ -31,7 +31,7 @@ namespace CybertronFramework.Libraries
         {
             get
             {
-                return new ApiClient(BaseURI, Token);
+                return new ApiClient(BaseURI);
             }
         }
 
@@ -44,13 +44,16 @@ namespace CybertronFramework.Libraries
         /// Tạo một đối tượng ApiClient sử dụng tham số truyền vào làm đường dẫn cơ bản cho Api
         /// </summary>
         /// <param name="baseUri">Đường dẫn cơ bản đến Api. Lưu ý đường dẫn dùng để lấy URI, không phải đường dẫn chung để cộng chuỗi URL sau này. Có thể hiểu đơn giản là tên domain. VD: http://www.abc.com, https://www.abc.com </param>
-        public ApiClient(string baseUri, string token)
+        public ApiClient(string baseUri)
         {
             client = new HttpClient();
             client.BaseAddress = new Uri(baseUri);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            if (HttpContext.Current.Session["TOKEN"] != null)
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", (string)HttpContext.Current.Session["TOKEN"]);
+            }
         }
 
         /// <summary>
@@ -125,7 +128,14 @@ namespace CybertronFramework.Libraries
             try
             {
                 HttpResponseMessage response = await client.PostAsJsonAsync(url, data);
-                result = await response.Content.ReadAsAsync<TResult>();
+                if (response.IsSuccessStatusCode)
+                {
+                    result = await response.Content.ReadAsAsync<TResult>();
+                }
+                else
+                {
+                    response.EnsureSuccessStatusCode();
+                }
                 return result;
             }
             catch (Exception ex)
@@ -182,9 +192,10 @@ namespace CybertronFramework.Libraries
                 var response = client.PostAsync("Token", content).Result;
                 if (response.IsSuccessStatusCode != true && response.StatusCode != HttpStatusCode.OK)
                 {
-                    return "";
+                    response.EnsureSuccessStatusCode();
                 }
                 var result = await response.Content.ReadAsAsync<AuthenticationToken>();
+                HttpContext.Current.Session["TOKEN"] = result.access_token;
                 return result.access_token;
             }
             catch (Exception ex)

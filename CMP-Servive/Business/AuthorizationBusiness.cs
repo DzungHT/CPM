@@ -22,7 +22,7 @@ namespace CMP_Servive.Business
             UserLoginOutput result = new UserLoginOutput();
             db.Configuration.LazyLoadingEnabled = true;
             string loginName = context.UserName.Trim();
-            string pass = context.Password.Encrypt(Constants.ENCRYPT_KEY);
+            string pass = context.Password.EncryptPassword(Constants.ENCRYPT_KEY);
             string appCode = context.ClientId.Trim();
             var user = db.Users.FirstOrDefault(x => x.LoginName.Equals(loginName) && x.Password.Equals(pass));
             if (user == null)
