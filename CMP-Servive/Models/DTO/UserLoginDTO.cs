@@ -44,6 +44,6 @@ namespace CMP_Servive.Models.DTO
             set { password = value.ToMD5(); }
         }
 
-        public int ApplicationID { get; set; }
+        public string ApplicationCode { get; set; }
     }
 }

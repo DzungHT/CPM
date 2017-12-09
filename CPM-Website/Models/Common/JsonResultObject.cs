@@ -21,5 +21,10 @@ namespace CPM_Website.Models
         /// Dữ liệu trả về nếu hành động thành công
         /// </summary>
         public TData Data { get; set; }
+
+        /// <summary>
+        /// Mã response
+        /// </summary>
+        public string StatusCode { get; set; }
     }
 }
