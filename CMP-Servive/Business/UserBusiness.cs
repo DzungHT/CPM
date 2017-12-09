@@ -47,7 +47,7 @@ namespace CMP_Servive.Business
             var user = db.Users.FirstOrDefault(x => x.LoginName == userInput.UserName && x.Password == userInput.Password);
             result.GetTransferData(user);
 
-            result.Roles = db.Database.SqlQuery<string>("sp_GetUserPermission @UserID, @ApplicationID", new SqlParameter("UserID", user.UserID), new SqlParameter("ApplicationID", userInput.ApplicationID)).ToList();
+            result.Roles = db.Database.SqlQuery<string>("sp_GetUserPermission @UserID, @ApplicationCode", new SqlParameter("UserID", user.UserID), new SqlParameter("ApplicationCode", userInput.ApplicationCode)).ToList();
             return result;
         }
 

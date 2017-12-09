@@ -31,8 +31,6 @@ namespace CMP_Servive.Business
             }
             result.GetTransferData(user);
             result.Roles = db.Database.SqlQuery<string>("sp_GetUserPermission @UserID, @ApplicationCode", new SqlParameter("UserID", user.UserID), new SqlParameter("ApplicationCode", appCode)).ToList();
-            //var listRole = from ur in db.UserRoles
-            //               join rp in db.Rol on ur.UserID =
             return result;
         }
 

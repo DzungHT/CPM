@@ -22,6 +22,8 @@ namespace CybertronFramework.Libraries
         /// </summary>
         public static string BaseURI { get; set; }
 
+        public static string Token { get; set; }
+
         /// <summary>
         /// Lấy ra đối tượng sử dụng BaseAddress. Yêu cầu BaseAddress phải được gán trước khi sử dụng thuộc tính này.
         /// </summary>
@@ -29,7 +31,7 @@ namespace CybertronFramework.Libraries
         {
             get
             {
-                return new ApiClient(BaseURI);
+                return new ApiClient(BaseURI, Token);
             }
         }
 
@@ -42,12 +44,13 @@ namespace CybertronFramework.Libraries
         /// Tạo một đối tượng ApiClient sử dụng tham số truyền vào làm đường dẫn cơ bản cho Api
         /// </summary>
         /// <param name="baseUri">Đường dẫn cơ bản đến Api. Lưu ý đường dẫn dùng để lấy URI, không phải đường dẫn chung để cộng chuỗi URL sau này. Có thể hiểu đơn giản là tên domain. VD: http://www.abc.com, https://www.abc.com </param>
-        public ApiClient(string baseUri)
+        public ApiClient(string baseUri, string token)
         {
             client = new HttpClient();
             client.BaseAddress = new Uri(baseUri);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         /// <summary>
@@ -86,7 +89,7 @@ namespace CybertronFramework.Libraries
         /// <typeparam name="TResult">Kiểu dữ liệu trả về của Api</typeparam>
         /// <param name="url">Đường dẫn đến Api. Đường dẫn được tính từ sau tên domain</param>
         /// <returns>Trả về một đối tượng có kiểu TResult</returns>
-        public async Task<TResult> GetApiAsync<TResult>(string url)
+        public async Task<TResult> GetApiAsync<TResult>(string url, string token)
         {
             TResult result = default(TResult);
             try
@@ -121,17 +124,8 @@ namespace CybertronFramework.Libraries
             TResult result = default(TResult);
             try
             {
-                AuthenticationLogin inp = new AuthenticationLogin();
-                string s = await GetAccessToken(inp);
                 HttpResponseMessage response = await client.PostAsJsonAsync(url, data);
-                if (response.IsSuccessStatusCode)
-                {
-                    result = await response.Content.ReadAsAsync<TResult>();
-                }
-                else
-                {
-                    response.EnsureSuccessStatusCode();
-                }
+                result = await response.Content.ReadAsAsync<TResult>();
                 return result;
             }
             catch (Exception ex)
@@ -171,18 +165,21 @@ namespace CybertronFramework.Libraries
         }
 
         #region xác thực
-        private async Task<string> GetAccessToken(AuthenticationLogin input)
+        public async Task<string> GetAccessToken(AuthenticationLogin input)
         {
             try
             {
-                input.grant_type = "password";
-                input.username = "admin";
-                input.password = "123456";
-                input.client_id = "CPM";
-                input.client_secret = "123455";
                 HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:8880/");
-                var response = client.PostAsync("Token", new StringContent(StringUtil.ObjectToFormString<AuthenticationLogin>(input), Encoding.UTF8)).Result;
+                client.BaseAddress = new Uri(Resource.ServiceUriBase);
+                var content = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("grant_type", input.grant_type),
+                    new KeyValuePair<string, string>("username", input.username),
+                    new KeyValuePair<string, string>("password", input.password),
+                    new KeyValuePair<string, string>("client_id", input.client_id),
+                    new KeyValuePair<string, string>("client_secret", input.client_secret)
+                });
+                var response = client.PostAsync("Token", content).Result;
                 if (response.IsSuccessStatusCode != true && response.StatusCode != HttpStatusCode.OK)
                 {
                     return "";
