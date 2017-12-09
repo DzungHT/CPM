@@ -1,5 +1,4 @@
 ﻿using CPM_Website.Models;
-using CPM_Website.Models.Common;
 using CybertronFramework;
 using CybertronFramework.Models;
 using System;
@@ -20,11 +19,13 @@ namespace CPM_Website.Controllers
             };
 
         // GET: Applications
+        [CybertronAuthorize(Roles = RoleCodes.Applications.INDEX)]
         public ActionResult Index()
         {
             return View();
         }
 
+        [CybertronAuthorize(Roles = RoleCodes.Applications.SEARCH)]
         public JsonResult SearchProcess(ApplicationsViewModel formData)
         {
             List<Application> data = lst.Where(x => x.Code == formData.Code).ToList();
@@ -35,6 +36,12 @@ namespace CPM_Website.Controllers
             dataTableResponse.error = null;
             dataTableResponse.draw = formData.DataTable.draw;
             return Json(dataTableResponse, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return PartialView("Form");
         }
     }
 }

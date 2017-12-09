@@ -1,16 +1,11 @@
 ﻿using CPM_Website.CybertronFramework.Common;
 using CPM_Website.Models;
-using CPM_Website.Respositories;
+using CybertronFramework;
 using CybertronFramework.Libraries;
 using Resources;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -28,16 +23,14 @@ namespace CPM_Website.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [CybertronAuthorize]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Accounts");
         }
         #endregion
-
-
-
+        
         #region HttpPost
         [HttpPost]
         [ValidateAntiForgeryToken]

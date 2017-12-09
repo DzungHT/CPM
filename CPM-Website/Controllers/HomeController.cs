@@ -1,17 +1,13 @@
-﻿using CPM_Website.CybertronFramework.Common;
+﻿using System.Web.Mvc;
+using CybertronFramework;
 using CPM_Website.Models;
-using Resources;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace CPM_Website.Controllers
 {
     public class HomeController : Controller
     {
         // GET: Home
+        [CybertronAuthorize(Roles = RoleCodes.Home.INDEX)]
         public ActionResult Index()
         {
             return View();
