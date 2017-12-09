@@ -6,6 +6,7 @@ using CybertronFramework.Models;
 using Resources;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -40,28 +41,35 @@ namespace CPM_Website.Controllers
         {
             getAccessToken(formData);
             ApiClient client = ApiClient.Instance;
-            var apiResult = await client.PostApiAsync<JsonResultObject<User>, object>(URLResources.LOGIN_API, new { UserName = formData.Username, Password = formData.Password, ApplicationCode = "CPM" });
-            if (apiResult != null && apiResult.IsSuccess)
+            try
             {
-                // Lấy danh sách quyền
-                apiResult.Data.Roles = new string[] { "VIEW_HOME", "VIEW_APPLICATION" };
-                string roleStr = string.Join(Constants.ROLE_STRING_SEPERATE, apiResult.Data.Roles);
+                var apiResult = await client.PostApiAsync<JsonResultObject<User>, object>(URLResources.LOGIN_API, new { UserName = formData.Username, Password = formData.Password, ApplicationCode = "CPM" });
+                if (apiResult != null && apiResult.IsSuccess)
+                {
+                    // Lấy danh sách quyền
+                    apiResult.Data.Roles = new string[] { "VIEW_HOME", "VIEW_APPLICATION" };
+                    string roleStr = string.Join(Constants.ROLE_STRING_SEPERATE, apiResult.Data.Roles);
 
-                var authTicket = new FormsAuthenticationTicket(1, formData.Username, DateTime.Now, DateTime.Now.AddMinutes(20), formData.RememberMe, roleStr);
+                    var authTicket = new FormsAuthenticationTicket(1, formData.Username, DateTime.Now, DateTime.Now.AddMinutes(20), formData.RememberMe, roleStr);
 
-                string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
-                FormsAuthentication.SetAuthCookie(encryptedTicket, formData.RememberMe);
+                    string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
+                    FormsAuthentication.SetAuthCookie(encryptedTicket, formData.RememberMe);
 
-                // Lấy danh sách menu
-                List<Menu> lstMenu = new List<Menu>();
-                lstMenu.Add(new Menu() { Name = "Trang chủ", Action = "index", Controller = "home", FontIcon = "fa fa-home" });
-                lstMenu.Add(new Menu() { Name = "Danh mục ứng dụng", Action = "index", Controller = "applications", FontIcon = "fa fa-window-restore" });
-                Session["lstMenu"] = lstMenu;
+                    // Lấy danh sách menu
+                    List<Menu> lstMenu = new List<Menu>();
+                    lstMenu.Add(new Menu() { Name = "Trang chủ", Action = "index", Controller = "home", FontIcon = "fa fa-home" });
+                    lstMenu.Add(new Menu() { Name = "Danh mục ứng dụng", Action = "index", Controller = "applications", FontIcon = "fa fa-window-restore" });
+                    Session["lstMenu"] = lstMenu;
 
-                string ReturnUrl = (string)Session["ReturnUrl"];
-                return Redirect(ReturnUrl);
+                    string ReturnUrl = (string)Session["ReturnUrl"];
+                    return Redirect(ReturnUrl);
+                }
+                return RedirectToAction("login");
             }
-            return RedirectToAction("login");
+            catch (Exception ex)
+            {
+                return RedirectToAction("login");
+            }
         }
         #endregion
 

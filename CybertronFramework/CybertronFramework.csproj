@@ -72,6 +72,8 @@
     <Compile Include="CybertronAuthorizeAttribute.cs" />
     <Compile Include="Libraries\ApiClient.cs" />
     <Compile Include="Libraries\EncryptionExtension.cs" />
+    <Compile Include="Libraries\StringUtil.cs" />
+    <Compile Include="Models\AuthenticationToken.cs" />
     <Compile Include="Models\DataTableRequest.cs" />
     <Compile Include="Models\DataTableResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
