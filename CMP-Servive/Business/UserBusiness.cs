@@ -18,7 +18,7 @@ namespace CMP_Servive.Business
             User user = db.Users.Find(id);
             if (user != null)
             {
-                string defaultPass = "123456".Encrypt(Constants.ENCRYPT_KEY);
+                string defaultPass = "123456".EncryptPassword(Constants.ENCRYPT_KEY);
                 user.Password = defaultPass;
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();

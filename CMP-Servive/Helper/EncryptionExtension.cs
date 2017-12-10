@@ -112,5 +112,24 @@ namespace CMP_Servive.Helper
 
             return Convert.ToBase64String(byteHash);
         }
+
+        /// <summary>
+        /// Viết chơi chơi
+        /// </summary>
+        /// <param name="strEnCrypt"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string EncryptPassword(this string strEnCrypt, string key)
+        {
+            try
+            {
+                var md5Str = strEnCrypt.ToMD5() + key.ToMD5();
+                return md5Str.ToMD5();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

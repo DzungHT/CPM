@@ -6,6 +6,7 @@ using CybertronFramework.Models;
 using Resources;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -39,9 +40,9 @@ namespace CPM_Website.Controllers
         public async Task<ActionResult> Login(AccountViewModel formData)
         {
             getAccessToken(formData);
-            if (Session["TOKEN"] != null && !"".Equals((string)Session["TOKEN"]))
+            ApiClient client = ApiClient.Instance;
+            try
             {
-                ApiClient client = new ApiClient(URLResources.BASE_URI, (string)Session["TOKEN"]);// (string)Session["TOKEN"]);
                 var apiResult = await client.PostApiAsync<JsonResultObject<User>, object>(URLResources.LOGIN_API, new { UserName = formData.Username, Password = formData.Password, ApplicationCode = "CPM" });
                 if (apiResult != null && apiResult.IsSuccess)
                 {
@@ -54,6 +55,8 @@ namespace CPM_Website.Controllers
                     string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
                     FormsAuthentication.SetAuthCookie(encryptedTicket, formData.RememberMe);
 
+                    //
+                    Session["USER"] = apiResult.Data;
                     // Lấy danh sách menu
                     List<Menu> lstMenu = new List<Menu>();
                     lstMenu.Add(new Menu() { Name = "Trang chủ", Action = "index", Controller = "home", FontIcon = "fa fa-home" });
@@ -64,17 +67,17 @@ namespace CPM_Website.Controllers
                     return Redirect(ReturnUrl);
                 }
                 return RedirectToAction("login");
-            } else
+            }
+            catch (Exception ex)
             {
                 return RedirectToAction("login");
-            } 
+            }
         }
         #endregion
 
         private void getAccessToken(AccountViewModel formData)
         {
             ApiClient client = ApiClient.Instance;
-            Session["TOKEN"] = null;
             AuthenticationLogin model = new AuthenticationLogin();
             model.client_id = ApplicationResources.AppNameSumary;
             model.client_secret = formData.Password;
@@ -82,7 +85,6 @@ namespace CPM_Website.Controllers
             model.username = formData.Username;
             model.password = formData.Password;
             var result = client.GetAccessToken(model);
-            Session["TOKEN"] = result.Result;
         }
     }
 }
