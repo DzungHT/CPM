@@ -10,6 +10,10 @@ namespace CPM_Website.Controllers
         [CybertronAuthorize(Roles = RoleCodes.Home.INDEX)]
         public ActionResult Index()
         {
+            //User user = (User)Session["USER"];
+            //if (user != null) { 
+            //    ViewBag.Fullname = user.FullName;
+            //}
             return View();
         }
     }

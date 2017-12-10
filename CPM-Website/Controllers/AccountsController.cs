@@ -55,6 +55,8 @@ namespace CPM_Website.Controllers
                     string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
                     FormsAuthentication.SetAuthCookie(encryptedTicket, formData.RememberMe);
 
+                    //
+                    Session["USER"] = apiResult.Data;
                     // Lấy danh sách menu
                     List<Menu> lstMenu = new List<Menu>();
                     lstMenu.Add(new Menu() { Name = "Trang chủ", Action = "index", Controller = "home", FontIcon = "fa fa-home" });
