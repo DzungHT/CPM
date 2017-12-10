@@ -12,7 +12,7 @@
     @Styles.Render("~/css/common")
     @Styles.Render("~/css/pnotify")
     @Styles.Render("~/css/dataTable")
-
+    <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
 </head>
 <body class="nav-md footer_fixed" ng-app="CybertronPolicyManagement">
     <div class="container body">
@@ -36,7 +36,7 @@
                     <!-- /menu profile quick info -->
                     <br />
                     <!-- sidebar menu -->
-                    @RenderPage("_LeftMenu.cshtml")
+                    @*@RenderPage("_LeftMenu.cshtml")*@
                     <!-- /sidebar menu -->
                     <!-- /menu footer buttons -->
                     <div class="sidebar-footer hidden-small">
@@ -78,7 +78,9 @@
     @Scripts.Render("~/js/common")
     @Scripts.Render("~/js/pnotify")
     @Scripts.Render("~/js/dataTable")
-
+    @Scripts.Render("~/js/angularJS")
+    <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     @RenderSection("script", false)
 </body>
 </html>

@@ -46,7 +46,7 @@ namespace CPM_Website.Controllers
                 if (apiResult != null && apiResult.IsSuccess)
                 {
                     // Lấy danh sách quyền
-                    apiResult.Data.Roles = new string[] { "VIEW_HOME", "VIEW_APPLICATION" };
+                    //apiResult.Data.Roles = new string[] { "VIEW_HOME", "VIEW_APPLICATION" };
                     string roleStr = string.Join(Constants.ROLE_STRING_SEPERATE, apiResult.Data.Roles);
 
                     var authTicket = new FormsAuthenticationTicket(1, formData.Username, DateTime.Now, DateTime.Now.AddMinutes(20), formData.RememberMe, roleStr);

@@ -17,5 +17,8 @@
                     <"col-md-4"l>
                     <"col-md-4"i>
                     <"col-md-4"p>>
-`
+    `,
+    drawCallback: function (settings) {
+        this.api().columns.adjust().responsive.recalc();
+    }
 } );

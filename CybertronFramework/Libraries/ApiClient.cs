@@ -125,7 +125,14 @@ namespace CybertronFramework.Libraries
             try
             {
                 HttpResponseMessage response = await client.PostAsJsonAsync(url, data);
-                result = await response.Content.ReadAsAsync<TResult>();
+                if (response.IsSuccessStatusCode)
+                {
+                    result = await response.Content.ReadAsAsync<TResult>();
+                }
+                else
+                {
+                    response.EnsureSuccessStatusCode();
+                }
                 return result;
             }
             catch (Exception ex)

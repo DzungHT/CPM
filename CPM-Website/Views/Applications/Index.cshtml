@@ -31,25 +31,17 @@
                 <form id="searchForm" class="form-horizontal form-label-left">
 
                     <div class="row">
-                        <div class="col-md-5 col-md-offset-1">
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Mã ứng dụng
-                                </label>
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input id="CodeFilter" name="Code" type="text" class="form-control" placeholder="Mã ứng dụng">
-                                </div>
-                            </div>
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                            Mã ứng dụng
+                        </label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input id="CodeFilter" name="Code" ng-model="searchData.Code" type="text" class="form-control" placeholder="Mã ứng dụng">
                         </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Tên ứng dụng
-                                </label>
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input id="NameFilter" name="Name" type="text" class="form-control" placeholder="Tên ứng dụng">
-                                </div>
-                            </div>
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                            Tên ứng dụng
+                        </label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input id="NameFilter" name="Name" ng-model="searchData.Name" type="text" class="form-control" placeholder="Tên ứng dụng">
                         </div>
                     </div>
                     
@@ -60,7 +52,7 @@
                                 <span class="glyphicons glyphicons-search"></span>
                                 Tìm kiếm
                             </button>
-                            <button type="button" class="btn btn-success" ng-click="">
+                            <button type="button" class="btn btn-success" ng-click="btnAdd()">
                                 <span class="glyphicons glyphicons-plus-sign"></span>
                                 Thêm mới
                             </button>
@@ -77,35 +69,94 @@
                 <h2>Kết quả tìm kiếm</h2>
                 <div class="clearfix"></div>
             </div>
-            <div class="x_content table-responsive">
-                <table id="searchResult" class="table table-bordered table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Thao tác</th>
-                            <th>Mã ứng dụng</th>
-                            <th>Tên ứng dụng</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+            <div class="x_content ">
+                <div class="table-responsive">
+                    <table id="searchResult" class="table table-bordered table-striped table-hover dt-responsive nowrap" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Thao tác</th>
+                                <th>Mã ứng dụng</th>
+                                <th>Tên ứng dụng</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="addDiv">
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>{{ titleForm }}</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <form id="form" class="form-horizontal form-label-left" action="/applications/create" method="post">
+                    <div id="token">
+                        
+                    </div>
+                    <div class="row form-group">
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                            Mã ứng dụng
+                        </label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input id="Code" name="Code" type="text" class="form-control" placeholder="Mã ứng dụng">
+                        </div>
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                            Tên ứng dụng
+                        </label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input id="Name" name="Name" type="text" class="form-control" placeholder="Tên ứng dụng">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                            Mô tả
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <textarea id="Description" name="Description" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 text-center">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                Lưu
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-
 @section script{
-    <script src="~/Scripts/Common/CybertronLibrary.js"></script>
     <script>
-        var ctrl = app.controller('ApplicationController', ['$scope', function ($scope) {
+
+        var ctrl = app.controller('ApplicationController', ['$scope', '$http', function ($scope, $http) {
+            $scope.searchData = {
+                Code: '',
+                Name: '',
+                DataTable: {}
+            }
             $scope.dataTable = $("#searchResult").DataTable({
-                responsive: true,
                 order: [[2, "asc"]],
                 ajax: {
                     url: '/applications/searchProcess',
                     type: 'POST',
                     data: function (d) {
-                        return { Code: $('#Code').val(), Name: $('#Name').val(), DataTable: d };
+                        $scope.searchData.DataTable = d;
+                        return $scope.searchData;
                     }
                 },
                 columns: [
@@ -144,6 +195,12 @@
 
             $scope.search = function () {
                 $scope.dataTable.ajax.reload();
+            }
+
+            $scope.btnAdd = function () {
+                $http.get('/Applications/Create').then(function (response) {
+
+                });
             }
         }]);
     </script>
