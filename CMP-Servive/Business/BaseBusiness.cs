@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CybertronFramework.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -106,6 +107,70 @@ namespace CMP_Servive.Business
             }
             result = set.SqlQuery( query + condition + strOrder, parameters).ToList();
             return result;
+        }
+        
+        public CybertronPagedList<T> Search<T>(int page, int recordPerPage,string sql, string orders, params SqlParameter[] parameters) where T:class
+        {
+            DbSet<T> set = db.Set<T>();
+            int offset = (page - 1) * recordPerPage;
+
+            string commandFormat = @"select * from ( {0} ) tabl {1} OFFSET {2} ROWS FETCH NEXT {3} ROWS ONLY";
+
+            string orderClause = "";
+            string[] ordersArr = orders.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            if (orders != null || orders.Length > 0)
+            {
+                for (int i = 0; i < ordersArr.Length; i++)
+                {
+                    ordersArr[0] = "tabl." + ordersArr[0].Trim();
+                }
+                orderClause = "ORDER BY " + string.Join(",", ordersArr);
+            }
+            
+
+            string command = string.Format(commandFormat,
+                                            sql, 
+                                            orderClause,
+                                            offset, 
+                                            recordPerPage
+                                            );
+            List<T> data = set.SqlQuery(command, parameters).ToList();
+            int recordsTotal = db.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) as recordsTotal FROM {0}", typeof(T).Name)).FirstOrDefault<int>();
+
+            List<SqlParameter> parameters2 = new List<SqlParameter>();
+            foreach (var item in parameters)
+            {
+                parameters2.Add(new SqlParameter(item.ParameterName, item.Value));
+            }
+            int recordsFiltered = db.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) as recordsFiltered FROM ({0}) tabl", sql), parameters2.ToArray()).FirstOrDefault<int>();
+
+            var result = new CybertronPagedList<T>(page, recordsTotal, recordsFiltered, data);
+            return result;
+        }
+
+        public string MakeFilterString<T>(string field, T value, ref List<SqlParameter> parameters)
+        {
+            string str = "";
+            if(value != null)
+            {
+                Type type = typeof(T);
+                object sqlValue = default(T);
+                string sqlOperator = "=";
+                if (type == typeof(int) || type == typeof(int?))
+                {
+                    sqlOperator = "=";
+                    sqlValue = value;
+                }
+                else if (type == typeof(string) && !string.IsNullOrWhiteSpace(value.ToString()))
+                {
+                    sqlOperator = "LIKE";
+                    sqlValue = string.Format("%{0}%", value);
+                }
+
+                str = string.Format(" AND {0} {1} @value{2} ", field, sqlOperator, parameters.Count);
+                parameters.Add(new SqlParameter("value" + parameters.Count, sqlValue));
+            }
+            return str;
         }
 
         public TDbContext getDbContext() {

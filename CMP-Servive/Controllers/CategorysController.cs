@@ -3,8 +3,10 @@ using CMP_Servive.Helper;
 using CMP_Servive.Models.DTO;
 using CMP_Servive.Models.Entities;
 using CMP_Servive.Providers.Authentication;
+using CybertronFramework.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -13,7 +15,7 @@ using System.Web.Http;
 namespace CMP_Servive.Controllers
 {
     [RoutePrefix("api/v1/Category")]
-    [BasicAuthentication]
+    //[BasicAuthentication]
     public class CategorysController : ApiController
     {
         CommonBusiness commonBu = new CommonBusiness();
@@ -51,12 +53,19 @@ namespace CMP_Servive.Controllers
 
         [Route("Applications/search")]
         [HttpGet]
-        public OutPutDTO SearchListApplications([FromBody] ApplicationDTO objSearch)
+        public OutPutDTO SearchListApplications([FromUri] ApplicationDTO objSearch)
         {
             try
             {
-                List<Application> result = commonBu.FindByProperty<Application, ApplicationDTO>(objSearch, "ApplicationID asc");
-                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                string sql = "SELECT * FROM Application a WHERE 1 = 1 ";
+                sql += commonBu.MakeFilterString<int?>("a.ApplicationID", objSearch.ApplicationID, ref parameters);
+                sql += commonBu.MakeFilterString<string>("a.Code", objSearch.Code, ref parameters);
+                sql += commonBu.MakeFilterString<string>("a.Name", objSearch.Name, ref parameters);
+
+                var data = commonBu.Search<Application>(objSearch.draw, objSearch.recordPerPage, sql, "ApplicationID", parameters.ToArray());
+
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, data);
             }
             catch (Exception ex)
             {
