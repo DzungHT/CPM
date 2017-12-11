@@ -53,19 +53,19 @@ namespace CMP_Servive.Controllers
 
         [Route("Applications/search")]
         [HttpPost]
-        public OutPutDTO SearchListApplications([FromBody] ApplicationDTO objSearch)
+        public OutPutDTO SearchListApplications([FromBody] ApplicationDTO objSearch, int offset, int recordPerPage)
         {
             try
             {
-                //List<SqlParameter> parameters = new List<SqlParameter>();
-                //string sql = "SELECT * FROM Application a WHERE 1 = 1 ";
-                //sql += commonBu.MakeFilterString<int?>("a.ApplicationID", objSearch.ApplicationID, ref parameters);
-                //sql += commonBu.MakeFilterString<string>("a.Code", objSearch.Code, ref parameters);
-                //sql += commonBu.MakeFilterString<string>("a.Name", objSearch.Name, ref parameters);
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                string sql = "SELECT * FROM Application a WHERE 1 = 1 ";
+                sql += commonBu.MakeFilterString("a.ApplicationID", objSearch.ApplicationID, ref parameters);
+                sql += commonBu.MakeFilterString("a.Code", objSearch.Code, ref parameters);
+                sql += commonBu.MakeFilterString("a.Name", objSearch.Name, ref parameters);
 
-                //var data = commonBu.Search<Application>(objSearch.draw, objSearch.recordPerPage, sql, "ApplicationID", parameters.ToArray());
-                List<Application> result = commonBu.FindByProperty<Application, ApplicationDTO>(objSearch, "ApplicationID asc");
-                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+                var data = commonBu.Search<Application>(offset, recordPerPage, sql, "ApplicationID", parameters.ToArray());
+
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, data);
             }
             catch (Exception ex)
             {
