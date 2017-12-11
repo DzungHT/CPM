@@ -28,7 +28,6 @@
                     <br />
                     <form id="searchForm" class="form-horizontal form-label-left">
                         @Html.AntiForgeryToken()
-                        
                         <div class="form-group no-padding">
                             <label class="control-label col-sm-2">
                                 Ứng dụng
@@ -38,7 +37,7 @@
                                         ui-select2
                                         ng-model="dataSearch.ApplicationID"
                                         id="ApplicationID"
-                                        placeholder="Chọn ứng dụng" ng-change="onChange()">
+                                        placeholder="Chọn ứng dụng" onchange="onChange()">
                                 <option></option>
                                 <option ng-repeat="x in listApplication" ng-value="{{x.ApplicationID}}">{{x.Name}}</option>
                                 </select>
@@ -126,6 +125,7 @@
                         data.Code = $scope.dataSearch.Code;
                         data.Name = $scope.dataSearch.Name;
                         data.DataTable = d;
+                        console.log('data searchc', data);
                         return data;
                     }
                 },
@@ -163,14 +163,20 @@
         }]);
         $(document).ready(function () {
             var scope = angular.element($('#MenuApp')).scope();
-            scope.listApplication = 
-            scope.$apply();
+            tctDeferredAjaxGet('/masterData/getListApplication').done(function (data) {
+                scope.listApplication = data;
+                scope.$apply();
+            });
         });
         function search() {
             var scope = angular.element($('#MenuApp')).scope();
             if ($('#searchForm').validationEngine("validate")) {
                 scope.dataTable.ajax.reload();
             }
+        }
+        function onChange() {
+            var scope = angular.element($('#MenuApp')).scope();
+            search();
         }
         function onResetForm(e) {
             var scope = angular.element($('#MenuApp')).scope();

@@ -11,7 +11,7 @@ namespace CPM_Website.Controllers
 {
     public class MasterDataController : Controller
     {
-        [HttpGet]
+        [HttpPost]
         public async Task<JsonResult> getListApplication()
         {
             ApiClient client = ApiClient.Instance;

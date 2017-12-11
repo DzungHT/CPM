@@ -53,19 +53,19 @@ namespace CMP_Servive.Controllers
 
         [Route("Applications/search")]
         [HttpPost]
-        public OutPutDTO SearchListApplications([FromBody] ApplicationDTO objSearch, int offset, int recordPerPage)
+        public OutPutDTO SearchListApplications([FromBody] ApplicationDTO objSearch)
         {
             try
             {
-                List<SqlParameter> parameters = new List<SqlParameter>();
-                string sql = "SELECT * FROM Application a WHERE 1 = 1 ";
-                sql += commonBu.MakeFilterString<int?>("a.ApplicationID", objSearch.ApplicationID, ref parameters);
-                sql += commonBu.MakeFilterString<string>("a.Code", objSearch.Code, ref parameters);
-                sql += commonBu.MakeFilterString<string>("a.Name", objSearch.Name, ref parameters);
+                //List<SqlParameter> parameters = new List<SqlParameter>();
+                //string sql = "SELECT * FROM Application a WHERE 1 = 1 ";
+                //sql += commonBu.MakeFilterString<int?>("a.ApplicationID", objSearch.ApplicationID, ref parameters);
+                //sql += commonBu.MakeFilterString<string>("a.Code", objSearch.Code, ref parameters);
+                //sql += commonBu.MakeFilterString<string>("a.Name", objSearch.Name, ref parameters);
 
-                var data = commonBu.Search<Application>(offset, recordPerPage, sql, "ApplicationID", parameters.ToArray());
-
-                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, data);
+                //var data = commonBu.Search<Application>(objSearch.draw, objSearch.recordPerPage, sql, "ApplicationID", parameters.ToArray());
+                List<Application> result = commonBu.FindByProperty<Application, ApplicationDTO>(objSearch, "ApplicationID asc");
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
             }
             catch (Exception ex)
             {
@@ -243,20 +243,12 @@ namespace CMP_Servive.Controllers
 
         [Route("Operations/search")]
         [HttpPost]
-        public OutPutDTO SearchListOperations([FromBody] Operation objSearch, int offset, int recordPerPage)
+        public OutPutDTO SearchListOperations([FromBody] Operation objSearch)
         {
             try
             {
-                List<SqlParameter> parameters = new List<SqlParameter>();
-                string sql = "SELECT * FROM Operation o WHERE 1 = 1 ";
-                sql += commonBu.MakeFilterString<int?>("o.OperationID", objSearch.OperationID, ref parameters);
-                sql += commonBu.MakeFilterString<string>("o.Code", objSearch.Code, ref parameters);
-                sql += commonBu.MakeFilterString<string>("o.Name", objSearch.Name, ref parameters);
-                sql += commonBu.MakeFilterString<string>("o.Description", objSearch.Description, ref parameters);
-
-                var data = commonBu.Search<Application>(offset, recordPerPage, sql, "Name", parameters.ToArray());
-
-                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, data);
+                List<Operation> result = commonBu.FindByProperty<Operation, Operation>(objSearch, "OperationID asc");
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
             }
             catch (Exception ex)
             {

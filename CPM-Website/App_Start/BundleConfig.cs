@@ -49,6 +49,7 @@ namespace CPM_Website
                             .Include("~/vendors/moment/min/moment.min.js")
                             .Include("~/vendors/bootstrap-daterangepicker/daterangepicker.js")
                             .Include("~/Scripts/Common/custom.js")
+                            .Include("~/Scripts/Common/ngselect2/select2.js")
                         );
 
             bundles.Add(new ScriptBundle("~/js/fastClick")
@@ -91,9 +92,8 @@ namespace CPM_Website
                         );
             bundles.Add(new ScriptBundle("~/js/angularJS")
                             .Include("~/Scripts/Common/angularJS/angular.js")
-                            .Include("~/Scripts/Common/angularJS/app.js")
-                            .Include("~/Scripts/Common/ngselect2/select2.js")
                             .Include("~/Scripts/Common/ngselect2/angular-ui-select2/select2.js")
+                            .Include("~/Scripts/Common/angularJS/app.js")
                         );
             bundles.Add(new ScriptBundle("~/js/inlineValidation")
                             .Include("~/Scripts/Common/inlineValidation/jquery.validationEngine_vi_VN.js")

@@ -27,7 +27,7 @@ namespace CPM_Website.Controllers
             try
             {
                 var apiResult = await client.PostApiAsync<JsonResultObject<List<Menu>>, object>(Resources.URLResources.SEARCH_MENU,
-                    new { ApplicationID = formData.AplicationID, Code = StringUtil.NVL(formData.Code), Name = StringUtil.NVL(formData.Name) });
+                    new { ApplicationID = formData.ApplicationID, Code = StringUtil.NVL(formData.Code), Name = StringUtil.NVL(formData.Name) });
                 if (apiResult != null && apiResult.IsSuccess)
                 {
                     List<Menu> data = apiResult.Data;

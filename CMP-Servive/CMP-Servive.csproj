@@ -237,7 +237,7 @@
     <Compile Include="Helper\RoleCodes.cs" />
     <Compile Include="Helper\TransferData.cs" />
     <Compile Include="Models\CybertronPagedList.cs" />
-    <Compile Include="Models\DTO\MenuDTO.cs" />
+    <Compile Include="Models\DTO\MenusDTO.cs" />
     <Compile Include="Models\DTO\ResourceDTO.cs" />
     <Compile Include="Models\Entities\ActionLog.cs" />
     <Compile Include="Models\Entities\Application.cs" />
@@ -360,7 +360,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>65103</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
