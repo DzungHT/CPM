@@ -178,14 +178,17 @@ namespace CMP_Servive.Controllers
             {
                 return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
+            var trans = commonBu.getDbContext().Database.BeginTransaction();
             try
             {
                 string sql = "DELETE RolePermission WHERE PermissionID = @PermissionID AND RoleID = @RoleID";
                 int n = commonBu.getDbContext().Database.ExecuteSqlCommand(sql, new SqlParameter("@PermissionID", permission.PermissionID), new SqlParameter("@RoleID", permission.RoleID));
+                trans.Commit();
                 return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, n);
             }
             catch (Exception ex)
             {
+                trans.Rollback();
                 return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
@@ -194,19 +197,25 @@ namespace CMP_Servive.Controllers
         [HttpPost]
         public OutPutDTO AddPermissions([FromBody]PermissionDTO permission)
         {
+            var trans = commonBu.getDbContext().Database.BeginTransaction();
             try
             {
-                string sql = @"INSERT INTO RolePermission (PermissionID, RoleID)
-SELECT 
-	p.PermissionID,
-	@RoleID
-FROM Permission p
-WHERE p.PermissionID in (22)";
-                int n = commonBu.getDbContext().Database.ExecuteSqlCommand(sql, new SqlParameter("@RoleID", permission.RoleID));
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                string sql = @"INSERT INTO RolePermission (PermissionID, RoleID) Value(@RoleID, @PermissionID)";
+                foreach (var PermissionID in permission.Selection)
+                {
+                    string param = "@PermissionID" + parameters.Count;
+                    sql += @" INSERT INTO RolePermission (PermissionID, RoleID) Value(@RoleID, " + param +") ";
+                    parameters.Add(new SqlParameter(param, PermissionID));
+                }
+                parameters.Add(new SqlParameter("@RoleID", permission.RoleID));
+                int n = commonBu.getDbContext().Database.ExecuteSqlCommand(sql, parameters.ToArray());
+                trans.Commit();
                 return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, n);
             }
             catch (Exception ex)
             {
+                trans.Rollback();
                 return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }

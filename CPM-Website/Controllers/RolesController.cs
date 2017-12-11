@@ -206,7 +206,7 @@ namespace CPM_Website.Controllers
             ApiClient client = ApiClient.Instance;
             try
             {
-                if (Permission.HasPermission(RoleCodes.Roles.UPDATE))
+                if (!Permission.HasPermission(RoleCodes.Roles.UPDATE))
                 {
                     var apiResult = await client.PostApiAsync<JsonResultObject<PermissionViewModel>, PermissionViewModel>("api/v1/Roles/addPermissions", app);
                     ViewBag.Status = "1";

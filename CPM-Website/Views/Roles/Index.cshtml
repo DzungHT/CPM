@@ -103,7 +103,9 @@
             $scope.dataSave = {};
             $scope.searchPermission = {};
             $scope.listApplication = [];
-            $scope.selectPermission = {};
+            $scope.selectPermission = {
+                Selection: []
+            };
 
             $scope.dataTable = $("#searchResult").DataTable({
                 ajax: {
@@ -222,9 +224,9 @@
     <label>
         <input type="checkbox" class="flat"
                name="permission"
-               value="{{data.PermissionID}}"
-               ng-checked="selectPermission.selection.indexOf(data.PermissionID) > -1"
-               ng-click="toggleSelection(data.PermissionID)">
+               value="` + data.PermissionID + `"
+               ng-checked="selectPermission.selection.indexOf(+ data.PermissionID +) > -1"
+               onchange="alert('adf')">
     </label>
 </div>`;
                         }
@@ -236,23 +238,10 @@
                         checkboxClass: 'icheckbox_flat-green',
                         radioClass: 'iradio_flat-green'
                     });
+                    var scope = angular.element($('#ApplicationApp')).scope();
+                    scope.$apply();
                 }
             });
-
-            $scope.toggleSelection = function toggleSelection(fruitName) {
-                var idx = $scope.selectPermission.selection.indexOf(fruitName);
-
-                // Is currently selected
-                if (idx > -1) {
-                    $scope.selectPermission.Selection.splice(idx, 1);
-                }
-
-                // Is newly selected
-                else {
-                    $scope.selectPermission.Selection.push(fruitName);
-                }
-                
-            };
 
             $scope.searchPermissionForRole = function () {
                 $("#selectPermissionTbl").DataTable().ajax.reload();
@@ -264,9 +253,10 @@
             }
             $scope.addPermission = function () {
                 var flag = 'flagSaveResult';
-                var url = '/Roles/save';
+                var url = '/Roles/AddPermissions';
                 var formData = getFormAsJson('saveForm');
                 formData.RoleID = $scope.dataSave.RoleID;
+                formData.Selection = $scope.selectPermission.Selection;
                 tctDeferredAjax(flag, url, formData).fail(function () {
                     alert('Có lỗi xảy ra!');
                     tctResetProgress();
@@ -333,7 +323,8 @@
         function goEdit(id) {
             var url = "/Roles/prepareUpdate?id=" + id;
             var data = '';
-            searchPermission();
+            var scope = angular.element($('#ApplicationApp')).scope();
+            scope.searchPermission();
             tctDeferredAjaxGet(url, data).done(function (data) {
                 var scope = angular.element($('#ApplicationApp')).scope();
                 scope.dataSave.Code = data.Code;
@@ -394,11 +385,28 @@
                     alert('Hết phiên làm việc!');
                     tctResetProgress();
                 }).done(function () {
-                    searchPermission();
+                    var scope = angular.element($('#ApplicationApp')).scope();
+                    scope.searchPermission();
                 });
             }, 'Bạn muốn xóa bản ghi này ?');
         }
 
+        function toggleSelection(id) {
+            debugger;
+            var scope = angular.element($('#ApplicationApp')).scope();
+            var idx = scope.selectPermission.selection.indexOf(id);
+
+            // Is currently selected
+            if (idx > -1) {
+                scope.selectPermission.Selection.splice(idx, 1);
+            }
+
+            // Is newly selected
+            else {
+                scope.selectPermission.Selection.push(id);
+            }
+            console.log(scope.selectPermission.Selection);
+        };
         
     </script>
 }
