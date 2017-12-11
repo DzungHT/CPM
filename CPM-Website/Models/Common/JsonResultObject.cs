@@ -25,6 +25,6 @@ namespace CPM_Website.Models
         /// <summary>
         /// Mã response
         /// </summary>
-        public string StatusCode { get; set; }
+        public string Status { get; set; }
     }
 }

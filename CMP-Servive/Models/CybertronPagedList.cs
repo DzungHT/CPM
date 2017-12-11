@@ -9,9 +9,9 @@ namespace CybertronFramework.Models
     public class CybertronPagedList<T>
     {
         /// <summary>
-        /// Có thể hiểu là trang số draw
+        /// offset để lấy dữ liệu bắt đầu từ dòng thứ offset + 1
         /// </summary>
-        public int draw { get; set; }
+        public int offset { get; set; }
         /// <summary>
         /// Tổng số bản - trước khi tìm kiếm. (Có thể hiểu là toàn bộ số bản ghi có trong bảng dữ liệu).
         /// </summary>
@@ -34,15 +34,15 @@ namespace CybertronFramework.Models
         /// <summary>
         /// Hàm khởi tạo
         /// </summary>
-        /// <param name="draw">Có thể hiểu là trang số draw</param>
+        /// <param name="offset">offset để lấy dữ liệu bắt đầu từ dòng thứ offset + 1</param>
         /// <param name="recordsTotal">Tổng số bản - trước khi tìm kiếm. (Có thể hiểu là toàn bộ số bản ghi có trong bảng dữ liệu).</param>
         /// <param name="recordsFiltered">Tổng số - sau khi tìm kiếm. (Là tổng số bản ghi tìm kiếm được theo điều kiện)</param>
         /// <param name="data">Mảng dữ liệu</param>
-        public CybertronPagedList(int draw, int recordsTotal, int recordsFiltered, IEnumerable<T> data)
+        public CybertronPagedList(int offset, int recordsTotal, int recordsFiltered, IEnumerable<T> data)
         {
-            this.draw = draw;
+            this.offset = offset;
             this.recordsTotal = recordsTotal;
-            this.recordsFiltered = recordsTotal;
+            this.recordsFiltered = recordsFiltered;
             this.data = data;
         }
 

@@ -14,12 +14,5 @@ namespace CMP_Servive.Models.DTO
         public string Name { get; set; }
 
         public string Description { get; set; }
-
-        /// <summary>
-        /// Được hiểu đơn giản là lấy dữ liệu ở trang số draw
-        /// </summary>
-        public int draw { get; set; }
-
-        public int recordPerPage { get; set; }
     }
 }

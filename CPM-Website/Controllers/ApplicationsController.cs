@@ -27,7 +27,7 @@ namespace CPM_Website.Controllers
         public async Task<JsonResult> SearchProcess(ApplicationsViewModel formData)
         {
             ApiClient client = ApiClient.Instance;
-            DataTableResponse dataTableResponse = new DataTableResponse();
+            DataTableResponse<Application> dataTableResponse = new DataTableResponse<Application>();
             try
             {
                 var apiResult = await client.PostApiAsync<JsonResultObject<List<Application>>, object>(Resources.URLResources.SEARCH_APPLICATION, 

@@ -23,7 +23,7 @@ namespace CPM_Website.Controllers
         public async Task<JsonResult> SearchProcess(MenuViewModel formData)
         {
             ApiClient client = ApiClient.Instance;
-            DataTableResponse dataTableResponse = new DataTableResponse();
+            DataTableResponse<Menu> dataTableResponse = new DataTableResponse<Menu>();
             try
             {
                 var apiResult = await client.PostApiAsync<JsonResultObject<List<Menu>>, object>(Resources.URLResources.SEARCH_MENU,
@@ -35,7 +35,6 @@ namespace CPM_Website.Controllers
                     dataTableResponse.recordsTotal = data.Count;
                     dataTableResponse.recordsFiltered = data.Count;
                     dataTableResponse.error = null;
-                    dataTableResponse.draw = formData.DataTable.draw;
                 }
 
             }

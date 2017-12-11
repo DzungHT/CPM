@@ -30,6 +30,7 @@
                     <form method="post" action="@Url.Action("login","accounts")">
                         @Html.AntiForgeryToken()
                         <h1>@LoginResources.LoginFormTitle</h1>
+                        @Html.ValidationSummary()
                         <div>
                             <input type="text" name="Username" class="form-control" placeholder="@LoginResources.UsernamePlaceholder" required autofocus/>
                         </div>

@@ -109,10 +109,10 @@ namespace CMP_Servive.Business
             return result;
         }
         
-        public CybertronPagedList<T> Search<T>(int page, int recordPerPage,string sql, string orders, params SqlParameter[] parameters) where T:class
+        public CybertronPagedList<T> Search<T>(int offset, int recordPerPage,string sql, string orders, params SqlParameter[] parameters) where T:class
         {
             DbSet<T> set = db.Set<T>();
-            int offset = (page - 1) * recordPerPage;
+            offset = offset < 0 ? 0 : offset;
 
             string commandFormat = @"select * from ( {0} ) tabl {1} OFFSET {2} ROWS FETCH NEXT {3} ROWS ONLY";
 
@@ -144,7 +144,7 @@ namespace CMP_Servive.Business
             }
             int recordsFiltered = db.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) as recordsFiltered FROM ({0}) tabl", sql), parameters2.ToArray()).FirstOrDefault<int>();
 
-            var result = new CybertronPagedList<T>(page, recordsTotal, recordsFiltered, data);
+            var result = new CybertronPagedList<T>(offset, recordsTotal, recordsFiltered, data);
             return result;
         }
 
@@ -154,21 +154,18 @@ namespace CMP_Servive.Business
             if(value != null)
             {
                 Type type = typeof(T);
-                object sqlValue = default(T);
-                string sqlOperator = "=";
                 if (type == typeof(int) || type == typeof(int?))
                 {
-                    sqlOperator = "=";
-                    sqlValue = value;
+                    str = string.Format(" AND {0} = @value{1} ", field, parameters.Count);
+                    parameters.Add(new SqlParameter("value" + parameters.Count, value));
                 }
                 else if (type == typeof(string) && !string.IsNullOrWhiteSpace(value.ToString()))
                 {
-                    sqlOperator = "LIKE";
-                    sqlValue = string.Format("%{0}%", value);
+                    str = string.Format(" AND {0} LIKE @value{1} ", field, parameters.Count);
+                    parameters.Add(new SqlParameter("value" + parameters.Count, string.Format("%{0}%", value)));
                 }
 
-                str = string.Format(" AND {0} {1} @value{2} ", field, sqlOperator, parameters.Count);
-                parameters.Add(new SqlParameter("value" + parameters.Count, sqlValue));
+                
             }
             return str;
         }
