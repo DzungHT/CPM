@@ -54,8 +54,8 @@
                                     Xóa bộ lọc
                                 </button>
                             </div>
-                        </div>
-                    </form>
+                         </div>                    
+               </form>
                 </div>
             </div>
         </div>
@@ -89,13 +89,11 @@
 <div id="flagSaveResult" style="display:none"></div>
 
 @section script{
-    <script src="~/Scripts/Common/CybertronLibrary.js"></script>
-    <script>
+    <script src="~/Scripts/Common/CybertronLibrary.js"></script>    <script>
         var ctrl = app.controller('ApplicationController', ['$scope', function ($scope) {
             $scope.appSearch = {};
             $scope.appSave = {};
             $scope.dataTable = $("#searchResult").DataTable({
-                responsive: true,
                 order: [[2, "asc"]],
                 ajax: {
                     url: '/applications/searchProcess',
