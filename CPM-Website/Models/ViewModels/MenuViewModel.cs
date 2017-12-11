@@ -9,9 +9,12 @@ namespace CPM_Website.Models
     public class MenuViewModel
     {
         public int? MenuID { get; set; }
+        public int? RoleID { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
+        public string ApplicationName { get; set; }
         public int? ApplicationID { get; set; }
         public DataTableRequest DataTable { get; set; }
+        public List<int> Selection { get; set; }
     }
 }

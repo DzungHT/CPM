@@ -35,6 +35,10 @@ namespace CMP_Servive.Models.DTO
 
         public int? Status { get; set; }
 
+        public string ApplicationName { get; set; }
+        public int? RoleID { get; set; }
+        public List<int> Selection { get; set; }
+
         /// <summary>
         /// Được hiểu đơn giản là lấy dữ liệu ở trang số draw
         /// </summary>

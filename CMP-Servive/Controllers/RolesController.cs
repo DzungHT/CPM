@@ -220,6 +220,106 @@ namespace CMP_Servive.Controllers
             }
         }
 
+        [Route("searchMenuByRole")]
+        [HttpPost]
+        public OutPutDTO SearchMenuByRole([FromBody] MenuDTO objSearch, int offset, int recordPerPage)
+        {
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                string sql = @"SELECT m.*, a.Name as ApplicationName FROM Menu m
+                                INNER JOIN Application a ON a.ApplicationID = m.ApplicationID
+                                INNER JOIN RoleMenu rm ON rm.MenuID = m.MenuID
+                                WHERE 1 = 1 ";
+                sql += commonBu.MakeFilterString("m.Code", objSearch.Code, ref parameters);
+                sql += commonBu.MakeFilterString("m.Name", objSearch.Name, ref parameters);
+                sql += commonBu.MakeFilterString("m.ApplicationID", objSearch.ApplicationID, ref parameters);
+                sql += commonBu.MakeFilterString("rm.RoleID", objSearch.RoleID, ref parameters);
+
+                var data = commonBu.Search<MenuDTO>(offset, recordPerPage, sql, "ApplicationID,Sort_Order", parameters.ToArray());
+
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, data);
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
+        }
+
+        [Route("searchMenuForRole")]
+        [HttpPost]
+        public OutPutDTO searchMenuForRole([FromBody] MenuDTO objSearch, int offset, int recordPerPage)
+        {
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                string sql = @"SELECT m.*, a.Name as ApplicationName FROM Menu m
+INNER JOIN Application a ON a.ApplicationID = m.ApplicationID
+WHERE 1 = 1  AND NOT EXISTS(SELECT 1 FROM RoleMenu rm WHERE rm.MenuID = m.MenuID AND rm.RoleID = @RoleID)";
+                parameters.Add(new SqlParameter("@RoleID", objSearch.RoleID));
+                sql += commonBu.MakeFilterString("m.Code", objSearch.Code, ref parameters);
+                sql += commonBu.MakeFilterString("m.Name", objSearch.Name, ref parameters);
+                sql += commonBu.MakeFilterString("m.ApplicationID", objSearch.ApplicationID, ref parameters);
+
+                var data = commonBu.Search<MenuDTO>(offset, recordPerPage, sql, "ApplicationID,Sort_Order", parameters.ToArray());
+
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, data);
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
+        }
+
+        [Route("deleteMenu")]
+        [HttpPost]
+        public OutPutDTO DeleteMenu([FromBody]MenuDTO obj)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+            }
+            var trans = commonBu.getDbContext().Database.BeginTransaction();
+            try
+            {
+                string sql = " DELETE RoleMenu WHERE MenuID = @MenuID AND RoleID = @RoleID ";
+                int n = commonBu.getDbContext().Database.ExecuteSqlCommand(sql, new SqlParameter("@MenuID", obj.MenuID), new SqlParameter("@RoleID", obj.RoleID));
+                trans.Commit();
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, n);
+            }
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
+        }
+
+        [Route("addMenus")]
+        [HttpPost]
+        public OutPutDTO AddMenus([FromBody]MenuDTO obj)
+        {
+            var trans = commonBu.getDbContext().Database.BeginTransaction();
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                string sql = "";
+                foreach (var MenuID in obj.Selection)
+                {
+                    string param = "@MenuID" + parameters.Count;
+                    sql += @" INSERT INTO RoleMenu (RoleID, MenuID) Values(@RoleID, " + param + ") ";
+                    parameters.Add(new SqlParameter(param, MenuID));
+                }
+                parameters.Add(new SqlParameter("@RoleID", obj.RoleID));
+                int n = commonBu.getDbContext().Database.ExecuteSqlCommand(sql, parameters.ToArray());
+                trans.Commit();
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
+            }
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
+        }
         protected override void Dispose(bool disposing)
         {
 
