@@ -35,7 +35,7 @@ namespace CMP_Servive.Business
             User user = db.Users.Find(id);
             if (user != null)
             {
-                user.Status = user.Status == 1 ? user.Status : 0 ;
+                user.Status = user.Status == 1 ? 0 : user.Status;
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return user;
