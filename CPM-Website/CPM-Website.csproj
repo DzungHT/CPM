@@ -2605,6 +2605,7 @@
     <Compile Include="Models\ViewModels\MenuViewModel.cs" />
     <Compile Include="Models\ViewModels\PermissionViewModel.cs" />
     <Compile Include="Models\ViewModels\ResourceViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Models\ViewModels\RoleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Resources\roledto.cs" />
@@ -2650,6 +2651,8 @@
     <Content Include="Views\Menus\Index.cshtml" />
     <Content Include="Views\Resources\Form.cshtml" />
     <Content Include="Views\Resources\Index.cshtml" />
+    <Content Include="Views\Accounts\Form.cshtml" />
+    <Content Include="Views\Accounts\Index.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Roles\Form.cshtml" />
     <None Include="Web.Debug.config">
@@ -2710,8 +2713,6 @@
           <DevelopmentServerPort>54060</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:8980/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:8980/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

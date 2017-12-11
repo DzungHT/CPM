@@ -5,6 +5,7 @@ using CMP_Servive.Models.Entities;
 using CMP_Servive.Providers.Authentication;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Web.Http;
 
 namespace CMP_Servive.Controllers
@@ -39,7 +40,14 @@ namespace CMP_Servive.Controllers
             try
             {
                 Menu obj = menuBusiness.Get<Menu>(id);
-                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
+                MenuDTO result = new MenuDTO();
+                result.GetTransferData(obj);
+                if (result.MenuPID != null)
+                {
+                    Menu objP = menuBusiness.Get<Menu>(result.MenuPID);
+                    result.MenuPName = objP.Name;
+                }
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
             }
             catch (Exception ex)
             {
@@ -49,12 +57,18 @@ namespace CMP_Servive.Controllers
 
         [Route("search")]
         [HttpPost]
-        public OutPutDTO SearchMenu([FromBody] MenuDTO objSearch)
+        public OutPutDTO SearchMenu([FromBody] MenuDTO objSearch, int offset, int recordPerPage)
         {
             try
             {
-                List<Menu> result = commonBu.FindByProperty<Menu, MenuDTO>(objSearch, "MenuID asc");
-                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                string sql = "SELECT * FROM Menu a WHERE 1 = 1 ";
+                sql += commonBu.MakeFilterString("a.ApplicationID", objSearch.ApplicationID, ref parameters);
+                sql += commonBu.MakeFilterString("a.Code", objSearch.Code, ref parameters);
+                sql += commonBu.MakeFilterString("a.Name", objSearch.Name, ref parameters);
+
+                var data = commonBu.Search<Menu>(offset, recordPerPage, sql, "MenuID", parameters.ToArray());
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, data);
             }
             catch (Exception ex)
             {

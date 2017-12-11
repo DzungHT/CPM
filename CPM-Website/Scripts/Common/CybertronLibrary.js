@@ -6,6 +6,9 @@
     $('#' + formId + ' input[type=hidden]').each(function (x, y) {
         data[y.name] = y.value;
     });
+    $('#' + formId + ' input[type=password]').each(function (x, y) {
+        data[y.name] = y.value;
+    });
     $('#' + formId + ' input[type=radio]').each(function (x, y) {
         if (y.checked) {
             data[y.name] = y.value;
@@ -212,7 +215,7 @@ function tctDeferredAjax(areaId, actionUrl, formData) {
                 tctResetProgress();
                 jQuery("#" + areaId).html(html);
                 //auto call validate jquery unfocus input form
-                //$("form").validationEngine({ promptPosition: 'inline' });
+                $("form").validationEngine({ promptPosition: 'inline' });
             },
             error: function (xhr, ajaxOptions, thrownError) {
             }

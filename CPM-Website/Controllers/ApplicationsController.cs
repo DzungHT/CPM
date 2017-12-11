@@ -18,7 +18,7 @@ namespace CPM_Website.Controllers
     public class ApplicationsController : Controller
     {
         // GET: Applications
-        [CybertronAuthorize(Roles = RoleCodes.Applications.INDEX)]
+        //[CybertronAuthorize(Roles = RoleCodes.Applications.INDEX)]
         public ActionResult Index()
         {
             return View();
@@ -30,8 +30,8 @@ namespace CPM_Website.Controllers
             DataTableResponse<Application> dataTableResponse = new DataTableResponse<Application>();
             try
             {
-                var apiResult = await client.PostApiAsync<JsonResultObject<DataTableResponse<Application>>, object>(URLResources.SEARCH_APPLICATION + "?page=" + formData.DataTable.start.ToString() + "&recordPerPage=" + formData.DataTable.length.ToString(),
-                    new Application { Code = StringUtil.NVL(formData.Code), Name = StringUtil.NVL(formData.Name) });
+                var apiResult = await client.PostApiAsync<JsonResultObject<DataTableResponse<Application>>, object>(URLResources.SEARCH_APPLICATION + "?offset=" + formData.DataTable.start.ToString() + "&recordPerPage=" + formData.DataTable.length.ToString(),
+                    new { Code = StringUtil.NVL(formData.Code), Name = StringUtil.NVL(formData.Name) });
                 if (apiResult != null && apiResult.IsSuccess)
                 {
                     dataTableResponse = apiResult.Data;

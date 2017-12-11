@@ -3,6 +3,7 @@ using CPM_Website.Models;
 using CPM_Website.Models.Common;
 using CybertronFramework.Libraries;
 using CybertronFramework.Models;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,15 +27,11 @@ namespace CPM_Website.Controllers
             DataTableResponse<Menu> dataTableResponse = new DataTableResponse<Menu>();
             try
             {
-                var apiResult = await client.PostApiAsync<JsonResultObject<List<Menu>>, object>(Resources.URLResources.SEARCH_MENU,
-                    new { ApplicationID = formData.ApplicationID, Code = StringUtil.NVL(formData.Code), Name = StringUtil.NVL(formData.Name) });
+                var apiResult = await client.PostApiAsync<JsonResultObject<DataTableResponse<Menu>>, object>(URLResources.SEARCH_MENU + "?offset=" + formData.DataTable.start.ToString() + "&recordPerPage=" + formData.DataTable.length.ToString(),
+                    new { ApplicationId = formData.ApplicationID, Code = StringUtil.NVL(formData.Code), Name = StringUtil.NVL(formData.Name) });
                 if (apiResult != null && apiResult.IsSuccess)
                 {
-                    List<Menu> data = apiResult.Data;
-                    dataTableResponse.data = data;
-                    dataTableResponse.recordsTotal = data.Count;
-                    dataTableResponse.recordsFiltered = data.Count;
-                    dataTableResponse.error = null;
+                    dataTableResponse = apiResult.Data;
                 }
 
             }
@@ -79,7 +76,7 @@ namespace CPM_Website.Controllers
             ApiClient client = ApiClient.Instance;
             try
             {
-                var apiResult = await client.GetApiAsync<JsonResultObject<Menu>>(Resources.URLResources.GET_MENU_BY_ID + id);
+                var apiResult = await client.GetApiAsync<JsonResultObject<Menu>>(URLResources.GET_MENU_BY_ID + id);
                 return Json(apiResult.Data);
             }
             catch (Exception ex)

@@ -100,11 +100,8 @@
                     url: '/applications/searchProcess',
                     type: 'POST',
                     data: function (d) {
-                        var data = new Object();
-                        data.Code = $scope.dataSearch.Code;
-                        data.Name = $scope.dataSearch.Name;
-                        data.DataTable = d;
-                        return data;
+                        $scope.dataSearch.DataTable = d;
+                        return $scope.dataSearch;
                     }
                 },
                 columns: [

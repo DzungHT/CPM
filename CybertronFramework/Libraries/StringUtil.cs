@@ -34,10 +34,5 @@ namespace CybertronFramework.Libraries
         {
             return String.IsNullOrEmpty(s) ? "" : s;
         }
-
-        public static int NVL(int s)
-        {
-            return s == null ? 0 : s;
-        }
     }
 }

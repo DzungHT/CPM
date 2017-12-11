@@ -10,6 +10,8 @@ namespace CPM_Website.Models
 
         public int? MenuPID { get; set; }
 
+        public string MenuPName { get; set; }
+
         public int? ApplicationID { get; set; }
 
         public string Code { get; set; }

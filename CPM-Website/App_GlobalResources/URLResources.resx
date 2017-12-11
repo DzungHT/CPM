@@ -135,6 +135,9 @@
   <data name="GET_ALL_APPLICATION" xml:space="preserve">
     <value>api/v1/Category/Applications/getAll</value>
   </data>
+  <data name="GET_ALL_MENU" xml:space="preserve">
+    <value>api/v1/Menu/getAll</value>
+  </data>
   <data name="GET_APPLICATION" xml:space="preserve">
     <value>api/v1/Category/Applications/get?id=</value>
   </data>
@@ -147,11 +150,20 @@
   <data name="GET_RESOURCE" xml:space="preserve">
     <value>api/v1/Category/Resources/get?id=</value>
   </data>
+  <data name="GET_USER" xml:space="preserve">
+    <value>api/v1/Users/get?id=</value>
+  </data>
+  <data name="LOCK_UNLOCK_USER" xml:space="preserve">
+    <value>api/v1/Users/lockUnlock?id=</value>
+    </data>
   <data name="GET_ROLE" xml:space="preserve">
     <value>api/v1/Roles/get?id=</value>
   </data>
   <data name="LOGIN_API" xml:space="preserve">
     <value>api/v1/Users/login</value>
+  </data>
+  <data name="RESTART_USER" xml:space="preserve">
+    <value>api/v1/Users/restart-password?id=</value>
   </data>
   <data name="SAVE_APPLICATION" xml:space="preserve">
     <value>api/v1/Category/Applications/save</value>
@@ -162,6 +174,9 @@
   <data name="SAVE_RESOURCE" xml:space="preserve">
     <value>api/v1/Category/Resources/save</value>
   </data>
+  <data name="SAVE_USER" xml:space="preserve">
+    <value>api/v1/Users/save</value>
+    </data>
   <data name="SAVE_ROLE" xml:space="preserve">
     <value>api/v1/Roles/save</value>
   </data>
@@ -174,6 +189,9 @@
   <data name="SEARCH_RESOURCE" xml:space="preserve">
     <value>api/v1/Category/Resources/search</value>
   </data>
+  <data name="SEARCH_USER" xml:space="preserve">
+    <value>api/v1/Users/search</value>
+    </data>
   <data name="SEARCH_ROLE" xml:space="preserve">
     <value>api/v1/Roles/search</value>
   </data>
