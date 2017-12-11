@@ -61,8 +61,8 @@
                                 Trạng thái
                             </label>
                             <div class="col-sm-4">
-                                <select class="form-control"ng-model="dataSave.Status" id="Status">
-                                    <option>--Chọn tất cả--</option>
+                                <select class="form-control"ng-model="dataSearch.Status" id="Status">
+                                    <option selected value="">--Chọn tất cả--</option>
                                     <option value="1">Hoạt động</option>
                                     <option value="0">Khóa</option>
                                 </select>
@@ -167,32 +167,34 @@
                         data: null,
                         className: "text-center",
                         render: function (data, type, row, cell) {
-                            return '<a href="javascript:;" onclick="goEdit(' + data.MenuID + ')" class="text-success" style="margin-right: 7px">'
+                            var icon = data.Status == 1 ? 'fa-unlock' : 'fa-lock';
+                            var _class = data.Status == 1 ? 'green' : 'orange';
+                            var _title = data.Status == 1 ? 'Khóa' : 'Mở khóa';
+                            return '<a href="javascript:;" onclick="goEdit(' + data.UserID + ')" class="text-success" style="margin-right: 7px">'
                                    + '<i class="fa fa-edit fa-2x" title="Sửa"></i>'
                                    +'</a>'
-                                   + '<a href="javascript:;" onclick= "restartPassword(' + data.MenuID + ')" class="red">'
+                                   + '<a href="javascript:;" onclick= "restartPassword(' + data.UserID + ')" style="margin-right: 7px" class="red">'
                                    + '<i class="fa fa-refresh fa-2x" title="Restart"></i>'
                                    + '</a>'
-                                    + '<a href="javascript:;" onclick= "lockUnlock(' + data.MenuID + ')" class="' + data.Status == 1 ? 'green' : 'orange' + '">'
-                                    + '<i class="fa ' + data.Status == 1 ? 'fa-unlock' : 'fa-lock' + ' fa-2x" title="Restart"></i>'
-                                    + '</a>';
-                            ;
+                                   + '<a href="javascript:;" onclick= "lockUnlock(' + data.UserID + ')" class="' + _class + '">'
+                                   + '<i class="fa ' + icon + ' fa-2x" title="' + _title + '"></i>'
+                                   + '</a>';
                         }
                     },
                 ]
             });
         }]);
         $(document).ready(function () {
-            var scope = angular.element($('#UserApp')).scope();
-            $.get('/masterData/getListApplication', function (data) {
-                scope.listApplication = data;
-                scope.$apply();
-            });
+            //var scope = angular.element($('#UserApp')).scope();
+            //$.get('/masterData/getListApplication', function (data) {
+            //    scope.listApplication = data;
+            //    scope.$apply();
+            //});
 
-            $.get('/masterData/GetListMenu', function (data) {
-                scope.listMenu = data;
-                scope.$apply();
-            });
+            //$.get('/masterData/GetListMenu', function (data) {
+            //    scope.listMenu = data;
+            //    scope.$apply();
+            //});
         });
         function search() {
             var scope = angular.element($('#UserApp')).scope();
@@ -202,6 +204,7 @@
         }
         function onResetForm(e) {
             var scope = angular.element($('#UserApp')).scope();
+            debugger;
             if (e === 'save') {
                 scope.dataSave.UserID = "";
                 scope.dataSave.LoginName = "";
@@ -225,12 +228,12 @@
                 var flag = 'flagSaveResult';
                 formData.id = id;
                 tctDeferredAjax(flag, url, formData).fail(function () {
-                    alert('Hết phiên làm việc!');
+                    alert('Có lỗi xảy ra!');
                     tctResetProgress();
                 }).done(function () {
                     search();
                 });
-            }, 'Bạn muốn xóa bản ghi này ?');
+            }, 'Restart password về dạng 123456 ?');
         }
         function lockUnlock(id) {
             tctConfirm(function () {
@@ -239,12 +242,12 @@
                 var flag = 'flagSaveResult';
                 formData.id = id;
                 tctDeferredAjax(flag, url, formData).fail(function () {
-                    alert('Hết phiên làm việc!');
+                    alert('Có lỗi xảy ra!');
                     tctResetProgress();
                 }).done(function () {
                     search();
                 });
-            }, 'Bạn muốn xóa bản ghi này ?');
+            }, 'Xác nhận thay đổi trạng thái bản ghi ?');
         }
         function goEdit(id) {
             var url = "/Accounts/prepareUpdate?id=" + id;
@@ -279,7 +282,7 @@
         function actionSave() {
             if ($('#saveForm').validationEngine("validate")) {
                 tctConfirm(function () {
-                    var url = '/menus/save';
+                    var url = '/Accounts/save';
                     var formData = getFormAsJson('saveForm');
                     var flag = 'flagSaveResult';
                     var scope = angular.element($('#UserApp')).scope();

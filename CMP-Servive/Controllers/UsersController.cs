@@ -67,7 +67,7 @@ namespace CMP_Servive.Controllers
                 sql += commonBu.MakeFilterString("a.Email", objSearch.Email, ref parameters);
                 sql += commonBu.MakeFilterString("a.PhoneNumber", objSearch.PhoneNumber, ref parameters);
                 sql += commonBu.MakeFilterString("a.Status", objSearch.Status, ref parameters);
-                var data = commonBu.Search<User>(offset, recordPerPage, sql, "", parameters.ToArray());
+                var data = commonBu.Search<User>(offset, recordPerPage, sql, "UserID", parameters.ToArray());
                 return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, data);
             }
             catch (Exception ex)
@@ -80,7 +80,7 @@ namespace CMP_Servive.Controllers
         [HttpPost]
         //[BasicAuthentication(true,"")]
         public OutPutDTO SaveUser([FromBody]UserDTO userDTO)
-        {
+            {
             if (!ModelState.IsValid)
             {
                 new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
@@ -91,10 +91,10 @@ namespace CMP_Servive.Controllers
                 User entities = new User();
                 if (userDTO.UserID != 0)
                 {
-                    if (!owinContext.Authentication.User.IsInRole(RoleCodes.Users.UPDATE))
-                    {
-                        return new OutPutDTO(false, Constants.STATUS_CODE.NOT_PERMISSION, Constants.STATUS_MESSAGE.NOT_PERMISSION, "");
-                    }
+                    //if (!owinContext.Authentication.User.IsInRole(RoleCodes.Users.UPDATE))
+                    //{
+                    //    return new OutPutDTO(false, Constants.STATUS_CODE.NOT_PERMISSION, Constants.STATUS_MESSAGE.NOT_PERMISSION, "");
+                    //}
                     entities = userBusiness.Get<User>(userDTO.UserID);
                     if (entities != null)
                     {
@@ -109,10 +109,10 @@ namespace CMP_Servive.Controllers
                 }
                 else
                 {
-                    if (!owinContext.Authentication.User.IsInRole(RoleCodes.Users.INSERT))
-                    {
-                        return new OutPutDTO(false, Constants.STATUS_CODE.NOT_PERMISSION, Constants.STATUS_MESSAGE.NOT_PERMISSION, "");
-                    }
+                    //if (!owinContext.Authentication.User.IsInRole(RoleCodes.Users.INSERT))
+                    //{
+                    //    return new OutPutDTO(false, Constants.STATUS_CODE.NOT_PERMISSION, Constants.STATUS_MESSAGE.NOT_PERMISSION, "");
+                    //}
                     entities.GetTransferData(userDTO);
                     entities.Password = entities.Password.Encrypt(Constants.ENCRYPT_KEY);
                     entities.Status = 1;
@@ -182,7 +182,7 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                User user = userBusiness.RestartPassword(id);
+                User user = userBusiness.LockUnlock(id);
                 if (user != null)
                 {
                     return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, user);

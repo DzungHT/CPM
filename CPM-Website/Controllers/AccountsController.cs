@@ -56,7 +56,14 @@ namespace CPM_Website.Controllers
                 if (Permission.HasPermission(RoleCodes.Applications.SEARCH))
                 {
                     var apiResult = await client.PostApiAsync<JsonResultObject<User>, User>(URLResources.SAVE_USER, obj);
-                    ViewBag.Status = "1";
+                    if(apiResult.Status == "05")
+                    {
+                        ViewBag.Status = "0";
+                    } else
+                    {
+                        ViewBag.Status = "1";
+                    }
+                    
                 }
                 else
                 {
@@ -99,7 +106,7 @@ namespace CPM_Website.Controllers
             {
                 if (Permission.HasPermission(RoleCodes.Applications.SEARCH))
                 {
-                    var apiResult = await client.PostApiAsync<JsonResultObject<String>, object>(URLResources.LOCK_UNLOCK_USER + id,
+                    var apiResult = await client.PostApiAsync<JsonResultObject<User>, object>(URLResources.LOCK_UNLOCK_USER + id,
                     new { });
                     ViewBag.Status = "1";
                 }
@@ -128,8 +135,7 @@ namespace CPM_Website.Controllers
             {
                 if (Permission.HasPermission(RoleCodes.Applications.SEARCH))
                 {
-                    var apiResult = await client.PostApiAsync<JsonResultObject<String>, object>(URLResources.RESTART_USER + id,
-                    new { });
+                    var apiResult = await client.PostApiAsync<JsonResultObject<User>, object>(URLResources.RESTART_USER + id,null);
                     ViewBag.Status = "1";
                 }
                 else
@@ -178,7 +184,7 @@ namespace CPM_Website.Controllers
                 if (apiResult != null && apiResult.IsSuccess)
                 {
                     // Lấy danh sách quyền
-                    string roleStr = string.Join(Constants.ROLE_STRING_SEPERATE,  apiResult.Data.Roles);
+                    string roleStr = string.Join(Constants.ROLE_STRING_SEPERATE,  RoleCodes.Applications.INDEX);
 
                     var authTicket = new FormsAuthenticationTicket(1, formData.Username, DateTime.Now, DateTime.Now.AddMinutes(20), formData.RememberMe, roleStr);
 
