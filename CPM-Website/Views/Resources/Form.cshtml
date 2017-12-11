@@ -1,8 +1,8 @@
 ﻿<div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2 ng-if="dataSave.ResourceID == ''">Thêm mới ứng dụng</h2>
-            <h2 ng-if="dataSave.ResourceID != ''">Cập nhật ứng dụng</h2>
+            <h2 ng-if="dataSave.ResourceID == ''">Thêm mới tài nguyên</h2>
+            <h2 ng-if="dataSave.ResourceID != ''">Cập nhật tài nguyên</h2>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
@@ -29,7 +29,7 @@
                         Ứng dụng <span class="red">*</span> 
                     </label>
                     <div class="col-sm-4">
-                        <select ng-model="dataSave.ApplicationID" id="ApplicationID" name="ApplicationID" class="form-control validate[required]">
+                        <select ng-model="dataSave.ApplicationID" id="ApplicationID" name="ApplicationID" class="form-control validate[required]" ui-select2>
                             <option value="">-- Chọn --</option>
                             <option ng-repeat="item in listApplication" value="{{item.ApplicationID}}">{{item.Code}} - {{item.Name}}</option>
                         </select>

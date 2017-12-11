@@ -48,7 +48,7 @@
                                     Ứng dụng
                                 </label>
                                 <div class="col-sm-4">
-                                    <select ng-model="dataSearch.ApplicationID" id="ApplicationIDFilter" name="ApplicationID" class="form-control">
+                                    <select ng-model="dataSearch.ApplicationID" id="ApplicationIDFilter" name="ApplicationID" class="form-control" ui-select2>
                                         <option value="">-- Chọn tất cả --</option>
                                         <option ng-repeat="item in listApplication" value="{{item.ApplicationID}}">{{item.Code}} - {{item.Name}}</option>
                                     </select>
