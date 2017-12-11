@@ -52,8 +52,8 @@ namespace CMP_Servive.Controllers
         }
 
         [Route("Applications/search")]
-        [HttpGet]
-        public OutPutDTO SearchListApplications([FromUri] ApplicationDTO objSearch)
+        [HttpPost]
+        public OutPutDTO SearchListApplications([FromBody] ApplicationDTO objSearch, int offset, int recordPerPage)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace CMP_Servive.Controllers
                 sql += commonBu.MakeFilterString<string>("a.Code", objSearch.Code, ref parameters);
                 sql += commonBu.MakeFilterString<string>("a.Name", objSearch.Name, ref parameters);
 
-                var data = commonBu.Search<Application>(objSearch.draw, objSearch.recordPerPage, sql, "ApplicationID", parameters.ToArray());
+                var data = commonBu.Search<Application>(offset, recordPerPage, sql, "ApplicationID", parameters.ToArray());
 
                 return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, data);
             }

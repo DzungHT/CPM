@@ -9,7 +9,7 @@ namespace CybertronFramework.Models
     /// <summary>
     /// Mô tả đối tượng trả về cho DataTable
     /// </summary>
-    public class DataTableResponse
+    public class DataTableResponse<T>
     {
         /// <summary>
         /// Có thể hiểu là trang số draw
@@ -26,7 +26,7 @@ namespace CybertronFramework.Models
         /// <summary>
         /// Mảng dữ liệu
         /// </summary>
-        public IEnumerable data { get; set; }
+        public IEnumerable<T> data { get; set; }
         /// <summary>
         /// Optional: If an error occurs during the running of the server-side processing script, 
         /// you can inform the user of this error by passing back the error message to be displayed using this parameter. 

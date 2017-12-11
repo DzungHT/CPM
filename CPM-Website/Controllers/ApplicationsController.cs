@@ -27,19 +27,14 @@ namespace CPM_Website.Controllers
         public async Task<JsonResult> SearchProcess(ApplicationsViewModel formData)
         {
             ApiClient client = ApiClient.Instance;
-            DataTableResponse dataTableResponse = new DataTableResponse();
+            DataTableResponse<Application> dataTableResponse = new DataTableResponse<Application>();
             try
             {
-                var apiResult = await client.PostApiAsync<JsonResultObject<List<Application>>, object>(Resources.URLResources.SEARCH_APPLICATION, 
-                    new { ApplicationID = 0, Code = StringUtil.NVL(formData.Code), Name = StringUtil.NVL(formData.Name), Description = "" });
+                var apiResult = await client.PostApiAsync<JsonResultObject<DataTableResponse<Application>>, object>(Resources.URLResources.SEARCH_APPLICATION + "?offset=" + formData.DataTable.start + "&recordPerPage=" + formData.DataTable.length, 
+                    new { Code = StringUtil.NVL(formData.Code), Name = StringUtil.NVL(formData.Name), Description = "" });
                 if (apiResult != null && apiResult.IsSuccess)
                 {
-                    List<Application> data = apiResult.Data;
-                    dataTableResponse.data = data;
-                    dataTableResponse.recordsTotal = data.Count;
-                    dataTableResponse.recordsFiltered = data.Count;
-                    dataTableResponse.error = null;
-                    dataTableResponse.draw = formData.DataTable.draw;
+                    dataTableResponse = apiResult.Data;
                 }
 
             } catch (Exception ex)

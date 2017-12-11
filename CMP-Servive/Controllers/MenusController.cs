@@ -5,6 +5,7 @@ using CMP_Servive.Models.Entities;
 using CMP_Servive.Providers.Authentication;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Web.Http;
 
 namespace CMP_Servive.Controllers
@@ -40,21 +41,6 @@ namespace CMP_Servive.Controllers
             {
                 Menu obj = menuBusiness.Get<Menu>(id);
                 return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, obj);
-            }
-            catch (Exception ex)
-            {
-                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
-            }
-        }
-
-        [Route("search")]
-        [HttpGet]
-        public OutPutDTO GetUser([FromBody] Menu objSearch)
-        {
-            try
-            {
-                List<Menu> result = commonBu.FindByProperty<Menu, Menu>(objSearch, "MenuID asc");
-                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
             }
             catch (Exception ex)
             {
@@ -127,6 +113,36 @@ namespace CMP_Servive.Controllers
             {
                 menuBusiness.Delete<Menu>(id);
                 return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
+        }
+
+        [Route("search")]
+        [HttpPost]
+        public OutPutDTO SearchListApplications([FromBody] MenusDTO objSearch, int offset, int recordPerPage)
+        {
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                string sql = "SELECT * FROM Menu m WHERE 1 = 1 ";
+                sql += commonBu.MakeFilterString<int?>("m.ApplicationID", objSearch.ApplicationID, ref parameters);
+                sql += commonBu.MakeFilterString<int?>("m.MenuID", objSearch.MenuID, ref parameters);
+                sql += commonBu.MakeFilterString<int?>("m.Sort_Order", objSearch.Sort_Order, ref parameters);
+                sql += commonBu.MakeFilterString<int?>("m.Status", objSearch.Status, ref parameters);
+                sql += commonBu.MakeFilterString<string>("m.Action", objSearch.Action, ref parameters);
+                sql += commonBu.MakeFilterString<string>("m.Code", objSearch.Code, ref parameters);
+                sql += commonBu.MakeFilterString<string>("m.Controller", objSearch.Controller, ref parameters);
+                sql += commonBu.MakeFilterString<string>("m.Description", objSearch.Description, ref parameters);
+                sql += commonBu.MakeFilterString<string>("m.Name", objSearch.Name, ref parameters);
+                sql += commonBu.MakeFilterString<string>("m.Path", objSearch.Path, ref parameters);
+                sql += commonBu.MakeFilterString<string>("m.Url", objSearch.Url, ref parameters);
+
+                var data = commonBu.Search<Menu>(offset, recordPerPage, sql, "ApplicationID,Sort_Order", parameters.ToArray());
+
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, data);
             }
             catch (Exception ex)
             {
