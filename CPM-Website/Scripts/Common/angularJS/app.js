@@ -1,1 +1,1 @@
-﻿var app = angular.module('CybertronPolicyManagement', []);
+﻿var app = angular.module('CybertronPolicyManagement', ['ui.select2']);

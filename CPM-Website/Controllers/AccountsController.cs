@@ -47,7 +47,7 @@ namespace CPM_Website.Controllers
                 if (apiResult != null && apiResult.IsSuccess)
                 {
                     // Lấy danh sách quyền
-                    //apiResult.Data.Roles = new string[] { "VIEW_HOME", "VIEW_APPLICATION" };
+                    apiResult.Data.Roles = new string[] { "VIEW_HOME", "VIEW_APPLICATION" };
                     string roleStr = string.Join(Constants.ROLE_STRING_SEPERATE, apiResult.Data.Roles);
 
                     var authTicket = new FormsAuthenticationTicket(1, formData.Username, DateTime.Now, DateTime.Now.AddMinutes(20), formData.RememberMe, roleStr);
@@ -60,8 +60,6 @@ namespace CPM_Website.Controllers
                     // Lấy danh sách menu
                     List<Menu> lstMenu = new List<Menu>();
                     var getListMenu = await client.GetApiAsync<JsonResultObject<List<Menu>>>(URLResources.GET_MENU + "?userId=" + apiResult.Data.UserID);
-                    //lstMenu.Add(new Menu() { Name = "Trang chủ", Action = "index", Controller = "home", FontIcon = "fa fa-home" });
-                    //lstMenu.Add(new Menu() { Name = "Danh mục ứng dụng", Action = "index", Controller = "applications", FontIcon = "fa fa-window-restore" });
                     Session["lstMenu"] = getListMenu.Data;
 
                     string ReturnUrl = (string)Session["ReturnUrl"];

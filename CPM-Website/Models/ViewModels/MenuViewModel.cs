@@ -11,7 +11,7 @@ namespace CPM_Website.Models
         public int? MenuID { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
-        public int AplicationID { get; set; }
+        public int ApplicationID { get; set; }
         public DataTableRequest DataTable { get; set; }
     }
 }
