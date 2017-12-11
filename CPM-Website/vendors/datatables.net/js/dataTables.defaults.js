@@ -1,10 +1,10 @@
 ﻿$.extend( $.fn.dataTable.defaults, {
     responsive: true,
     searching: false,
-    ordering: true,
+    ordering: false,
     processing: true,
     serverSide: true,
-    order: [[1, "asc"]],
+    //order: [[1, "asc"]],
     language: {
         url: '/vendors/datatables.net/i18n/vi_VN.js'
     },

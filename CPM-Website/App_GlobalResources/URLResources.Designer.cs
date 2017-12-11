@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option or rebuild the Visual Studio project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class URLResources {
@@ -88,6 +88,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/v1/Category/Resources/delete?id=.
+        /// </summary>
+        internal static string DELETE_RESOURCE {
+            get {
+                return ResourceManager.GetString("DELETE_RESOURCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/v1/Category/Applications/getAll.
         /// </summary>
         internal static string GET_ALL_APPLICATION {
@@ -124,6 +133,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/v1/Category/Resources/get?id=.
+        /// </summary>
+        internal static string GET_RESOURCE {
+            get {
+                return ResourceManager.GetString("GET_RESOURCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/v1/Users/login.
         /// </summary>
         internal static string LOGIN_API {
@@ -151,6 +169,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/v1/Category/Resources/save.
+        /// </summary>
+        internal static string SAVE_RESOURCE {
+            get {
+                return ResourceManager.GetString("SAVE_RESOURCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/v1/Category/Applications/search.
         /// </summary>
         internal static string SEARCH_APPLICATION {
@@ -165,6 +192,15 @@ namespace Resources {
         internal static string SEARCH_MENU {
             get {
                 return ResourceManager.GetString("SEARCH_MENU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to api/v1/Category/Resources/search.
+        /// </summary>
+        internal static string SEARCH_RESOURCE {
+            get {
+                return ResourceManager.GetString("SEARCH_RESOURCE", resourceCulture);
             }
         }
     }

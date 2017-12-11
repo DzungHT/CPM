@@ -47,7 +47,6 @@ namespace CPM_Website.Controllers
                 if (apiResult != null && apiResult.IsSuccess)
                 {
                     // Lấy danh sách quyền
-                    apiResult.Data.Roles = new string[] { "VIEW_HOME", "VIEW_APPLICATION" };
                     string roleStr = string.Join(Constants.ROLE_STRING_SEPERATE, apiResult.Data.Roles);
 
                     var authTicket = new FormsAuthenticationTicket(1, formData.Username, DateTime.Now, DateTime.Now.AddMinutes(20), formData.RememberMe, roleStr);
@@ -65,11 +64,13 @@ namespace CPM_Website.Controllers
                     string ReturnUrl = (string)Session["ReturnUrl"];
                     return Redirect(ReturnUrl);
                 }
-                return RedirectToAction("login");
+                ModelState.AddModelError(string.Empty, "Đăng nhập không thành công!");
+                return PartialView("login");
             }
             catch (Exception ex)
             {
-                return RedirectToAction("login");
+                ModelState.AddModelError(string.Empty, "Đăng nhập không thành công!");
+                return PartialView("login");
             }
         }
         #endregion

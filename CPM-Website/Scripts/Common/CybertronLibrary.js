@@ -14,6 +14,9 @@
     $('#' + formId + ' textarea').each(function (x, y) {
         data[y.name] = y.value;
     });
+    $('#' + formId + ' select').each(function (x, y) {
+        data[y.name] = y.value;
+    });
     $('#' + formId + ' input[name=__RequestVerificationToken]').each(function (x, y) {
         data[y.name] = y.value;
     });
