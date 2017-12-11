@@ -209,7 +209,14 @@ namespace CPM_Website.Controllers
                 if (!Permission.HasPermission(RoleCodes.Roles.UPDATE))
                 {
                     var apiResult = await client.PostApiAsync<JsonResultObject<PermissionViewModel>, PermissionViewModel>("api/v1/Roles/addPermissions", app);
-                    ViewBag.Status = "1";
+                    if (apiResult.IsSuccess)
+                    {
+                        ViewBag.Status = "1";
+                    }
+                    else
+                    {
+                        ViewBag.Status = "-1";
+                    }
                 }
                 else
                 {

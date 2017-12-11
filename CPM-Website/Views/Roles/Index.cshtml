@@ -67,7 +67,7 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content table-responsive">
-                        <table id="searchResult" class="table table-bordered table-striped table-hover">
+                        <table id="searchResult" class="table table-bordered table-striped table-hover" width="100%">
                             <thead>
                                 <tr>
                                     <th>STT</th>
@@ -223,10 +223,8 @@
                             return `<div class="checkbox">
     <label>
         <input type="checkbox" class="flat"
-               name="permission"
-               value="` + data.PermissionID + `"
-               ng-checked="selectPermission.selection.indexOf(+ data.PermissionID +) > -1"
-               onchange="alert('adf')">
+               name="permission[]"
+               value="` + data.PermissionID + `">
     </label>
 </div>`;
                         }
@@ -238,8 +236,6 @@
                         checkboxClass: 'icheckbox_flat-green',
                         radioClass: 'iradio_flat-green'
                     });
-                    var scope = angular.element($('#ApplicationApp')).scope();
-                    scope.$apply();
                 }
             });
 
@@ -256,7 +252,11 @@
                 var url = '/Roles/AddPermissions';
                 var formData = getFormAsJson('saveForm');
                 formData.RoleID = $scope.dataSave.RoleID;
-                formData.Selection = $scope.selectPermission.Selection;
+                var ids = [];
+                $('#selectPermissionTbl input:checked').each(function () {
+                    ids.push(this.value);
+                });
+                formData.Selection = ids;
                 tctDeferredAjax(flag, url, formData).fail(function () {
                     alert('Có lỗi xảy ra!');
                     tctResetProgress();
@@ -391,22 +391,7 @@
             }, 'Bạn muốn xóa bản ghi này ?');
         }
 
-        function toggleSelection(id) {
-            debugger;
-            var scope = angular.element($('#ApplicationApp')).scope();
-            var idx = scope.selectPermission.selection.indexOf(id);
-
-            // Is currently selected
-            if (idx > -1) {
-                scope.selectPermission.Selection.splice(idx, 1);
-            }
-
-            // Is newly selected
-            else {
-                scope.selectPermission.Selection.push(id);
-            }
-            console.log(scope.selectPermission.Selection);
-        };
+        
         
     </script>
 }

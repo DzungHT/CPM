@@ -201,17 +201,17 @@ namespace CMP_Servive.Controllers
             try
             {
                 List<SqlParameter> parameters = new List<SqlParameter>();
-                string sql = @"INSERT INTO RolePermission (PermissionID, RoleID) Value(@RoleID, @PermissionID)";
+                string sql = "";
                 foreach (var PermissionID in permission.Selection)
                 {
                     string param = "@PermissionID" + parameters.Count;
-                    sql += @" INSERT INTO RolePermission (PermissionID, RoleID) Value(@RoleID, " + param +") ";
+                    sql += @" INSERT INTO RolePermission (RoleID, PermissionID) Values(@RoleID, " + param +") ";
                     parameters.Add(new SqlParameter(param, PermissionID));
                 }
                 parameters.Add(new SqlParameter("@RoleID", permission.RoleID));
                 int n = commonBu.getDbContext().Database.ExecuteSqlCommand(sql, parameters.ToArray());
                 trans.Commit();
-                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, n);
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
             }
             catch (Exception ex)
             {

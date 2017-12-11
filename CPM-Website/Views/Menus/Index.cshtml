@@ -35,7 +35,7 @@
                             <div class="col-sm-4">
                                 <select class="form-control" ui-select2 ng-model="dataSearch.ApplicationID" id="ApplicationID" onchange="search()">
                                 <option>--Chọn tất cả--</option>
-                                <option ng-repeat="x in listApplication" ng-value="{{x.ApplicationID}}">{{x.Name}}</option>
+                                <option ng-repeat="x in listApplication" ng-value="{{x.ApplicationID}}">{{x.Code}} - {{x.Name}}</option>
                                 </select>
                             </div>
                             <label class="control-label col-sm-2">

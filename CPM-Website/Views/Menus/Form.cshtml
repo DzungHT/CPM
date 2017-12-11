@@ -48,7 +48,7 @@
                 <div class="col-sm-4">
                     <select class="form-control validate[required]" ui-select2 ng-model="dataSave.ApplicationID" id="ApplicationID">
                         <option>--Chọn--</option>
-                        <option ng-repeat="x in listApplication" ng-value="{{x.ApplicationID}}">{{x.Name}}</option>
+                        <option ng-repeat="x in listApplication" ng-value="{{x.ApplicationID}}">{{x.Code}} - {{x.Name}}</option>
                     </select>
                 </div>
                 <label class="control-label col-sm-2">
