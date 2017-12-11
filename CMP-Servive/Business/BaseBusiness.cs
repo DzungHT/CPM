@@ -134,8 +134,8 @@ namespace CMP_Servive.Business
                                             offset, 
                                             recordPerPage
                                             );
-            List<T> data = set.SqlQuery(command, parameters).ToList();
-            int recordsTotal = db.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) as recordsTotal FROM {0}", typeof(T).Name)).FirstOrDefault<int>();
+            List<T> data = db.Database.SqlQuery<T>(command, parameters).ToList();
+            //int recordsTotal = db.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) as recordsTotal FROM {0}", typeof(T).Name)).FirstOrDefault<int>();
 
             List<SqlParameter> parameters2 = new List<SqlParameter>();
             foreach (var item in parameters)
@@ -143,7 +143,7 @@ namespace CMP_Servive.Business
                 parameters2.Add(new SqlParameter(item.ParameterName, item.Value));
             }
             int recordsFiltered = db.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) as recordsFiltered FROM ({0}) tabl", sql), parameters2.ToArray()).FirstOrDefault<int>();
-
+            int recordsTotal = recordsFiltered;
             var result = new CybertronPagedList<T>(offset, recordsTotal, recordsFiltered, data);
             return result;
         }
