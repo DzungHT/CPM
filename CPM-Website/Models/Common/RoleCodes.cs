@@ -104,5 +104,62 @@ namespace CPM_Website.Models
             /// </summary>
             public const string DELETE = D + RESOURCE;
         }
+        public class Roles : Operator
+        {
+            /// <summary>
+            /// Mã tài nguyên
+            /// </summary>
+            private const string RESOURCE = "_ROLE";
+
+            /// <summary>
+            /// Quyền tác động vào action index
+            /// </summary>
+            public const string INDEX = V + RESOURCE;
+
+            /// <summary>
+            /// Quyền tác động vào chức năng tìm kiếm
+            /// </summary>
+            public const string SEARCH = V + RESOURCE;
+
+            /// <summary>
+            /// Quyền tác động vào chức năng insert
+            /// </summary>
+            public const string INSERT = C + RESOURCE;
+
+            /// <summary>
+            /// Quyền tác động vào chức năng delete
+            /// </summary>
+            public const string DELETE = D + RESOURCE;
+
+            public const string UPDATE = U + RESOURCE;
+        }
+
+        public class Permissions : Operator
+        {
+            /// <summary>
+            /// Mã tài nguyên
+            /// </summary>
+            private const string RESOURCE = "_PERMISSION";
+
+            /// <summary>
+            /// Quyền tác động vào action index
+            /// </summary>
+            public const string INDEX = V + RESOURCE;
+
+            /// <summary>
+            /// Quyền tác động vào chức năng tìm kiếm
+            /// </summary>
+            public const string SEARCH = V + RESOURCE;
+
+            /// <summary>
+            /// Quyền tác động vào chức năng insert
+            /// </summary>
+            public const string INSERT = C + RESOURCE;
+
+            /// <summary>
+            /// Quyền tác động vào chức năng delete
+            /// </summary>
+            public const string DELETE = D + RESOURCE;
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace CPM_Website.Controllers
             return View();
         }
 
-        [CybertronAuthorize(Roles = RoleCodes.Resources.INDEX)]
+        [CybertronAuthorize(Roles = RoleCodes.Resources.SEARCH)]
         public async Task<JsonResult> SearchProcess(ResourceViewModel formData)
         {
             ApiClient client = ApiClient.Instance;

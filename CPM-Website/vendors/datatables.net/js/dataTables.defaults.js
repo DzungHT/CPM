@@ -19,6 +19,6 @@
                     <"col-md-4"p>>
     `,
     drawCallback: function (settings) {
-        this.api().columns.adjust().responsive.recalc();
+        this.api().responsive.recalc();
     }
 } );

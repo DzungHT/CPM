@@ -228,6 +228,7 @@
     <Compile Include="Controllers\AuthorizationController.cs" />
     <Compile Include="Controllers\CategorysController.cs" />
     <Compile Include="Controllers\MenusController.cs" />
+    <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -237,8 +238,10 @@
     <Compile Include="Helper\RoleCodes.cs" />
     <Compile Include="Helper\TransferData.cs" />
     <Compile Include="Models\CybertronPagedList.cs" />
-    <Compile Include="Models\DTO\MenusDTO.cs" />
+    <Compile Include="Models\DTO\MenuDTO.cs" />
+    <Compile Include="Models\DTO\PermissionDTO.cs" />
     <Compile Include="Models\DTO\ResourceDTO.cs" />
+    <Compile Include="Models\DTO\RoleDTO.cs" />
     <Compile Include="Models\Entities\ActionLog.cs" />
     <Compile Include="Models\Entities\Application.cs" />
     <Compile Include="Models\Entities\dbContext.cs" />
@@ -360,11 +363,13 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>65103</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:8880/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:8880/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -97,6 +97,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/v1/Roles/delete?id=.
+        /// </summary>
+        internal static string DELETE_ROLE {
+            get {
+                return ResourceManager.GetString("DELETE_ROLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/v1/Category/Applications/getAll.
         /// </summary>
         internal static string GET_ALL_APPLICATION {
@@ -142,6 +151,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/v1/Roles/get?id=.
+        /// </summary>
+        internal static string GET_ROLE {
+            get {
+                return ResourceManager.GetString("GET_ROLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/v1/Users/login.
         /// </summary>
         internal static string LOGIN_API {
@@ -178,6 +196,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/v1/Roles/save.
+        /// </summary>
+        internal static string SAVE_ROLE {
+            get {
+                return ResourceManager.GetString("SAVE_ROLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/v1/Category/Applications/search.
         /// </summary>
         internal static string SEARCH_APPLICATION {
@@ -201,6 +228,15 @@ namespace Resources {
         internal static string SEARCH_RESOURCE {
             get {
                 return ResourceManager.GetString("SEARCH_RESOURCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to api/v1/Roles/search.
+        /// </summary>
+        internal static string SEARCH_ROLE {
+            get {
+                return ResourceManager.GetString("SEARCH_ROLE", resourceCulture);
             }
         }
     }
