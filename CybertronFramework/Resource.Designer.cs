@@ -61,7 +61,7 @@ namespace CybertronFramework {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://localhost:65103.
+        ///   Looks up a localized string similar to http://localhost:8880.
         /// </summary>
         internal static string ServiceUriBase {
             get {

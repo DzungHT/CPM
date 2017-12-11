@@ -341,13 +341,22 @@ namespace CMP_Servive.Controllers
         }
 
         [Route("Resources/search")]
-        [HttpGet]
-        public OutPutDTO SearchListResources([FromBody] Resource objSearch)
+        [HttpPost]
+        public OutPutDTO SearchListResources([FromBody] ResourceDTO objSearch, int offset, int recordPerPage)
         {
             try
             {
-                List<Resource> result = commonBu.FindByProperty<Resource, Resource>(objSearch, "ResourceID asc");
-                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                string sql = "SELECT * FROM Resource a WHERE 1 = 1 ";
+                sql += commonBu.MakeFilterString("a.ApplicationID", objSearch.ApplicationID, ref parameters);
+                sql += commonBu.MakeFilterString("a.ResourceID", objSearch.ResourceID, ref parameters);
+                sql += commonBu.MakeFilterString("a.Code", objSearch.Code, ref parameters);
+                sql += commonBu.MakeFilterString("a.Name", objSearch.Name, ref parameters);
+                sql += commonBu.MakeFilterString("a.Description", objSearch.Description, ref parameters);
+
+                var data = commonBu.Search<Resource>(offset, recordPerPage, sql, "Code,ResourceID", parameters.ToArray());
+
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, data);
             }
             catch (Exception ex)
             {

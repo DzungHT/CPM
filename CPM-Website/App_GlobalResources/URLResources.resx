@@ -126,6 +126,9 @@
   <data name="DELETE_MENU" xml:space="preserve">
     <value>api/v1/Menu/delete?id=</value>
   </data>
+  <data name="DELETE_RESOURCE" xml:space="preserve">
+    <value>api/v1/Category/Resources/delete?id=</value>
+  </data>
   <data name="GET_ALL_APPLICATION" xml:space="preserve">
     <value>api/v1/Category/Applications/getAll</value>
   </data>
@@ -138,6 +141,9 @@
   <data name="GET_MENU_BY_ID" xml:space="preserve">
     <value>api/v1/Menu/get?id=</value>
   </data>
+  <data name="GET_RESOURCE" xml:space="preserve">
+    <value>api/v1/Category/Resources/get?id=</value>
+  </data>
   <data name="LOGIN_API" xml:space="preserve">
     <value>api/v1/Users/login</value>
   </data>
@@ -147,10 +153,16 @@
   <data name="SAVE_MENU" xml:space="preserve">
     <value>api/v1/Menu/save</value>
   </data>
+  <data name="SAVE_RESOURCE" xml:space="preserve">
+    <value>api/v1/Category/Resources/save</value>
+  </data>
   <data name="SEARCH_APPLICATION" xml:space="preserve">
     <value>api/v1/Category/Applications/search</value>
   </data>
   <data name="SEARCH_MENU" xml:space="preserve">
     <value>api/v1/Menu/search</value>
+  </data>
+  <data name="SEARCH_RESOURCE" xml:space="preserve">
+    <value>api/v1/Category/Resources/search</value>
   </data>
 </root>

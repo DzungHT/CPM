@@ -122,7 +122,7 @@ namespace CMP_Servive.Business
             {
                 for (int i = 0; i < ordersArr.Length; i++)
                 {
-                    ordersArr[0] = "tabl." + ordersArr[0].Trim();
+                    ordersArr[i] = "tabl." + ordersArr[i].Trim();
                 }
                 orderClause = "ORDER BY " + string.Join(",", ordersArr);
             }
