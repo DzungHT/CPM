@@ -48,12 +48,12 @@ namespace CMP_Servive.Controllers
         }
 
         [Route("search")]
-        [HttpGet]
-        public OutPutDTO GetUser([FromBody] Menu objSearch)
+        [HttpPost]
+        public OutPutDTO SearchMenu([FromBody] MenuDTO objSearch)
         {
             try
             {
-                List<Menu> result = commonBu.FindByProperty<Menu, Menu>(objSearch, "MenuID asc");
+                List<Menu> result = commonBu.FindByProperty<Menu, MenuDTO>(objSearch, "MenuID asc");
                 return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
             }
             catch (Exception ex)

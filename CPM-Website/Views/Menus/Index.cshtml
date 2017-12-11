@@ -3,11 +3,11 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row" id="ApplicationApp" ng-controller="ApplicationController">
+<div class="row" id="MenuApp" ng-controller="MenuController">
     <div id=formIndex>
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="title_left">
-                <h3>Quản lý ứng dụng</h3>
+                <h3>Quản lý menu</h3>
             </div>
             <div class="title_right">
                 <button type="button" class="btn btn-success btn-add" onclick="goInsert()">
@@ -28,15 +28,35 @@
                     <br />
                     <form id="searchForm" class="form-horizontal form-label-left">
                         @Html.AntiForgeryToken()
+                        
                         <div class="form-group no-padding">
                             <label class="control-label col-sm-2">
-                                Mã ứng dụng
+                                Ứng dụng
+                            </label>
+                            <div class="col-sm-4">
+                                <select class="form-control"
+                                        ui-select2
+                                        ng-model="dataSearch.ApplicationID"
+                                        id="ApplicationID"
+                                        placeholder="Chọn ứng dụng" ng-change="onChange()">
+                                <option></option>
+                                <option ng-repeat="x in listApplication" ng-value="{{x.ApplicationID}}">{{x.Name}}</option>
+                                </select>
+                            </div>
+                            <label class="control-label col-sm-2">
+                            </label>
+                            <div class="col-sm-4">
+                            </div>
+                        </div>
+                        <div class="form-group no-padding">
+                            <label class="control-label col-sm-2">
+                                Mã menu
                             </label>
                             <div class="col-sm-4">
                                 <input ng-model="dataSearch.Code" id="CodeFilter" name="Code" type="text" class="form-control validate[optional,maxSize[255]]" placeholder="Mã ứng dụng">
                             </div>
                             <label class="control-label col-sm-2">
-                                Tên ứng dụng
+                                Tên menu
                             </label>
                             <div class="col-sm-4">
                                 <input ng-model="dataSearch.Name" id="NameFilter" name="Name" type="text" class="form-control validate[optional,maxSize[255]]" placeholder="Tên ứng dụng">
@@ -71,8 +91,9 @@
                         <thead>
                             <tr>
                                 <th>STT</th>
-                                <th>Mã ứng dụng</th>
-                                <th>Tên ứng dụng</th>
+                                <th>Mã menu</th>
+                                <th>Tên menu</th>
+                                <th>Url</th>
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -83,23 +104,25 @@
         </div>
     </div>
     <div id=formSave style="display:none">
-        @RenderPage("Form.cshtml");
+        @*@RenderPage("Form.cshtml");*@
     </div>
 </div>
 <div id="flagSaveResult" style="display:none"></div>
 
-@section script{
-    <script src="~/Scripts/Common/CybertronLibrary.js"></script>    <script>
-        var ctrl = app.controller('ApplicationController', ['$scope', function ($scope) {
+@section script{   
+    <script>
+        var ctrl = app.controller('MenuController', ['$scope', function ($scope) {
             $scope.dataSearch = {};
             $scope.dataSave = {};
+            $scope.listApplication = {};
             $scope.dataTable = $("#searchResult").DataTable({
                 order: [[2, "asc"]],
                 ajax: {
-                    url: '/applications/searchProcess',
+                    url: '/menus/searchProcess',
                     type: 'POST',
                     data: function (d) {
                         var data = new Object();
+                        data.ApplicationID = $scope.dataSearch.ApplicationID;
                         data.Code = $scope.dataSearch.Code;
                         data.Name = $scope.dataSearch.Name;
                         data.DataTable = d;
@@ -120,16 +143,17 @@
                     },
                     { data: 'Code', className: "text-center" },
                     { data: 'Name' },
+                    { data: 'Url' },
                     {
                         searchable: false,
                         orderable: false,
                         data: null,
                         className: "text-center",
                         render: function (data, type, row, cell) {
-                            return '<a href="javascript:;" onclick="goEdit(' + data.ApplicationID + ')" class="text-success" style="margin-right: 7px">'
+                            return '<a href="javascript:;" onclick="goEdit(' + data.MenuID + ')" class="text-success" style="margin-right: 7px">'
                                    + '<i class="fa fa-edit fa-2x" title="Sửa"></i>'
                                    +'</a>'
-                                   + '<a href="javascript:;" onclick= "deleteRow(' + data.ApplicationID + ')" class="red">'
+                                   + '<a href="javascript:;" onclick= "deleteRow(' + data.MenuID + ')" class="red">'
                                    +'<i class="fa fa-remove fa-2x" title="Xóa"></i>'
                                    +'</a>';
                         }
@@ -137,14 +161,19 @@
                 ]
             });
         }]);
+        $(document).ready(function () {
+            var scope = angular.element($('#MenuApp')).scope();
+            scope.listApplication = 
+            scope.$apply();
+        });
         function search() {
-            var scope = angular.element($('#ApplicationApp')).scope();
+            var scope = angular.element($('#MenuApp')).scope();
             if ($('#searchForm').validationEngine("validate")) {
                 scope.dataTable.ajax.reload();
             }
         }
         function onResetForm(e) {
-            var scope = angular.element($('#ApplicationApp')).scope();
+            var scope = angular.element($('#MenuApp')).scope();
             if (e === 'save') {
                 scope.dataSave.ApplicationID = "";
                 scope.dataSave.Code = "";
@@ -158,7 +187,7 @@
         }
         function deleteRow(id) {
             tctConfirm(function () {
-                var url = '/applications/delete';
+                var url = '/menus/delete';
                 var formData = getFormAsJson('searchForm');
                 var flag = 'flagSaveResult';
                 formData.id = id;
@@ -171,10 +200,10 @@
             }, 'Bạn muốn xóa bản ghi này ?');
         }
         function goEdit(id) {
-            var url = "/applications/prepareUpdate?id=" + id;
+            var url = "/menus/prepareUpdate?id=" + id;
             var data = '';
             tctDeferredAjaxGet(url, data).done(function (data) {
-                var scope = angular.element($('#ApplicationApp')).scope();
+                var scope = angular.element($('#MenuApp')).scope();
                 scope.dataSave.ApplicationID = data.ApplicationID;
                 scope.dataSave.Code = data.Code;
                 scope.dataSave.Name = data.Name;
@@ -201,10 +230,10 @@
         function actionSave() {
             if ($('#saveForm').validationEngine("validate")) {
                 tctConfirm(function () {
-                    var url = '/applications/save';
+                    var url = '/menus/save';
                     var formData = getFormAsJson('saveForm');
                     var flag = 'flagSaveResult';
-                    var scope = angular.element($('#ApplicationApp')).scope();
+                    var scope = angular.element($('#MenuApp')).scope();
                     formData.ApplicationID = scope.dataSave.ApplicationID;
                     console.log('data save', formData);
                     tctDeferredAjax(flag, url, formData).fail(function () {

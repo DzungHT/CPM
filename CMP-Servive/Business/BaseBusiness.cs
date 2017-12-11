@@ -92,12 +92,12 @@ namespace CMP_Servive.Business
                 {
                     object value = proK.GetValue(KObject);
                     Type type = proK.PropertyType;
-                    if (type == typeof(Int32) && (int)value != 0)
+                    if (type == typeof(Int32) && value != null)
                     {
                         condition += " AND t." + proK.Name + " = {" + i.ToString() + "}";
                         parameters[i] = (int)value;
                         i++;
-                    } else if (type == typeof(String) && value.ToString().Trim() != "")
+                    } else if (type == typeof(String) && value != null )
                     {
                         condition += " AND LOWER(t." + proK.Name + ") like {" + i.ToString() + "}";
                         parameters[i] ="%" + value.ToString().Trim().ToLower() + "%";

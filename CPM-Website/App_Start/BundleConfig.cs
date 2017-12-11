@@ -17,6 +17,7 @@ namespace CPM_Website
                             .Include("~/vendors/nprogress/nprogress.css")
                             .Include("~/vendors/iCheck/skins/flat/green.css", new CssRewriteUrlTransform())
                             .Include("~/Content/Common/custom.min.css")
+                            .Include("~/Scripts/Common/ngselect2/select2.css")
                             .Include("~/Content/Common/mycss.css")
                         );
 
@@ -91,6 +92,8 @@ namespace CPM_Website
             bundles.Add(new ScriptBundle("~/js/angularJS")
                             .Include("~/Scripts/Common/angularJS/angular.js")
                             .Include("~/Scripts/Common/angularJS/app.js")
+                            .Include("~/Scripts/Common/ngselect2/select2.js")
+                            .Include("~/Scripts/Common/ngselect2/angular-ui-select2/select2.js")
                         );
             bundles.Add(new ScriptBundle("~/js/inlineValidation")
                             .Include("~/Scripts/Common/inlineValidation/jquery.validationEngine_vi_VN.js")
