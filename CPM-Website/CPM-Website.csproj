@@ -119,13 +119,16 @@
     <Content Include="Content\Common\font-awesome.css" />
     <Content Include="Content\Common\font-awesome.min.css" />
     <Content Include="Content\Common\font-glyphicons.css" />
+    <Content Include="Content\Common\mycss.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-filetypes-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-regular.svg" />
     <Content Include="fonts\glyphicons-social-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Avatar\smile-icon-facebook.png" />
     <Content Include="Images\Icons\glyphicons-715-user-structure.png" />
+    <Content Include="Images\Icons\loading.gif" />
     <Content Include="Scripts\Common\angularJS\angular-mocks.js" />
     <Content Include="Scripts\Common\angularJS\angular.js" />
     <Content Include="Scripts\Common\angularJS\angular.min.js" />
@@ -137,6 +140,11 @@
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\Common\jquery\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\Common\CybertronLibrary.js" />
+    <Content Include="Scripts\Common\inlineValidation\jquery.validationEngine.js" />
+    <Content Include="Scripts\Common\inlineValidation\jquery.validationEngine_vi_VN.js" />
+    <Content Include="Scripts\Common\inlineValidation\validationEngine.jquery.css" />
+    <Content Include="Scripts\Common\jquery-confirm\jquery-confirm.min.css" />
+    <Content Include="Scripts\Common\jquery-confirm\jquery-confirm.min.js" />
     <Content Include="vendors\datatables.net\i18n\en_US.js" />
     <Content Include="vendors\datatables.net\i18n\vi_VN.js" />
     <Content Include="vendors\datatables.net\js\dataTables.defaults.js" />
@@ -2403,7 +2411,9 @@
     <Content Include="vendors\validator\fv.css" />
     <Content Include="vendors\validator\multifield.js" />
     <Content Include="vendors\validator\validator.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Accounts\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -2572,6 +2582,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Common\JsonResultObject.cs" />
+    <Compile Include="Models\Common\Permission.cs" />
     <Compile Include="Models\Entities\Application.cs" />
     <Compile Include="Models\Entities\Menu.cs" />
     <Compile Include="Models\Entities\OAuthDTO.cs" />
@@ -2619,6 +2630,7 @@
     <Content Include="Views\Shared\_TopNavigation.cshtml" />
     <Content Include="Views\Shared\_Unauthorized.cshtml" />
     <Content Include="Views\Applications\Form.cshtml" />
+    <Content Include="Views\Shared\_SaveResult.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

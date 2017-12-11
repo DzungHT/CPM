@@ -70,11 +70,56 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/v1/Category/Applications/delete?id=.
+        /// </summary>
+        internal static string DELETE_APPLICATION {
+            get {
+                return ResourceManager.GetString("DELETE_APPLICATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to api/v1/Category/Applications/get?id=.
+        /// </summary>
+        internal static string GET_APPLICATION {
+            get {
+                return ResourceManager.GetString("GET_APPLICATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to api/v1/Menu/getListByUser.
+        /// </summary>
+        internal static string GET_MENU {
+            get {
+                return ResourceManager.GetString("GET_MENU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/v1/Users/login.
         /// </summary>
         internal static string LOGIN_API {
             get {
                 return ResourceManager.GetString("LOGIN_API", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to api/v1/Category/Applications/save.
+        /// </summary>
+        internal static string SAVE_APPLICATION {
+            get {
+                return ResourceManager.GetString("SAVE_APPLICATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to api/v1/Category/Applications/search.
+        /// </summary>
+        internal static string SEARCH_APPLICATION {
+            get {
+                return ResourceManager.GetString("SEARCH_APPLICATION", resourceCulture);
             }
         }
     }

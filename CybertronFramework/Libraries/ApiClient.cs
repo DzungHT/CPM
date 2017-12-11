@@ -92,7 +92,7 @@ namespace CybertronFramework.Libraries
         /// <typeparam name="TResult">Kiểu dữ liệu trả về của Api</typeparam>
         /// <param name="url">Đường dẫn đến Api. Đường dẫn được tính từ sau tên domain</param>
         /// <returns>Trả về một đối tượng có kiểu TResult</returns>
-        public async Task<TResult> GetApiAsync<TResult>(string url, string token)
+        public async Task<TResult> GetApiAsync<TResult>(string url)
         {
             TResult result = default(TResult);
             try

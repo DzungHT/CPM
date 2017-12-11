@@ -3,101 +3,97 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row" ng-controller="ApplicationController">
-    <div class="page-title">
-        <div class="title_left">
-            <h3>Application</h3>
+<div class="row" id="ApplicationApp" ng-controller="ApplicationController">
+    <div id=formIndex>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="title_left">
+                <h3>Quản lý ứng dụng</h3>
+            </div>
+            <div class="title_right">
+                <button type="button" class="btn btn-success btn-add" onclick="goInsert()">
+                    <span class="glyphicons glyphicons-plus-sign"></span>
+                    Thêm mới
+                </button>
+            </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="title_right">
-            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Go!</button>
-                    </span>
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Điều kiện tìm kiếm</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
+                    <form id="searchForm" class="form-horizontal form-label-left">
+                        @Html.AntiForgeryToken()
+                        <div class="form-group no-padding">
+                            <label class="control-label col-sm-2">
+                                Mã ứng dụng
+                            </label>
+                            <div class="col-sm-4">
+                                <input ng-model="appSearch.Code" id="CodeFilter" name="Code" type="text" class="form-control validate[optional,maxSize[255]]" placeholder="Mã ứng dụng">
+                            </div>
+                            <label class="control-label col-sm-2">
+                                Tên ứng dụng
+                            </label>
+                            <div class="col-sm-4">
+                                <input ng-model="appSearch.Name" id="NameFilter" name="Name" type="text" class="form-control validate[optional,maxSize[255]]" placeholder="Tên ứng dụng">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="text-right" style="padding-right: 5px;">
+                                <button type="button" class="btn btn-default" onclick="search()">
+                                    <span class="glyphicons glyphicons-search green"></span>
+                                    Tìm kiếm
+                                </button>
+                                <button type="button" class="btn btn-default" onclick="onResetForm()">
+                                    <span class="glyphicons glyphicons-remove red"></span>
+                                    Xóa bộ lọc
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Kết quả tìm kiếm</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content table-responsive">
+                    <table id="searchResult" class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã ứng dụng</th>
+                                <th>Tên ứng dụng</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Điều kiện tìm kiếm</h2>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <br />
-                <form id="searchForm" class="form-horizontal form-label-left">
-
-                    <div class="row">
-                        <div class="col-md-5 col-md-offset-1">
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Mã ứng dụng
-                                </label>
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input id="CodeFilter" name="Code" type="text" class="form-control" placeholder="Mã ứng dụng">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Tên ứng dụng
-                                </label>
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input id="NameFilter" name="Name" type="text" class="form-control" placeholder="Tên ứng dụng">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="ln_solid"></div>
-                    <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 text-center">
-                            <button type="button" class="btn btn-primary" ng-click="search()">
-                                <span class="glyphicons glyphicons-search"></span>
-                                Tìm kiếm
-                            </button>
-                            <button type="button" class="btn btn-success" ng-click="">
-                                <span class="glyphicons glyphicons-plus-sign"></span>
-                                Thêm mới
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Kết quả tìm kiếm</h2>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content table-responsive">
-                <table id="searchResult" class="table table-bordered table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Thao tác</th>
-                            <th>Mã ứng dụng</th>
-                            <th>Tên ứng dụng</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
+    <div id=formSave style="display:none">
+        @RenderPage("Form.cshtml");
     </div>
 </div>
+<div id="flagSaveResult" style="display:none"></div>
 
 @section script{
     <script src="~/Scripts/Common/CybertronLibrary.js"></script>
     <script>
         var ctrl = app.controller('ApplicationController', ['$scope', function ($scope) {
+            $scope.appSearch = {};
+            $scope.appSave = {};
             $scope.dataTable = $("#searchResult").DataTable({
                 responsive: true,
                 order: [[2, "asc"]],
@@ -105,7 +101,11 @@
                     url: '/applications/searchProcess',
                     type: 'POST',
                     data: function (d) {
-                        return { Code: $('#Code').val(), Name: $('#Name').val(), DataTable: d };
+                        var data = new Object();
+                        data.Code = $scope.appSearch.Code;
+                        data.Name = $scope.appSearch.Name;
+                        data.DataTable = d;
+                        return data;
                     }
                 },
                 columns: [
@@ -120,31 +120,96 @@
                             return stt;
                         }
                     },
+                    { data: 'Code', className: "text-center" },
+                    { data: 'Name' },
                     {
                         searchable: false,
                         orderable: false,
                         data: null,
                         className: "text-center",
                         render: function (data, type, row, cell) {
-                            return `<a href="javascript:;" class="text-success" style="margin-right: 7px">
-                                    <i class="fa fa-edit fa-2x" title="Sửa"></i>
-                                </a>
-                                <a href="javascript:;" class="red">
-                                    <i class="fa fa-remove fa-2x" title="Xóa"></i>
-                                </a>`;
+                            return '<a href="javascript:;" onclick="goEdit(' + data.ApplicationID + ')" class="text-success" style="margin-right: 7px">'
+                                   + '<i class="fa fa-edit fa-2x" title="Sửa"></i>'
+                                   +'</a>'
+                                   + '<a href="javascript:;" onclick= "deleteRow(' + data.ApplicationID + ')" class="red">'
+                                   +'<i class="fa fa-remove fa-2x" title="Xóa"></i>'
+                                   +'</a>';
                         }
                     },
-                    { data: 'Code', className: "text-center" },
-                    { data: 'Name' }
                 ]
             });
-            angular.element(document).ready(function () {
-                NProgress.done();
-            });
-
-            $scope.search = function () {
-                $scope.dataTable.ajax.reload();
-            }
         }]);
+        function search() {
+            var scope = angular.element($('#ApplicationApp')).scope();
+            if ($('#searchForm').validationEngine("validate")) {
+                scope.dataTable.ajax.reload();
+            }
+        }
+        function onResetForm() {
+            var scope = angular.element($('#ApplicationApp')).scope();
+            scope.appSearch.Code = "";
+            scope.appSearch.Name = "";
+            scope.$apply();
+        }
+        function deleteRow(id) {
+            tctConfirm(function () {
+                var url = '/applications/delete';
+                var formData = getFormAsJson('searchForm');
+                var flag = 'flagSaveResult';
+                formData.id = id;
+                tctDeferredAjax(flag, url, formData).fail(function () {
+                    alert('Hết phiên làm việc!');
+                    tctResetProgress();
+                }).done(function () {
+                    search();
+                });
+            }, 'Bạn muốn xóa bản ghi này ?');
+        }
+        function goEdit(id) {
+            var url = "/applications/prepareUpdate?id=" + id;
+            var data = '';
+            tctDeferredAjaxGet(url, data).done(function (data) {
+                var scope = angular.element($('#ApplicationApp')).scope();
+                scope.appSave.ApplicationID = data.ApplicationID;
+                scope.appSave.Code = data.Code;
+                scope.appSave.Name = data.Name;
+                scope.appSave.Description = data.Description;
+                scope.$apply();
+                goInsert(true);
+            }).fail(function () {
+                alert('Có lỗi xảy ra!');
+                tctResetProgress();
+            });
+        }
+        function goInsert(e) {
+            tctToggleFieldset($('#formIndex'));
+            if (!e) {
+                tctResetForm('saveForm');
+            }
+            tctToggleFieldset($('#formSave'));
+        }
+        function goSearch() {
+            tctToggleFieldset($('#formIndex'));
+            tctToggleFieldset($('#formSave'));
+            search();
+        }
+        function actionSave() {
+            if ($('#saveForm').validationEngine("validate")) {
+                tctConfirm(function () {
+                    var url = '/applications/save';
+                    var formData = getFormAsJson('saveForm');
+                    var flag = 'flagSaveResult';
+                    var scope = angular.element($('#ApplicationApp')).scope();
+                    formData.ApplicationID = scope.appSave.ApplicationID;
+                    console.log('data save', formData);
+                    tctDeferredAjax(flag, url, formData).fail(function () {
+                        alert('Có lỗi xảy ra!');
+                        tctResetProgress();
+                    }).done(function () {
+                        goSearch();
+                    });
+                }, 'Bạn có muốn thực hiện ?');
+            }
+        }
     </script>
 }

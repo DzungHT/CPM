@@ -127,4 +127,7 @@
   <data name="FontIcon" xml:space="preserve">
     <value>glyphicons glyphicons-user-structure</value>
   </data>
+  <data name="MessageNonPermission" xml:space="preserve">
+    <value>Bạn không có quyền truy cập chức năng này!</value>
+  </data>
 </root>

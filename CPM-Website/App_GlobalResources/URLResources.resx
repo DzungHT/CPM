@@ -120,7 +120,22 @@
   <data name="BASE_URI" xml:space="preserve">
     <value>http://localhost:8880</value>
   </data>
+  <data name="DELETE_APPLICATION" xml:space="preserve">
+    <value>api/v1/Category/Applications/delete?id=</value>
+  </data>
+  <data name="GET_APPLICATION" xml:space="preserve">
+    <value>api/v1/Category/Applications/get?id=</value>
+  </data>
+  <data name="GET_MENU" xml:space="preserve">
+    <value>api/v1/Menu/getListByUser</value>
+  </data>
   <data name="LOGIN_API" xml:space="preserve">
     <value>api/v1/Users/login</value>
+  </data>
+  <data name="SAVE_APPLICATION" xml:space="preserve">
+    <value>api/v1/Category/Applications/save</value>
+  </data>
+  <data name="SEARCH_APPLICATION" xml:space="preserve">
+    <value>api/v1/Category/Applications/search</value>
   </data>
 </root>

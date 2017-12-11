@@ -22,7 +22,7 @@ namespace CMP_Servive.Business
             var result = from ur in db.UserRoles
                          join rm in db.RoleMenus on ur.RoleID equals rm.RoleID
                          join m in db.Menus on rm.MenuID equals m.MenuID
-                         where ur.UserID == userId
+                         where ur.UserID == userId && rm.IsActive == 1
                          select m;
             return result.ToList();
         }

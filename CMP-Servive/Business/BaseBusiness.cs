@@ -82,24 +82,24 @@ namespace CMP_Servive.Business
             string query = " SELECT * FROM " + typeof(T).Name + " t WHERE 1=1";
             string condition = "";
             string strOrder = (!String.IsNullOrEmpty(order) ? " ORDER BY " + order : "");
-            object[] parameters = new object[] { };
+            object[] parameters = new object[100];
+            int i = 0;
             foreach (PropertyInfo proK in proArrayK)
             {
-                int i = 0;
                 var propT = proArrayT.FirstOrDefault(x => x.Name.Equals(proK.Name));
                 if (propT != null)
                 {
                     object value = proK.GetValue(KObject);
-                    Type type = proK.GetType();
-                    if (type == typeof(int) && (int)value != 0)
+                    Type type = proK.PropertyType;
+                    if (type == typeof(Int32) && (int)value != 0)
                     {
-                        condition += " AND t." + proK.Name + " = @value" + i.ToString();
-                        parameters[i] = new SqlParameter("value" + i.ToString(), (int)value);
+                        condition += " AND t." + proK.Name + " = {" + i.ToString() + "}";
+                        parameters[i] = (int)value;
                         i++;
-                    } else if (type == typeof(string) && value.ToString().Trim() != "")
+                    } else if (type == typeof(String) && value.ToString().Trim() != "")
                     {
-                        condition += " AND LOWER(t." + proK.Name + ") like @value" + i.ToString();
-                        parameters[i] = new SqlParameter("value" + i.ToString(), "%" + value.ToString().Trim().ToLower() + "%");
+                        condition += " AND LOWER(t." + proK.Name + ") like {" + i.ToString() + "}";
+                        parameters[i] ="%" + value.ToString().Trim().ToLower() + "%";
                         i++;
                     }
                 }

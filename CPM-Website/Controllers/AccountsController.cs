@@ -22,6 +22,7 @@ namespace CPM_Website.Controllers
         public ActionResult Login(string ReturnUrl)
         {
             Session["ReturnUrl"] = ReturnUrl ?? "/";
+            FormsAuthentication.SignOut();
             return PartialView();
         }
 
@@ -36,7 +37,6 @@ namespace CPM_Website.Controllers
         
         #region HttpPost
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(AccountViewModel formData)
         {
             getAccessToken(formData);
@@ -59,9 +59,10 @@ namespace CPM_Website.Controllers
                     Session["USER"] = apiResult.Data;
                     // Lấy danh sách menu
                     List<Menu> lstMenu = new List<Menu>();
-                    lstMenu.Add(new Menu() { Name = "Trang chủ", Action = "index", Controller = "home", FontIcon = "fa fa-home" });
-                    lstMenu.Add(new Menu() { Name = "Danh mục ứng dụng", Action = "index", Controller = "applications", FontIcon = "fa fa-window-restore" });
-                    Session["lstMenu"] = lstMenu;
+                    var getListMenu = await client.GetApiAsync<JsonResultObject<List<Menu>>>(URLResources.GET_MENU + "?userId=" + apiResult.Data.UserID);
+                    //lstMenu.Add(new Menu() { Name = "Trang chủ", Action = "index", Controller = "home", FontIcon = "fa fa-home" });
+                    //lstMenu.Add(new Menu() { Name = "Danh mục ứng dụng", Action = "index", Controller = "applications", FontIcon = "fa fa-window-restore" });
+                    Session["lstMenu"] = getListMenu.Data;
 
                     string ReturnUrl = (string)Session["ReturnUrl"];
                     return Redirect(ReturnUrl);

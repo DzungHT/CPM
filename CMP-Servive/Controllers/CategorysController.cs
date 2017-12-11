@@ -50,7 +50,7 @@ namespace CMP_Servive.Controllers
         }
 
         [Route("Applications/search")]
-        [HttpGet]
+        [HttpPost]
         public OutPutDTO SearchListApplications([FromBody] ApplicationDTO objSearch)
         {
             try

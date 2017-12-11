@@ -65,6 +65,16 @@ namespace CPM_Website.Models
             /// Quyền tác động vào chức năng tìm kiếm
             /// </summary>
             public const string SEARCH = V + RESOURCE;
+
+            /// <summary>
+            /// Quyền tác động vào chức năng insert
+            /// </summary>
+            public const string INSERT = C + RESOURCE;
+
+            /// <summary>
+            /// Quyền tác động vào chức năng delete
+            /// </summary>
+            public const string DELETE = D + RESOURCE;
         }
     }
 }

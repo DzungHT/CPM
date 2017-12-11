@@ -9,5 +9,8 @@ namespace CPM_Website.CybertronFramework.Common
     public static class Constants
     {
         public const string ROLE_STRING_SEPERATE = ",";
+        public static class VIEW {
+            public const string SAVE_RESULT = "_SaveResult";
+        }
     }
 }

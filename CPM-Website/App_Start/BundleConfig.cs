@@ -17,15 +17,23 @@ namespace CPM_Website
                             .Include("~/vendors/nprogress/nprogress.css")
                             .Include("~/vendors/iCheck/skins/flat/green.css", new CssRewriteUrlTransform())
                             .Include("~/Content/Common/custom.min.css")
+                            .Include("~/Content/Common/mycss.css")
                         );
 
             bundles.Add(new StyleBundle("~/css/pnotify")
                             .Include("~/vendors/pnotify/dist/pnotify.css")
+                            .Include("~/vendors/pnotify/dist/pnotify.brighttheme.css")
                             .Include("~/vendors/pnotify/dist/pnotify.buttons.css")
                             .Include("~/vendors/pnotify/dist/pnotify.nonblock.css")
                         );
             bundles.Add(new StyleBundle("~/css/dataTable")
                             .Include("~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css", new CssRewriteUrlTransform())
+                        );
+            bundles.Add(new StyleBundle("~/css/inlineValidation")
+                            .Include("~/Scripts/Common/inlineValidation/validationEngine.jquery.css", new CssRewriteUrlTransform())
+                        );
+            bundles.Add(new StyleBundle("~/css/confirm")
+                            .Include("~/Scripts/Common/jquery-confirm/jquery-confirm.min.css", new CssRewriteUrlTransform())
                         );
             #endregion
 
@@ -84,6 +92,13 @@ namespace CPM_Website
                             .Include("~/Scripts/Common/angularJS/angular.js")
                             .Include("~/Scripts/Common/angularJS/app.js")
                         );
+            bundles.Add(new ScriptBundle("~/js/inlineValidation")
+                            .Include("~/Scripts/Common/inlineValidation/jquery.validationEngine_vi_VN.js")
+                            .Include("~/Scripts/Common/inlineValidation/jquery.validationEngine.js")
+                        );
+            bundles.Add(new ScriptBundle("~/js/confirm")
+                           .Include("~/Scripts/Common/jquery-confirm/jquery-confirm.min.js")
+                       );
             #endregion
         }
     }
