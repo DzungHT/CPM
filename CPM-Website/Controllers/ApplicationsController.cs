@@ -30,23 +30,20 @@ namespace CPM_Website.Controllers
             DataTableResponse<Application> dataTableResponse = new DataTableResponse<Application>();
             try
             {
-                var apiResult = await client.PostApiAsync<JsonResultObject<List<Application>>, object>(Resources.URLResources.SEARCH_APPLICATION, 
-                    new { Code = StringUtil.NVL(formData.Code), Name = StringUtil.NVL(formData.Name)});
+                var apiResult = await client.PostApiAsync<JsonResultObject<DataTableResponse<Application>>, object>(URLResources.SEARCH_APPLICATION + "?page=" + formData.DataTable.start.ToString() + "&recordPerPage=" + formData.DataTable.length.ToString(),
+                    new Application { Code = StringUtil.NVL(formData.Code), Name = StringUtil.NVL(formData.Name) });
                 if (apiResult != null && apiResult.IsSuccess)
                 {
-                    List<Application> data = apiResult.Data;
-                    dataTableResponse.data = data;
-                    dataTableResponse.recordsTotal = data.Count;
-                    dataTableResponse.recordsFiltered = data.Count;
-                    dataTableResponse.error = null;
-                    dataTableResponse.draw = formData.DataTable.draw;
+                    dataTableResponse = apiResult.Data;
                 }
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
             return Json(dataTableResponse, JsonRequestBehavior.AllowGet);
+
         }
 
         [ValidateAntiForgeryToken]
