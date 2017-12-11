@@ -242,13 +242,21 @@ namespace CMP_Servive.Controllers
         }
 
         [Route("Operations/search")]
-        [HttpGet]
-        public OutPutDTO SearchListOperations([FromBody] Operation objSearch)
+        [HttpPost]
+        public OutPutDTO SearchListOperations([FromBody] Operation objSearch, int offset, int recordPerPage)
         {
             try
             {
-                List<Operation> result = commonBu.FindByProperty<Operation, Operation>(objSearch, "OperationID asc");
-                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                string sql = "SELECT * FROM Operation o WHERE 1 = 1 ";
+                sql += commonBu.MakeFilterString<int?>("o.OperationID", objSearch.OperationID, ref parameters);
+                sql += commonBu.MakeFilterString<string>("o.Code", objSearch.Code, ref parameters);
+                sql += commonBu.MakeFilterString<string>("o.Name", objSearch.Name, ref parameters);
+                sql += commonBu.MakeFilterString<string>("o.Description", objSearch.Description, ref parameters);
+
+                var data = commonBu.Search<Application>(offset, recordPerPage, sql, "Name", parameters.ToArray());
+
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, data);
             }
             catch (Exception ex)
             {

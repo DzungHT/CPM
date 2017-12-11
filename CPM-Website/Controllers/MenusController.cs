@@ -1,48 +1,44 @@
 ﻿using CPM_Website.CybertronFramework.Common;
 using CPM_Website.Models;
 using CPM_Website.Models.Common;
-using CybertronFramework;
 using CybertronFramework.Libraries;
 using CybertronFramework.Models;
-using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace CPM_Website.Controllers
 {
-    public class ApplicationsController : Controller
+    public class MenusController : Controller
     {
-        // GET: Applications
-        [CybertronAuthorize(Roles = RoleCodes.Applications.INDEX)]
+        // GET: Menus
         public ActionResult Index()
         {
             return View();
         }
 
-        public async Task<JsonResult> SearchProcess(ApplicationsViewModel formData)
+        public async Task<JsonResult> SearchProcess(MenuViewModel formData)
         {
             ApiClient client = ApiClient.Instance;
-            DataTableResponse<Application> dataTableResponse = new DataTableResponse<Application>();
+            DataTableResponse<Menu> dataTableResponse = new DataTableResponse<Menu>();
             try
             {
-                var apiResult = await client.PostApiAsync<JsonResultObject<List<Application>>, object>(Resources.URLResources.SEARCH_APPLICATION, 
-                    new { Code = StringUtil.NVL(formData.Code), Name = StringUtil.NVL(formData.Name)});
+                var apiResult = await client.PostApiAsync<JsonResultObject<List<Menu>>, object>(Resources.URLResources.SEARCH_MENU,
+                    new { ApplicationID = formData.AplicationID, Code = StringUtil.NVL(formData.Code), Name = StringUtil.NVL(formData.Name) });
                 if (apiResult != null && apiResult.IsSuccess)
                 {
-                    List<Application> data = apiResult.Data;
+                    List<Menu> data = apiResult.Data;
                     dataTableResponse.data = data;
                     dataTableResponse.recordsTotal = data.Count;
                     dataTableResponse.recordsFiltered = data.Count;
                     dataTableResponse.error = null;
-                    dataTableResponse.draw = formData.DataTable.draw;
                 }
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
@@ -51,14 +47,14 @@ namespace CPM_Website.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<ActionResult> Save(Application app)
+        public async Task<ActionResult> Save(Menu obj)
         {
             ApiClient client = ApiClient.Instance;
             try
             {
                 if (Permission.HasPermission(RoleCodes.Applications.SEARCH))
                 {
-                    var apiResult = await client.PostApiAsync<JsonResultObject<Application>, Application>(Resources.URLResources.SAVE_APPLICATION, app);
+                    var apiResult = await client.PostApiAsync<JsonResultObject<Menu>, Menu>(Resources.URLResources.SAVE_MENU, obj);
                     ViewBag.Status = "1";
                 }
                 else
@@ -83,7 +79,7 @@ namespace CPM_Website.Controllers
             ApiClient client = ApiClient.Instance;
             try
             {
-                var apiResult = await client.GetApiAsync<JsonResultObject<Application>>(Resources.URLResources.GET_APPLICATION + id);
+                var apiResult = await client.GetApiAsync<JsonResultObject<Menu>>(Resources.URLResources.GET_MENU_BY_ID + id);
                 return Json(apiResult.Data);
             }
             catch (Exception ex)
@@ -102,14 +98,15 @@ namespace CPM_Website.Controllers
             {
                 if (Permission.HasPermission(RoleCodes.Applications.SEARCH))
                 {
-                    var apiResult = await client.PostApiAsync<JsonResultObject<String>, object>(Resources.URLResources.DELETE_APPLICATION + id,
+                    var apiResult = await client.PostApiAsync<JsonResultObject<String>, object>(Resources.URLResources.DELETE_MENU + id,
                     new { });
                     ViewBag.Status = "1";
-                } else
+                }
+                else
                 {
                     ViewBag.Status = "0";
                 }
-                
+
             }
             catch (Exception ex)
             {

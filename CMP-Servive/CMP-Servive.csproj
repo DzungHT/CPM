@@ -237,6 +237,7 @@
     <Compile Include="Helper\RoleCodes.cs" />
     <Compile Include="Helper\TransferData.cs" />
     <Compile Include="Models\CybertronPagedList.cs" />
+    <Compile Include="Models\DTO\MenusDTO.cs" />
     <Compile Include="Models\Entities\ActionLog.cs" />
     <Compile Include="Models\Entities\Application.cs" />
     <Compile Include="Models\Entities\dbContext.cs" />

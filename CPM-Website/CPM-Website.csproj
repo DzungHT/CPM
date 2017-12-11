@@ -145,6 +145,11 @@
     <Content Include="Scripts\Common\inlineValidation\validationEngine.jquery.css" />
     <Content Include="Scripts\Common\jquery-confirm\jquery-confirm.min.css" />
     <Content Include="Scripts\Common\jquery-confirm\jquery-confirm.min.js" />
+    <Content Include="Scripts\Common\ngselect2\angular-ui-select2\select2.js" />
+    <Content Include="Scripts\Common\ngselect2\select2-spinner.gif" />
+    <Content Include="Scripts\Common\ngselect2\select2.css" />
+    <Content Include="Scripts\Common\ngselect2\select2.js" />
+    <Content Include="Scripts\Common\ngselect2\select2.png" />
     <Content Include="vendors\datatables.net\i18n\en_US.js" />
     <Content Include="vendors\datatables.net\i18n\vi_VN.js" />
     <Content Include="vendors\datatables.net\js\dataTables.defaults.js" />
@@ -2577,6 +2582,8 @@
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\ApplicationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MasterDataController.cs" />
+    <Compile Include="Controllers\MenusController.cs" />
     <Compile Include="Models\Common\Constants.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2631,6 +2638,8 @@
     <Content Include="Views\Shared\_Unauthorized.cshtml" />
     <Content Include="Views\Applications\Form.cshtml" />
     <Content Include="Views\Shared\_SaveResult.cshtml" />
+    <Content Include="Views\Menus\Form.cshtml" />
+    <Content Include="Views\Menus\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

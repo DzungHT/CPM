@@ -118,10 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BASE_URI" xml:space="preserve">
-    <value>http://localhost:65103</value>
+    <value>http://localhost:8880</value>
   </data>
   <data name="DELETE_APPLICATION" xml:space="preserve">
     <value>api/v1/Category/Applications/delete?id=</value>
+  </data>
+  <data name="DELETE_MENU" xml:space="preserve">
+    <value>api/v1/Menu/delete?id=</value>
+  </data>
+  <data name="GET_ALL_APPLICATION" xml:space="preserve">
+    <value>api/v1/Category/Applications/getAll</value>
   </data>
   <data name="GET_APPLICATION" xml:space="preserve">
     <value>api/v1/Category/Applications/get?id=</value>
@@ -129,13 +135,22 @@
   <data name="GET_MENU" xml:space="preserve">
     <value>api/v1/Menu/getListByUser</value>
   </data>
+  <data name="GET_MENU_BY_ID" xml:space="preserve">
+    <value>api/v1/Menu/get?id=</value>
+  </data>
   <data name="LOGIN_API" xml:space="preserve">
     <value>api/v1/Users/login</value>
   </data>
   <data name="SAVE_APPLICATION" xml:space="preserve">
     <value>api/v1/Category/Applications/save</value>
   </data>
+  <data name="SAVE_MENU" xml:space="preserve">
+    <value>api/v1/Menu/save</value>
+  </data>
   <data name="SEARCH_APPLICATION" xml:space="preserve">
     <value>api/v1/Category/Applications/search</value>
+  </data>
+  <data name="SEARCH_MENU" xml:space="preserve">
+    <value>api/v1/Menu/search</value>
   </data>
 </root>

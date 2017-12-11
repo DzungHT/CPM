@@ -247,6 +247,12 @@ function tctDeferredAjaxGet(actionUrl, formData) {
     return dfd;
 }
 
+function tctGetMasterData(url) {
+    $.get(url, function (data) {
+        console.log(data);
+    });
+}
+
 /**
  * Reset form bang Javascript.
  * Khong reset truong hidden, vi truong hidden thuong la truong de cau hinh.

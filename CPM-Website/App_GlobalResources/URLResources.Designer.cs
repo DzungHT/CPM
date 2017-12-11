@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option or rebuild the Visual Studio project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "14.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class URLResources {
@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://localhost:65103.
+        ///   Looks up a localized string similar to http://localhost:8880.
         /// </summary>
         internal static string BASE_URI {
             get {
@@ -75,6 +75,24 @@ namespace Resources {
         internal static string DELETE_APPLICATION {
             get {
                 return ResourceManager.GetString("DELETE_APPLICATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to api/v1/Menu/delete?id=.
+        /// </summary>
+        internal static string DELETE_MENU {
+            get {
+                return ResourceManager.GetString("DELETE_MENU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to api/v1/Category/Applications/getAll.
+        /// </summary>
+        internal static string GET_ALL_APPLICATION {
+            get {
+                return ResourceManager.GetString("GET_ALL_APPLICATION", resourceCulture);
             }
         }
         
@@ -97,6 +115,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/v1/Menu/get?id=.
+        /// </summary>
+        internal static string GET_MENU_BY_ID {
+            get {
+                return ResourceManager.GetString("GET_MENU_BY_ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/v1/Users/login.
         /// </summary>
         internal static string LOGIN_API {
@@ -115,11 +142,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/v1/Menu/save.
+        /// </summary>
+        internal static string SAVE_MENU {
+            get {
+                return ResourceManager.GetString("SAVE_MENU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/v1/Category/Applications/search.
         /// </summary>
         internal static string SEARCH_APPLICATION {
             get {
                 return ResourceManager.GetString("SEARCH_APPLICATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to api/v1/Menu/search.
+        /// </summary>
+        internal static string SEARCH_MENU {
+            get {
+                return ResourceManager.GetString("SEARCH_MENU", resourceCulture);
             }
         }
     }
