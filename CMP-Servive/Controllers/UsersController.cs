@@ -9,6 +9,7 @@ using CMP_Servive.Providers.Authentication;
 using CMP_Servive.Providers;
 using CPM_Website.Helper;
 using System.Web;
+using System.Data.SqlClient;
 
 namespace CMP_Servive.Controllers
 {
@@ -53,21 +54,27 @@ namespace CMP_Servive.Controllers
         }
 
         [Route("search")]
-        [HttpGet]
+        [HttpPost]
         //[BasicAuthentication(true, RoleCodes.Users.VIEW)]
-        public OutPutDTO GetUser([FromBody] UserDTO objSearch)
+        public OutPutDTO GetUser([FromBody] UserDTO objSearch, int offset, int recordPerPage)
         {
             try
             {
-                List<User> result = commonBu.FindByProperty<User, UserDTO>(objSearch, "UserID asc");
-                return new OutPutDTO( true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, result);
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                string sql = "SELECT * FROM [User] a WHERE 1 = 1 ";
+                sql += commonBu.MakeFilterString("a.LoginName", objSearch.LoginName, ref parameters);
+                sql += commonBu.MakeFilterString("a.FullName", objSearch.FullName, ref parameters);
+                sql += commonBu.MakeFilterString("a.Email", objSearch.Email, ref parameters);
+                sql += commonBu.MakeFilterString("a.PhoneNumber", objSearch.PhoneNumber, ref parameters);
+                sql += commonBu.MakeFilterString("a.Status", objSearch.Status, ref parameters);
+                var data = commonBu.Search<User>(offset, recordPerPage, sql, "", parameters.ToArray());
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, data);
             }
             catch (Exception ex)
             {
                 return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
-
 
         [Route("save")]
         [HttpPost]
@@ -108,6 +115,7 @@ namespace CMP_Servive.Controllers
                     }
                     entities.GetTransferData(userDTO);
                     entities.Password = entities.Password.Encrypt(Constants.ENCRYPT_KEY);
+                    entities.Status = 1;
                     userBusiness.Save(entities);
                     return new OutPutDTO( true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, entities);
                 }
@@ -152,6 +160,32 @@ namespace CMP_Servive.Controllers
                 if (user != null)
                 {
                     return new OutPutDTO( true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, user);
+                }
+                else
+                {
+                    return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, user);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
+        }
+
+        [Route("lockUnlock")]
+        [HttpPost]
+        public OutPutDTO lockUnlock(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+            }
+            try
+            {
+                User user = userBusiness.RestartPassword(id);
+                if (user != null)
+                {
+                    return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, user);
                 }
                 else
                 {

@@ -30,6 +30,22 @@ namespace CMP_Servive.Business
             }
         }
 
+        public User LockUnlock(int id)
+        {
+            User user = db.Users.Find(id);
+            if (user != null)
+            {
+                user.Status = user.Status == 1 ? user.Status : 0 ;
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return user;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public bool AddRole(int userId, List<int> lstRoleId)
         {
             db.UserRoles.AddRange(
