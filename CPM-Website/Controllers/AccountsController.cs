@@ -1,5 +1,7 @@
 ﻿using CPM_Website.CybertronFramework.Common;
 using CPM_Website.Models;
+using CPM_Website.Models.Common;
+using CPM_Website.Models.ViewModels;
 using CybertronFramework;
 using CybertronFramework.Libraries;
 using CybertronFramework.Models;
@@ -15,8 +17,137 @@ namespace CPM_Website.Controllers
 {
     public class AccountsController : Controller
     {
-        
+
         #region HttpGet
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public async Task<JsonResult> SearchProcess(UserViewModel formData)
+        {
+            ApiClient client = ApiClient.Instance;
+            DataTableResponse<UserViewModel> dataTableResponse = new DataTableResponse<UserViewModel>();
+            try
+            {
+                var apiResult = await client.PostApiAsync<JsonResultObject<DataTableResponse<UserViewModel>>, object>(URLResources.SEARCH_USER + "?offset=" + formData.DataTable.start.ToString() + "&recordPerPage=" + formData.DataTable.length.ToString(),
+                    new { LoginName = formData.LoginName, FullName = formData.FullName, Email = formData.Email, PhoneNumber = formData.PhoneNumber, Status = formData.Status });
+                if (apiResult != null && apiResult.IsSuccess)
+                {
+                    dataTableResponse = apiResult.Data;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json(dataTableResponse, JsonRequestBehavior.AllowGet);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<ActionResult> Save(User obj)
+        {
+            ApiClient client = ApiClient.Instance;
+            try
+            {
+                if (Permission.HasPermission(RoleCodes.Applications.SEARCH))
+                {
+                    var apiResult = await client.PostApiAsync<JsonResultObject<User>, User>(URLResources.SAVE_USER, obj);
+                    ViewBag.Status = "1";
+                }
+                else
+                {
+                    ViewBag.Status = "0";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("401"))
+                {
+                    ViewBag.Status = "-2";
+                }
+            }
+            return PartialView(Constants.VIEW.SAVE_RESULT);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> PrepareUpdate(int id)
+        {
+            ApiClient client = ApiClient.Instance;
+            try
+            {
+                var apiResult = await client.GetApiAsync<JsonResultObject<User>>(URLResources.GET_USER + id);
+                return Json(apiResult.Data);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json(null);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<ActionResult> LockUnlock(int id)
+        {
+            ApiClient client = ApiClient.Instance;
+            try
+            {
+                if (Permission.HasPermission(RoleCodes.Applications.SEARCH))
+                {
+                    var apiResult = await client.PostApiAsync<JsonResultObject<String>, object>(URLResources.LOCK_UNLOCK_USER + id,
+                    new { });
+                    ViewBag.Status = "1";
+                }
+                else
+                {
+                    ViewBag.Status = "0";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("401"))
+                {
+                    ViewBag.Status = "-2";
+                }
+            }
+            return PartialView(Constants.VIEW.SAVE_RESULT);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<ActionResult> RestartPassword(int id)
+        {
+            ApiClient client = ApiClient.Instance;
+            try
+            {
+                if (Permission.HasPermission(RoleCodes.Applications.SEARCH))
+                {
+                    var apiResult = await client.PostApiAsync<JsonResultObject<String>, object>(URLResources.RESTART_USER + id,
+                    new { });
+                    ViewBag.Status = "1";
+                }
+                else
+                {
+                    ViewBag.Status = "0";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("401"))
+                {
+                    ViewBag.Status = "-2";
+                }
+            }
+            return PartialView(Constants.VIEW.SAVE_RESULT);
+        }
+
         // GET: Account
         [HttpGet]
         public ActionResult Login(string ReturnUrl)
@@ -47,7 +178,7 @@ namespace CPM_Website.Controllers
                 if (apiResult != null && apiResult.IsSuccess)
                 {
                     // Lấy danh sách quyền
-                    string roleStr = string.Join(Constants.ROLE_STRING_SEPERATE, apiResult.Data.Roles);
+                    string roleStr = string.Join(Constants.ROLE_STRING_SEPERATE,  apiResult.Data.Roles);
 
                     var authTicket = new FormsAuthenticationTicket(1, formData.Username, DateTime.Now, DateTime.Now.AddMinutes(20), formData.RememberMe, roleStr);
 

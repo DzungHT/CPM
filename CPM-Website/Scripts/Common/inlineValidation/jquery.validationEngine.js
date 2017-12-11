@@ -105,7 +105,9 @@
 			var element = $(this);
 			var valid = null;
 			var options;
-
+		    //remove ui-select2
+			$("div").find(".select2-container").removeClass("validate[required]");
+		    //remove ui-select2
 			if (element.is("form") || element.hasClass("validationEngineContainer")) {
 				if (element.hasClass('validating')) {
 					// form is already validating.

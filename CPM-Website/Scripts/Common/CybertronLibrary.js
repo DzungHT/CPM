@@ -212,7 +212,7 @@ function tctDeferredAjax(areaId, actionUrl, formData) {
                 tctResetProgress();
                 jQuery("#" + areaId).html(html);
                 //auto call validate jquery unfocus input form
-                //$("form").validationEngine({ promptPosition: 'inline' });
+                $("form").validationEngine({ promptPosition: 'inline' });
             },
             error: function (xhr, ajaxOptions, thrownError) {
             }

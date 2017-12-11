@@ -11,7 +11,6 @@ namespace CPM_Website.Controllers
 {
     public class MasterDataController : Controller
     {
-        [HttpPost]
         public async Task<JsonResult> getListApplication()
         {
             ApiClient client = ApiClient.Instance;
@@ -20,7 +19,7 @@ namespace CPM_Website.Controllers
                 var apiResult = await client.GetApiAsync<JsonResultObject<List<Application>>>(Resources.URLResources.GET_ALL_APPLICATION);
                 if (apiResult != null && apiResult.IsSuccess)
                 {
-                    return Json(apiResult.Data);
+                    return Json(apiResult.Data, JsonRequestBehavior.AllowGet);
                 }
 
             }
@@ -28,7 +27,25 @@ namespace CPM_Website.Controllers
             {
 
             }
-            return Json(null);
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<JsonResult> GetListMenu()
+        {
+            ApiClient client = ApiClient.Instance;
+            try
+            {
+                var apiResult = await client.GetApiAsync<JsonResultObject<List<Menu>>>(Resources.URLResources.GET_ALL_MENU);
+                if (apiResult.IsSuccess)
+                {
+                    return Json(apiResult.Data, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
     }
 }

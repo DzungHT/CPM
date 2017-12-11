@@ -1,10 +1,12 @@
-using CybertronFramework.Models;
+﻿using CybertronFramework.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-namespace CPM_Website.Models
+namespace CPM_Website.Models.ViewModels
 {
-    public partial class User
+    public class UserViewModel
     {
         public int UserID { get; set; }
 
@@ -29,5 +31,7 @@ namespace CPM_Website.Models
         public DateTime? RequestDate { get; set; }
 
         public string[] Roles { get; set; }
+
+        public DataTableRequest DataTable { get; set; }
     }
 }

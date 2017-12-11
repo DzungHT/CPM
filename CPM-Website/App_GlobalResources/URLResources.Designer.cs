@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option or rebuild the Visual Studio project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "14.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class URLResources {
@@ -106,6 +106,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/v1/Menu/getAll.
+        /// </summary>
+        internal static string GET_ALL_MENU {
+            get {
+                return ResourceManager.GetString("GET_ALL_MENU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/v1/Category/Applications/get?id=.
         /// </summary>
         internal static string GET_APPLICATION {
@@ -142,11 +151,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/v1/Users/get?id=.
+        /// </summary>
+        internal static string GET_USER {
+            get {
+                return ResourceManager.GetString("GET_USER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to api/v1/Users/lockUnlock?id=.
+        /// </summary>
+        internal static string LOCK_UNLOCK_USER {
+            get {
+                return ResourceManager.GetString("LOCK_UNLOCK_USER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/v1/Users/login.
         /// </summary>
         internal static string LOGIN_API {
             get {
                 return ResourceManager.GetString("LOGIN_API", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to api/v1/Users/restart-password?id=.
+        /// </summary>
+        internal static string RESTART_USER {
+            get {
+                return ResourceManager.GetString("RESTART_USER", resourceCulture);
             }
         }
         
@@ -178,6 +214,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/v1/Users/save.
+        /// </summary>
+        internal static string SAVE_USER {
+            get {
+                return ResourceManager.GetString("SAVE_USER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/v1/Category/Applications/search.
         /// </summary>
         internal static string SEARCH_APPLICATION {
@@ -201,6 +246,15 @@ namespace Resources {
         internal static string SEARCH_RESOURCE {
             get {
                 return ResourceManager.GetString("SEARCH_RESOURCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to api/v1/Users/search.
+        /// </summary>
+        internal static string SEARCH_USER {
+            get {
+                return ResourceManager.GetString("SEARCH_USER", resourceCulture);
             }
         }
     }
