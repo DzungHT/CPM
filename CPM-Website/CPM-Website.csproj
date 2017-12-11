@@ -2584,7 +2584,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MasterDataController.cs" />
     <Compile Include="Controllers\MenusController.cs" />
+    <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Models\Common\Constants.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2601,9 +2603,12 @@
     <Compile Include="Models\ViewModels\AccountViewModel.cs" />
     <Compile Include="Models\ViewModels\ApplicationsViewModel.cs" />
     <Compile Include="Models\ViewModels\MenuViewModel.cs" />
+    <Compile Include="Models\ViewModels\PermissionViewModel.cs" />
     <Compile Include="Models\ViewModels\ResourceViewModel.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
+    <Compile Include="Models\ViewModels\RoleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Resources\roledto.cs" />
     <Compile Include="Respositories\DataFactory.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2648,6 +2653,8 @@
     <Content Include="Views\Resources\Index.cshtml" />
     <Content Include="Views\Accounts\Form.cshtml" />
     <Content Include="Views\Accounts\Index.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\Form.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2657,6 +2664,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Permissions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\ApplicationResources.resx">

@@ -129,6 +129,9 @@
   <data name="DELETE_RESOURCE" xml:space="preserve">
     <value>api/v1/Category/Resources/delete?id=</value>
   </data>
+  <data name="DELETE_ROLE" xml:space="preserve">
+    <value>api/v1/Roles/delete?id=</value>
+  </data>
   <data name="GET_ALL_APPLICATION" xml:space="preserve">
     <value>api/v1/Category/Applications/getAll</value>
   </data>
@@ -152,6 +155,9 @@
   </data>
   <data name="LOCK_UNLOCK_USER" xml:space="preserve">
     <value>api/v1/Users/lockUnlock?id=</value>
+    </data>
+  <data name="GET_ROLE" xml:space="preserve">
+    <value>api/v1/Roles/get?id=</value>
   </data>
   <data name="LOGIN_API" xml:space="preserve">
     <value>api/v1/Users/login</value>
@@ -170,6 +176,9 @@
   </data>
   <data name="SAVE_USER" xml:space="preserve">
     <value>api/v1/Users/save</value>
+    </data>
+  <data name="SAVE_ROLE" xml:space="preserve">
+    <value>api/v1/Roles/save</value>
   </data>
   <data name="SEARCH_APPLICATION" xml:space="preserve">
     <value>api/v1/Category/Applications/search</value>
@@ -182,5 +191,8 @@
   </data>
   <data name="SEARCH_USER" xml:space="preserve">
     <value>api/v1/Users/search</value>
+    </data>
+  <data name="SEARCH_ROLE" xml:space="preserve">
+    <value>api/v1/Roles/search</value>
   </data>
 </root>

@@ -228,6 +228,7 @@
     <Compile Include="Controllers\AuthorizationController.cs" />
     <Compile Include="Controllers\CategorysController.cs" />
     <Compile Include="Controllers\MenusController.cs" />
+    <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -238,7 +239,9 @@
     <Compile Include="Helper\TransferData.cs" />
     <Compile Include="Models\CybertronPagedList.cs" />
     <Compile Include="Models\DTO\MenuDTO.cs" />
+    <Compile Include="Models\DTO\PermissionDTO.cs" />
     <Compile Include="Models\DTO\ResourceDTO.cs" />
+    <Compile Include="Models\DTO\RoleDTO.cs" />
     <Compile Include="Models\Entities\ActionLog.cs" />
     <Compile Include="Models\Entities\Application.cs" />
     <Compile Include="Models\Entities\dbContext.cs" />

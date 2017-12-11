@@ -97,6 +97,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/v1/Roles/delete?id=.
+        /// </summary>
+        internal static string DELETE_ROLE {
+            get {
+                return ResourceManager.GetString("DELETE_ROLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/v1/Category/Applications/getAll.
         /// </summary>
         internal static string GET_ALL_APPLICATION {
@@ -165,6 +174,13 @@ namespace Resources {
         internal static string LOCK_UNLOCK_USER {
             get {
                 return ResourceManager.GetString("LOCK_UNLOCK_USER", resourceCulture);
+			}
+		}
+        ///   Looks up a localized string similar to api/v1/Roles/get?id=.
+        /// </summary>
+        internal static string GET_ROLE {
+            get {
+                return ResourceManager.GetString("GET_ROLE", resourceCulture);
             }
         }
         
@@ -219,6 +235,13 @@ namespace Resources {
         internal static string SAVE_USER {
             get {
                 return ResourceManager.GetString("SAVE_USER", resourceCulture);
+			}
+		}
+        ///   Looks up a localized string similar to api/v1/Roles/save.
+        /// </summary>
+        internal static string SAVE_ROLE {
+            get {
+                return ResourceManager.GetString("SAVE_ROLE", resourceCulture);
             }
         }
         
@@ -255,6 +278,13 @@ namespace Resources {
         internal static string SEARCH_USER {
             get {
                 return ResourceManager.GetString("SEARCH_USER", resourceCulture);
+			}
+		}
+        ///   Looks up a localized string similar to api/v1/Roles/search.
+        /// </summary>
+        internal static string SEARCH_ROLE {
+            get {
+                return ResourceManager.GetString("SEARCH_ROLE", resourceCulture);
             }
         }
     }
