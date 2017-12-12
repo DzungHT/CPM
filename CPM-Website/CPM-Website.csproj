@@ -126,6 +126,7 @@
     <Content Include="fonts\glyphicons-regular.svg" />
     <Content Include="fonts\glyphicons-social-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Avatar\17156037_1253402538088938_7718839922421342644_n.jpg" />
     <Content Include="Images\Avatar\smile-icon-facebook.png" />
     <Content Include="Images\Icons\glyphicons-715-user-structure.png" />
     <Content Include="Images\Icons\loading.gif" />
