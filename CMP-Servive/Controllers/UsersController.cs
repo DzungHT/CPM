@@ -76,6 +76,28 @@ namespace CMP_Servive.Controllers
             }
         }
 
+        [Route("searchRolebyUser")]
+        [HttpPost]
+        //[BasicAuthentication(true, RoleCodes.Users.VIEW)]
+        public OutPutDTO searchRolebyUser([FromBody] UserRoleDTO objSearch, int offset, int recordPerPage)
+        {
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                string sql = "select r.* from Role r INNER JOIN UserRole ur on ur.RoleID = r.RoleID WHERE 1 = 1 ";
+                sql += commonBu.MakeFilterString("ur.UserID", objSearch.UserID, ref parameters);
+                sql += commonBu.MakeFilterString("r.Code", objSearch.Code, ref parameters);
+                sql += commonBu.MakeFilterString("r.Name", objSearch.Name, ref parameters);
+                
+                var data = commonBu.Search<Role>(offset, recordPerPage, sql, "RoleID", parameters.ToArray());
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, data);
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
+        }
+
         [Route("save")]
         [HttpPost]
         //[BasicAuthentication(true,"")]
@@ -227,7 +249,7 @@ namespace CMP_Servive.Controllers
 
         [Route("addRole")]
         [HttpPost]
-        public OutPutDTO addRole(int userId, List<int> lstRoleId)
+        public OutPutDTO addRole(UserRoleDTO obj)
         {
             if (!ModelState.IsValid)
             {
@@ -235,10 +257,35 @@ namespace CMP_Servive.Controllers
             }
             try
             {
-                if (userBusiness.AddRole(userId, lstRoleId))
+                if (userBusiness.AddRole(obj.UserID, obj.Selection))
                 {
                     return new OutPutDTO( true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
                 } else
+                {
+                    return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
+            }
+        }
+
+        [Route("deleteRole")]
+        [HttpPost]
+        public OutPutDTO deleteRole(UserRoleDTO obj)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+            }
+            try
+            {
+                if (userBusiness.deleteRole(obj.UserID, obj.RoleID))
+                {
+                    return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
+                }
+                else
                 {
                     return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
                 }

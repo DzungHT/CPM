@@ -160,6 +160,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/v1/Roles/get?id=.
+        /// </summary>
+        internal static string GET_ROLE {
+            get {
+                return ResourceManager.GetString("GET_ROLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/v1/Users/get?id=.
         /// </summary>
         internal static string GET_USER {
@@ -174,13 +183,6 @@ namespace Resources {
         internal static string LOCK_UNLOCK_USER {
             get {
                 return ResourceManager.GetString("LOCK_UNLOCK_USER", resourceCulture);
-			}
-		}
-        ///   Looks up a localized string similar to api/v1/Roles/get?id=.
-        /// </summary>
-        internal static string GET_ROLE {
-            get {
-                return ResourceManager.GetString("GET_ROLE", resourceCulture);
             }
         }
         
@@ -230,18 +232,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to api/v1/Users/save.
-        /// </summary>
-        internal static string SAVE_USER {
-            get {
-                return ResourceManager.GetString("SAVE_USER", resourceCulture);
-			}
-		}
         ///   Looks up a localized string similar to api/v1/Roles/save.
         /// </summary>
         internal static string SAVE_ROLE {
             get {
                 return ResourceManager.GetString("SAVE_ROLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to api/v1/Users/save.
+        /// </summary>
+        internal static string SAVE_USER {
+            get {
+                return ResourceManager.GetString("SAVE_USER", resourceCulture);
             }
         }
         
@@ -273,18 +277,29 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to api/v1/Users/search.
-        /// </summary>
-        internal static string SEARCH_USER {
-            get {
-                return ResourceManager.GetString("SEARCH_USER", resourceCulture);
-			}
-		}
         ///   Looks up a localized string similar to api/v1/Roles/search.
         /// </summary>
         internal static string SEARCH_ROLE {
             get {
                 return ResourceManager.GetString("SEARCH_ROLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to api/v1/Users/searchRolebyUser.
+        /// </summary>
+        internal static string SEARCH_ROLE_BY_USER {
+            get {
+                return ResourceManager.GetString("SEARCH_ROLE_BY_USER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to api/v1/Users/search.
+        /// </summary>
+        internal static string SEARCH_USER {
+            get {
+                return ResourceManager.GetString("SEARCH_USER", resourceCulture);
             }
         }
     }

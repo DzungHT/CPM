@@ -9,22 +9,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
+using System.Web;   
 using System.Web.Mvc;
 
 namespace CPM_Website.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ResourcesController : Controller
     {
         /// GET: Resources
-        [CybertronAuthorize(Roles = RoleCodes.Resources.INDEX)]
+        //[CybertronAuthorize(Roles = RoleCodes.Resources.INDEX)]
         public ActionResult Index()
         {
             return View();
         }
 
-        [CybertronAuthorize(Roles = RoleCodes.Resources.SEARCH)]
+        //[CybertronAuthorize(Roles = RoleCodes.Resources.SEARCH)]
         public async Task<JsonResult> SearchProcess(ResourceViewModel formData)
         {
             ApiClient client = ApiClient.Instance;

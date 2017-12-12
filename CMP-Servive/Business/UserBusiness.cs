@@ -55,6 +55,13 @@ namespace CMP_Servive.Business
             return true;
         }
 
+        public bool deleteRole(int userId,int roleId)
+        {
+            //var x = db.Database.SqlQuery<string>("DELETE FROM UserRole  WHERE UserID = @UserID AND RoleID = @RoleID", new SqlParameter("UserID", userId), new SqlParameter("RoleID", roleId)).
+            //db.SaveChanges();
+            return true;
+        }
+
         public UserLoginOutput GetUserInformation(UserLoginInput userInput)
         {
             UserLoginOutput result = new UserLoginOutput();

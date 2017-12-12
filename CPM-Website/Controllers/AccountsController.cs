@@ -46,6 +46,29 @@ namespace CPM_Website.Controllers
             return Json(dataTableResponse, JsonRequestBehavior.AllowGet);
         }
 
+        public async Task<JsonResult> searchRoleByUser(RoleViewModel formData)
+        {
+            ApiClient client = ApiClient.Instance;
+            DataTableResponse<Role> dataTableResponse = new DataTableResponse<Role>();
+            try
+            {
+                var apiResult = await client.PostApiAsync<JsonResultObject<DataTableResponse<Role>>, object>(URLResources.SEARCH_ROLE_BY_USER + "?offset=" + formData.DataTable.start.ToString() + "&recordPerPage=" + formData.DataTable.length.ToString(),
+                    new { UserID = formData.UserID, Code = formData.Code, Name = formData.Name }
+                    );
+                if (apiResult != null && apiResult.IsSuccess)
+                {
+                    dataTableResponse = apiResult.Data;
+                    dataTableResponse.draw = formData.DataTable.draw;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json(dataTableResponse, JsonRequestBehavior.AllowGet);
+        }
+
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<ActionResult> Save(User obj)
@@ -136,6 +159,63 @@ namespace CPM_Website.Controllers
                 if (Permission.HasPermission(RoleCodes.Applications.SEARCH))
                 {
                     var apiResult = await client.PostApiAsync<JsonResultObject<User>, object>(URLResources.RESTART_USER + id,null);
+                    ViewBag.Status = "1";
+                }
+                else
+                {
+                    ViewBag.Status = "0";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("401"))
+                {
+                    ViewBag.Status = "-2";
+                }
+            }
+            return PartialView(Constants.VIEW.SAVE_RESULT);
+        }
+
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<ActionResult> AddRoleUser(RoleViewModel app)
+        {
+            ApiClient client = ApiClient.Instance;
+            try
+            {
+                if (!Permission.HasPermission(RoleCodes.Roles.UPDATE))
+                {
+                    var apiResult = await client.PostApiAsync<JsonResultObject<RoleViewModel>, RoleViewModel>("api/v1/Users/addRole", app);
+                    ViewBag.Status = "1";
+                }
+                else
+                {
+                    ViewBag.Status = "0";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("401"))
+                {
+                    ViewBag.Status = "-2";
+                }
+            }
+            return PartialView(Constants.VIEW.SAVE_RESULT);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<ActionResult> DeleteRoleUser(RoleViewModel app)
+        {
+            ApiClient client = ApiClient.Instance;
+            try
+            {
+                if (!Permission.HasPermission(RoleCodes.Roles.UPDATE))
+                {
+                    var apiResult = await client.PostApiAsync<JsonResultObject<RoleViewModel>, RoleViewModel>("api/v1/Users/deleteRole", app);
                     ViewBag.Status = "1";
                 }
                 else
