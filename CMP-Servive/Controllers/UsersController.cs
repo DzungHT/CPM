@@ -279,19 +279,17 @@ namespace CMP_Servive.Controllers
             {
                 return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
             }
+            var trans = commonBu.getDbContext().Database.BeginTransaction();
             try
             {
-                if (userBusiness.deleteRole(obj.UserID, obj.RoleID))
-                {
-                    return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
-                }
-                else
-                {
-                    return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
-                }
+                string sql = "DELETE FROM UserRole  WHERE UserID = @UserID AND RoleID = @RoleID";
+                int n = commonBu.getDbContext().Database.ExecuteSqlCommand(sql, new SqlParameter("@UserID", obj.UserID), new SqlParameter("@RoleID", obj.RoleID));
+                trans.Commit();
+                return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, n);
             }
             catch (Exception ex)
             {
+                trans.Rollback();
                 return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
             }
         }
