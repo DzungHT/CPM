@@ -18,13 +18,13 @@ namespace CPM_Website.Controllers
     public class RolesController : Controller
     {
         /// GET: Resources
-        //[CybertronAuthorize(Roles = RoleCodes.Roles.INDEX)]
+        [CybertronAuthorize(Roles = RoleCodes.Roles.INDEX)]
         public ActionResult Index()
         {
             return View();
         }
 
-        //[CybertronAuthorize(Roles = RoleCodes.Roles.SEARCH)]
+        [CybertronAuthorize(Roles = RoleCodes.Roles.SEARCH)]
         [HttpPost]
         public async Task<JsonResult> SearchProcess(RoleViewModel formData)
         {
@@ -56,7 +56,7 @@ namespace CPM_Website.Controllers
             ApiClient client = ApiClient.Instance;
             try
             {
-                if (Permission.HasPermission(RoleCodes.Roles.SEARCH))
+                if (Permission.HasPermission(RoleCodes.Roles.INSERT))
                 {
                     var apiResult = await client.PostApiAsync<JsonResultObject<Role>, Role>(Resources.URLResources.SAVE_ROLE, app);
                     ViewBag.Status = "1";
@@ -122,7 +122,8 @@ namespace CPM_Website.Controllers
             return PartialView(Constants.VIEW.SAVE_RESULT);
         }
 
-        //[CybertronAuthorize(Roles = RoleCodes.Roles.SEARCH)]
+        #region permission
+        [CybertronAuthorize(Roles = RoleCodes.Roles.SEARCH)]
         [HttpPost]
         public async Task<JsonResult> SearchPermissionByRole(PermissionViewModel formData)
         {
@@ -146,7 +147,7 @@ namespace CPM_Website.Controllers
             return Json(dataTableResponse, JsonRequestBehavior.AllowGet);
         }
 
-        //[CybertronAuthorize(Roles = RoleCodes.Roles.SEARCH)]
+        [CybertronAuthorize(Roles = RoleCodes.Roles.SEARCH)]
         [HttpPost]
         public async Task<JsonResult> SearchPermissionForRole(PermissionViewModel formData)
         {
@@ -155,7 +156,7 @@ namespace CPM_Website.Controllers
             try
             {
                 var apiResult = await client.PostApiAsync<JsonResultObject<DataTableResponse<PermissionViewModel>>, object>("api/v1/Roles/searchPermissionForRole?offset=" + formData.DataTable.start.ToString() + "&recordPerPage=" + formData.DataTable.length.ToString(),
-                    new { RoleID = formData.RoleID, Code = formData.Code, Name = formData.Name }
+                    new { RoleID = formData.RoleID, Code = formData.Code, Name = formData.Name, ApplicationID = formData.ApplicationID }
                     );
                 if (apiResult != null && apiResult.IsSuccess)
                 {
@@ -177,7 +178,7 @@ namespace CPM_Website.Controllers
             ApiClient client = ApiClient.Instance;
             try
             {
-                if (!Permission.HasPermission(RoleCodes.Roles.DELETE))
+                if (Permission.HasPermission(RoleCodes.Roles.DELETE))
                 {
                     var apiResult = await client.PostApiAsync<JsonResultObject<String>, object>("api/v1/Roles/deletePermission",
                     new { PermissionID = formData.PermissionID, RoleID = formData.RoleID });
@@ -206,10 +207,133 @@ namespace CPM_Website.Controllers
             ApiClient client = ApiClient.Instance;
             try
             {
-                if (!Permission.HasPermission(RoleCodes.Roles.UPDATE))
+                if (Permission.HasPermission(RoleCodes.Roles.UPDATE))
                 {
                     var apiResult = await client.PostApiAsync<JsonResultObject<PermissionViewModel>, PermissionViewModel>("api/v1/Roles/addPermissions", app);
+                    if (apiResult.IsSuccess)
+                    {
+                        ViewBag.Status = "1";
+                    }
+                    else
+                    {
+                        ViewBag.Status = "-1";
+                    }
+                }
+                else
+                {
+                    ViewBag.Status = "0";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("401"))
+                {
+                    ViewBag.Status = "-2";
+                }
+            }
+            return PartialView(Constants.VIEW.SAVE_RESULT);
+        }
+
+        #endregion
+
+
+
+        [CybertronAuthorize(Roles = RoleCodes.Roles.SEARCH)]
+        [HttpPost]
+        public async Task<JsonResult> SearchMenuByRole(MenuViewModel formData)
+        {
+            ApiClient client = ApiClient.Instance;
+            DataTableResponse<MenuViewModel> dataTableResponse = new DataTableResponse<MenuViewModel>();
+            try
+            {
+                var apiResult = await client.PostApiAsync<JsonResultObject<DataTableResponse<MenuViewModel>>, object>("api/v1/Roles/searchMenuByRole?offset=" + formData.DataTable.start.ToString() + "&recordPerPage=" + formData.DataTable.length.ToString(),
+                    new { RoleID = formData.RoleID, Code = formData.Code, Name = formData.Name }
+                    );
+                if (apiResult != null && apiResult.IsSuccess)
+                {
+                    dataTableResponse = apiResult.Data;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json(dataTableResponse, JsonRequestBehavior.AllowGet);
+        }
+
+        [CybertronAuthorize(Roles = RoleCodes.Roles.SEARCH)]
+        [HttpPost]
+        public async Task<JsonResult> SearchMenuForRole(MenuViewModel formData)
+        {
+            ApiClient client = ApiClient.Instance;
+            DataTableResponse<MenuViewModel> dataTableResponse = new DataTableResponse<MenuViewModel>();
+            try
+            {
+                var apiResult = await client.PostApiAsync<JsonResultObject<DataTableResponse<MenuViewModel>>, object>("api/v1/Roles/searchMenuForRole?offset=" + formData.DataTable.start.ToString() + "&recordPerPage=" + formData.DataTable.length.ToString(),
+                    new { RoleID = formData.RoleID, Code = formData.Code, Name = formData.Name, ApplicationID = formData.ApplicationID }
+                    );
+                if (apiResult != null && apiResult.IsSuccess)
+                {
+                    dataTableResponse = apiResult.Data;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json(dataTableResponse, JsonRequestBehavior.AllowGet);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<ActionResult> DeleteMenu(MenuViewModel formData)
+        {
+            ApiClient client = ApiClient.Instance;
+            try
+            {
+                if (Permission.HasPermission(RoleCodes.Roles.DELETE))
+                {
+                    var apiResult = await client.PostApiAsync<JsonResultObject<String>, object>("api/v1/Roles/deleteMenu",
+                    new { MenuID = formData.MenuID, RoleID = formData.RoleID });
                     ViewBag.Status = "1";
+                }
+                else
+                {
+                    ViewBag.Status = "0";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("401"))
+                {
+                    ViewBag.Status = "-2";
+                }
+            }
+            return PartialView(Constants.VIEW.SAVE_RESULT);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<ActionResult> AddMenus(MenuViewModel app)
+        {
+            ApiClient client = ApiClient.Instance;
+            try
+            {
+                if (Permission.HasPermission(RoleCodes.Roles.UPDATE))
+                {
+                    var apiResult = await client.PostApiAsync<JsonResultObject<MenuViewModel>, MenuViewModel>("api/v1/Roles/addMenus", app);
+                    if (apiResult.IsSuccess)
+                    {
+                        ViewBag.Status = "1";
+                    }
+                    else
+                    {
+                        ViewBag.Status = "-1";
+                    }
                 }
                 else
                 {

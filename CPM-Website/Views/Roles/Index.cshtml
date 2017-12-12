@@ -67,7 +67,7 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content table-responsive">
-                        <table id="searchResult" class="table table-bordered table-striped table-hover">
+                        <table id="searchResult" class="table table-bordered table-striped table-hover" width="100%">
                             <thead>
                                 <tr>
                                     <th>STT</th>
@@ -223,10 +223,8 @@
                             return `<div class="checkbox">
     <label>
         <input type="checkbox" class="flat"
-               name="permission"
-               value="` + data.PermissionID + `"
-               ng-checked="selectPermission.selection.indexOf(+ data.PermissionID +) > -1"
-               onchange="alert('adf')">
+               name="permission[]"
+               value="` + data.PermissionID + `">
     </label>
 </div>`;
                         }
@@ -238,8 +236,97 @@
                         checkboxClass: 'icheckbox_flat-green',
                         radioClass: 'iradio_flat-green'
                     });
-                    var scope = angular.element($('#ApplicationApp')).scope();
-                    scope.$apply();
+                }
+            });
+
+            $scope.roleMenuTbl = $("#roleMenuTbl").DataTable({
+                ajax: {
+                    url: '/Roles/SearchMenuByRole',
+                    type: 'POST',
+                    data: function (d) {
+                        $scope.searchMenu.DataTable = d;
+                        $scope.searchMenu.RoleID = $scope.dataSave.RoleID;
+                        return $scope.searchMenu;
+                    }
+                },
+                deferLoading: 0,
+                columns: [
+                    {
+                        searchable: false,
+                        orderable: false,
+                        data: null,
+                        className: "text-center",
+                        render: function (data, type, row, cell) {
+                            var info = $scope.dataTable.page.info();
+                            var stt = 1 + (info.page * info.length) + cell.row;
+                            return stt;
+                        }
+                    },
+                    { data: 'Code', className: "text-center" },
+                    { data: 'Name' },
+                    { data: 'ApplicationName' },
+                    {
+                        searchable: false,
+                        orderable: false,
+                        data: null,
+                        className: "text-center",
+                        render: function (data, type, row, cell) {
+                            return '<a href="javascript:;" onclick= "deleteMenu(' + data.MenuID + ')" class="red">'
+                                + '<i class="fa fa-remove fa-2x" title="Xóa"></i>'
+                                + '</a>';
+                        }
+                    },
+                ]
+            });
+
+            $scope.selectMenuTbl = $("#selectMenuTbl").DataTable({
+                ajax: {
+                    url: '/Roles/SearchMenuForRole',
+                    type: 'POST',
+                    data: function (d) {
+                        $scope.selectMenu.DataTable = d;
+                        $scope.selectMenu.RoleID = $scope.dataSave.RoleID;
+                        return $scope.selectMenu;
+                    }
+                },
+                deferLoading: 0,
+                columns: [
+                    {
+                        searchable: false,
+                        orderable: false,
+                        data: null,
+                        className: "text-center",
+                        render: function (data, type, row, cell) {
+                            var info = $scope.dataTable.page.info();
+                            var stt = 1 + (info.page * info.length) + cell.row;
+                            return stt;
+                        }
+                    },
+                    { data: 'Code', className: "text-center" },
+                    { data: 'Name' },
+                    { data: 'ApplicationName' },
+                    {
+                        searchable: false,
+                        orderable: false,
+                        data: null,
+                        className: "text-center",
+                        render: function (data, type, row, cell) {
+                            return `<div class="checkbox">
+    <label>
+        <input type="checkbox" class="flat"
+               name="permission[]"
+               value="` + data.MenuID + `">
+    </label>
+</div>`;
+                        }
+                    },
+                ],
+                drawCallback: function (settings) {
+                    this.api().responsive.recalc();
+                    $('input.flat').iCheck({
+                        checkboxClass: 'icheckbox_flat-green',
+                        radioClass: 'iradio_flat-green'
+                    });
                 }
             });
 
@@ -256,7 +343,11 @@
                 var url = '/Roles/AddPermissions';
                 var formData = getFormAsJson('saveForm');
                 formData.RoleID = $scope.dataSave.RoleID;
-                formData.Selection = $scope.selectPermission.Selection;
+                var ids = [];
+                $('#selectPermissionTbl input:checked').each(function () {
+                    ids.push(this.value);
+                });
+                formData.Selection = ids;
                 tctDeferredAjax(flag, url, formData).fail(function () {
                     alert('Có lỗi xảy ra!');
                     tctResetProgress();
@@ -269,6 +360,39 @@
             $scope.searchPermission = function () {
                 if ($('#searchPermission').validationEngine("validate")) {
                     $("#rolePermissionTbl").DataTable().ajax.reload();
+                }
+            }
+
+            $scope.searchMenuForRole = function () {
+                $("#selectMenuTbl").DataTable().ajax.reload();
+            }
+
+            $scope.goAddMenu = function () {
+                $('#selectMenu').modal('show');
+                $scope.searchMenuForRole();
+            }
+            $scope.addMenu = function () {
+                var flag = 'flagSaveResult';
+                var url = '/Roles/AddMenus';
+                var formData = getFormAsJson('saveForm');
+                formData.RoleID = $scope.dataSave.RoleID;
+                var ids = [];
+                $('#selectMenuTbl input:checked').each(function () {
+                    ids.push(this.value);
+                });
+                formData.Selection = ids;
+                tctDeferredAjax(flag, url, formData).fail(function () {
+                    alert('Có lỗi xảy ra!');
+                    tctResetProgress();
+                }).done(function () {
+                    $('#selectMenu').modal('hide');
+                    $scope.searchMenu();
+                });
+            }
+
+            $scope.searchMenu = function () {
+                if ($('#searchMenu').validationEngine("validate")) {
+                    $("#roleMenuTbl").DataTable().ajax.reload();
                 }
             }
             function init() {
@@ -325,6 +449,7 @@
             var data = '';
             var scope = angular.element($('#ApplicationApp')).scope();
             scope.searchPermission();
+            scope.searchMenu();
             tctDeferredAjaxGet(url, data).done(function (data) {
                 var scope = angular.element($('#ApplicationApp')).scope();
                 scope.dataSave.Code = data.Code;
@@ -391,22 +516,7 @@
             }, 'Bạn muốn xóa bản ghi này ?');
         }
 
-        function toggleSelection(id) {
-            debugger;
-            var scope = angular.element($('#ApplicationApp')).scope();
-            var idx = scope.selectPermission.selection.indexOf(id);
-
-            // Is currently selected
-            if (idx > -1) {
-                scope.selectPermission.Selection.splice(idx, 1);
-            }
-
-            // Is newly selected
-            else {
-                scope.selectPermission.Selection.push(id);
-            }
-            console.log(scope.selectPermission.Selection);
-        };
+        
         
     </script>
 }

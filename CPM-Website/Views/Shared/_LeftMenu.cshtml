@@ -8,7 +8,7 @@
             @foreach (Menu m in list)
             {
                 <li>
-                    <a href="@Url.Action(m.Action, m.Controller)"><i class="@m.FontIcon"></i> @m.Name</a>
+                    <a href="@m.Url"><i class="@m.FontIcon"></i> @m.Name</a>
                 </li>
             }
         </ul>

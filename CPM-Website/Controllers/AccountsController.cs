@@ -264,7 +264,7 @@ namespace CPM_Website.Controllers
                 if (apiResult != null && apiResult.IsSuccess)
                 {
                     // Lấy danh sách quyền
-                    string roleStr = string.Join(Constants.ROLE_STRING_SEPERATE,  RoleCodes.Applications.INDEX);
+                    string roleStr = string.Join(Constants.ROLE_STRING_SEPERATE,  apiResult.Data.Roles);
 
                     var authTicket = new FormsAuthenticationTicket(1, formData.Username, DateTime.Now, DateTime.Now.AddMinutes(20), formData.RememberMe, roleStr);
 

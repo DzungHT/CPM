@@ -54,7 +54,7 @@ namespace CPM_Website.Controllers
             ApiClient client = ApiClient.Instance;
             try
             {
-                if (Permission.HasPermission(RoleCodes.Resources.SEARCH))
+                if (Permission.HasPermission(RoleCodes.Resources.INSERT))
                 {
                     var apiResult = await client.PostApiAsync<JsonResultObject<Resource>, Resource>(Resources.URLResources.SAVE_RESOURCE, app);
                     ViewBag.Status = "1";
@@ -120,6 +120,7 @@ namespace CPM_Website.Controllers
             return PartialView(Constants.VIEW.SAVE_RESULT);
         }
 
+        [CybertronAuthorize(Roles = RoleCodes.Resources.SEARCH)]
         public async Task<JsonResult> GetApplications()
         {
             ApiClient client = ApiClient.Instance;
