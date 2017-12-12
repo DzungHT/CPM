@@ -106,6 +106,7 @@
                                 <th>Email</th>
                                 <th>Số điện thoại</th>
                                 <th>Trạng thái</th>
+                                <th>Vai trò</th>
                                 <th>Tác động</th>
                             </tr>
                         </thead>
@@ -118,6 +119,9 @@
     <div id=formSave style="display:none">
         @RenderPage("Form.cshtml");
     </div>
+    <div id="formAddRole" style="display:none">
+        @RenderPage("AddRole.cshtml");
+    </div>
 </div>
 <div id="flagSaveResult" style="display:none"></div>
 
@@ -126,6 +130,12 @@
         var ctrl = app.controller('UserController', ['$scope', function ($scope) {
             $scope.dataSearch = {};
             $scope.dataSave = {};
+            $scope.dataSearchRole = {};
+            $scope.dataSearchRoleAll = {};
+            $scope.selectRole = {
+                Selection: []
+            };
+            
             $scope.dataTable = $("#searchResult").DataTable({
                 order: [[2, "asc"]],
                 ajax: {
@@ -167,6 +177,20 @@
                         data: null,
                         className: "text-center",
                         render: function (data, type, row, cell) {
+                            if (data.Status == 1) {
+                                return '<a href="javascript:;" onclick="goAddRole(' + data.UserID + ')" class="text-success" style="margin-right: 7px">'
+                                       + '<i class="fa fa-edit fa-2x" title="Sửa vai trò"></i>'
+                                       + '</a>';
+                            }
+                            return "";
+                        }
+                    },
+                    {
+                        searchable: false,
+                        orderable: false,
+                        data: null,
+                        className: "text-center",
+                        render: function (data, type, row, cell) {
                             var icon = data.Status == 1 ? 'fa-unlock' : 'fa-lock';
                             var _class = data.Status == 1 ? 'green' : 'orange';
                             var _title = data.Status == 1 ? 'Khóa' : 'Mở khóa';
@@ -183,19 +207,98 @@
                     },
                 ]
             });
+            $scope.roleTbl = $("#roleTbl").DataTable({
+                ajax: {
+                    url: '/Accounts/searchRoleByUser',
+                    type: 'POST',
+                    data: function (d) {
+                        $scope.dataSearchRole.DataTable = d;
+                        return $scope.dataSearchRole;
+                    }
+                },
+                columns: [
+                    {
+                        searchable: false,
+                        orderable: false,
+                        data: null,
+                        className: "text-center",
+                        render: function (data, type, row, cell) {
+                            var info = $scope.dataTable.page.info();
+                            var stt = 1 + (info.page * info.length) + cell.row;
+                            return stt;
+                        }
+                    },
+                    { data: 'Code', className: "text-center" },
+                    { data: 'Name' },
+                    { data: 'Description' },
+                    {
+                        searchable: false,
+                        orderable: false,
+                        data: null,
+                        className: "text-center",
+                        render: function (data, type, row, cell) {
+                            return '<a href="javascript:;" onclick= "deleteRoleFromUser(' + data.RoleID + ')" class="red">'
+                                   + '<i class="fa fa-remove fa-2x" title="Xóa"></i>'
+                                   + '</a>';
+                        }
+                    },
+                ]
+            });
+            $scope.selectRoleTbl = $("#selectRoleTbl").DataTable({
+                ajax: {
+                    url: '/Roles/searchProcess',
+                    type: 'POST',
+                    data: function (d) {
+                        $scope.dataSearchRoleAll.DataTable = d;
+                        return $scope.dataSearchRoleAll;
+                    }
+                },
+                deferLoading: 0,
+                columns: [
+                    {
+                        searchable: false,
+                        orderable: false,
+                        data: null,
+                        className: "text-center",
+                        render: function (data, type, row, cell) {
+                            var info = $scope.dataTable.page.info();
+                            var stt = 1 + (info.page * info.length) + cell.row;
+                            return stt;
+                        }
+                    },
+                    { data: 'Code', className: "text-center" },
+                    { data: 'Name' },
+                    { data: 'Description' },
+                    {
+                        searchable: false,
+                        orderable: false,
+                        data: null,
+                        className: "text-center",
+                        render: function (data, type, row, cell) {
+                            return '<div class="checkbox">'
+                                    +'<label>'
+                                    +'<input type="checkbox" class="flat"'
+                                         +'   name="role"'
+                                        +'    value="' + data.RoleID + '"'
+                                         + '   ng-checked="selectRole.selection.indexOf(' + data.RoleID + ') > -1"'
+                                        +'    onchange="">'
+                                  +'  </label>'
+                                 +'   </div>';
+                        }
+                    },
+                ],
+                drawCallback: function (settings) {
+                    this.api().responsive.recalc();
+                    $('input.flat').iCheck({
+                        checkboxClass: 'icheckbox_flat-green',
+                        radioClass: 'iradio_flat-green'
+                    });
+                    var scope = angular.element($('#UserApp')).scope();
+                    scope.$apply();
+                }
+            });
+            
         }]);
-        $(document).ready(function () {
-            //var scope = angular.element($('#UserApp')).scope();
-            //$.get('/masterData/getListApplication', function (data) {
-            //    scope.listApplication = data;
-            //    scope.$apply();
-            //});
-
-            //$.get('/masterData/GetListMenu', function (data) {
-            //    scope.listMenu = data;
-            //    scope.$apply();
-            //});
-        });
         function search() {
             var scope = angular.element($('#UserApp')).scope();
             if ($('#searchForm').validationEngine("validate")) {
@@ -268,16 +371,18 @@
             });
         }
         function goInsert(e) {
-            tctToggleFieldset($('#formIndex'));
             if (!e) {
                 onResetForm('save');
             }
-            tctToggleFieldset($('#formSave'));
+            $('#formIndex').hide();
+            $('#formSave').show();
+            $('#formAddRole').hide();
         }
         function goSearch() {
-            tctToggleFieldset($('#formIndex'));
-            tctToggleFieldset($('#formSave'));
             search();
+            $('#formIndex').show();
+            $('#formSave').hide();
+            $('#formAddRole').hide();
         }
         function actionSave() {
             if ($('#saveForm').validationEngine("validate")) {
@@ -295,6 +400,48 @@
                     });
                 }, 'Bạn có muốn thực hiện ?');
             }
+        }
+
+        function goAddRole(id) {
+            var scope = angular.element($('#UserApp')).scope();
+            scope.dataSearchRole.UserID = id;
+            searchRoleUser();
+            $('#formIndex').hide();
+            $('#formSave').hide();
+            $('#formAddRole').show();
+        }
+        function searchRoleUser() {
+            var scope = angular.element($('#UserApp')).scope();
+            scope.roleTbl.ajax.reload();
+        }
+        function goAddRoleUser() {
+            $('#selectRole').modal('show');
+            searchRoleAll();
+        }
+
+        function searchRoleAll() {
+            var scope = angular.element($('#UserApp')).scope();
+            scope.selectRoleTbl.ajax.reload();
+        }
+
+        function addRoleUser() {
+            var flag = 'flagSaveResult';
+            var url = '/Account/AddRoleUser';
+            var formData = getFormAsJson('saveForm');
+            var scope = angular.element($('#UserApp')).scope();
+            formData.UserID = scope.dataSearchRole.UserID;
+            formData.Selection = scope.selectRole.Selection;
+            tctDeferredAjax(flag, url, formData).fail(function () {
+                alert('Có lỗi xảy ra!');
+                tctResetProgress();
+            }).done(function () {
+                $('#selectRole').modal('hide');
+                searchRoleUser();
+            });
+        }
+
+        function deleteRoleFromUser(id) {
+
         }
     </script>
 }

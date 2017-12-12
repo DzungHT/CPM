@@ -155,7 +155,7 @@
   </data>
   <data name="LOCK_UNLOCK_USER" xml:space="preserve">
     <value>api/v1/Users/lockUnlock?id=</value>
-    </data>
+  </data>
   <data name="GET_ROLE" xml:space="preserve">
     <value>api/v1/Roles/get?id=</value>
   </data>
@@ -176,7 +176,7 @@
   </data>
   <data name="SAVE_USER" xml:space="preserve">
     <value>api/v1/Users/save</value>
-    </data>
+  </data>
   <data name="SAVE_ROLE" xml:space="preserve">
     <value>api/v1/Roles/save</value>
   </data>
@@ -191,8 +191,11 @@
   </data>
   <data name="SEARCH_USER" xml:space="preserve">
     <value>api/v1/Users/search</value>
-    </data>
+  </data>
   <data name="SEARCH_ROLE" xml:space="preserve">
     <value>api/v1/Roles/search</value>
+  </data>
+  <data name="SEARCH_ROLE_BY_USER" xml:space="preserve">
+    <value>api/v1/Users/searchRolebyUser</value>
   </data>
 </root>

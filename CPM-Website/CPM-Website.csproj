@@ -2585,7 +2585,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MasterDataController.cs" />
     <Compile Include="Controllers\MenusController.cs" />
-    <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Models\Common\Constants.cs" />
@@ -2656,6 +2655,7 @@
     <Content Include="Views\Accounts\Index.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Roles\Form.cshtml" />
+    <Content Include="Views\Accounts\AddRole.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2665,7 +2665,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Permissions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\ApplicationResources.resx">
