@@ -356,6 +356,7 @@
             var url = "/Accounts/prepareUpdate?id=" + id;
             var data = '';
             tctDeferredAjaxGet(url, data).done(function (data) {
+                console.log(data);
                 var scope = angular.element($('#UserApp')).scope();
                 scope.dataSave.UserID = data.UserID;
                 scope.dataSave.LoginName = data.LoginName;
@@ -426,11 +427,15 @@
 
         function addRoleUser() {
             var flag = 'flagSaveResult';
-            var url = '/Account/AddRoleUser';
+            var url = '/Accounts/AddRoleUser';
             var formData = getFormAsJson('saveForm');
             var scope = angular.element($('#UserApp')).scope();
             formData.UserID = scope.dataSearchRole.UserID;
-            formData.Selection = scope.selectRole.Selection;
+            var ids = [];
+            $('#selectRoleTbl input:checked').each(function () {
+                ids.push(this.value);
+            });
+            formData.Selection = ids;
             tctDeferredAjax(flag, url, formData).fail(function () {
                 alert('Có lỗi xảy ra!');
                 tctResetProgress();
@@ -441,7 +446,20 @@
         }
 
         function deleteRoleFromUser(id) {
-
+            tctConfirm(function () {
+                var url = '/Accounts/DeleteRoleUser';
+                var formData = getFormAsJson('searchForm');
+                var flag = 'flagSaveResult';
+                formData.RoleID = id;
+                var scope = angular.element($('#UserApp')).scope();
+                formData.UserID = scope.dataSearchRole.UserID;
+                tctDeferredAjax(flag, url, formData).fail(function () {
+                    alert('Hết phiên làm việc!');
+                    tctResetProgress();
+                }).done(function () {
+                    searchRoleUser()
+                });
+            }, 'Bạn muốn xóa bản ghi này ?');
         }
     </script>
 }

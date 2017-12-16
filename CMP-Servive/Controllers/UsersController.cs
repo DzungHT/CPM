@@ -251,10 +251,6 @@ namespace CMP_Servive.Controllers
         [HttpPost]
         public OutPutDTO addRole(UserRoleDTO obj)
         {
-            if (!ModelState.IsValid)
-            {
-                return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
-            }
             try
             {
                 if (userBusiness.AddRole(obj.UserID, obj.Selection))
@@ -275,19 +271,19 @@ namespace CMP_Servive.Controllers
         [HttpPost]
         public OutPutDTO deleteRole(UserRoleDTO obj)
         {
-            if (!ModelState.IsValid)
-            {
-                return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
-            }
             try
             {
-                if (userBusiness.deleteRole(obj.UserID, obj.RoleID))
+                var trans = commonBu.getDbContext().Database.BeginTransaction();
+                try
                 {
-                    return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, null);
+                    int n = commonBu.getDbContext().Database.ExecuteSqlCommand("DELETE UserRole WHERE UserID = @UserID AND RoleID = @RoleID", new SqlParameter("UserID", obj.UserID), new SqlParameter("RoleID", obj.RoleID));
+                    trans.Commit();
+                    return new OutPutDTO(true, Constants.STATUS_CODE.SUCCESS, Constants.STATUS_MESSAGE.SUCCESS, n);
                 }
-                else
+                catch (Exception ex)
                 {
-                    return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
+                    trans.Rollback();
+                    return new OutPutDTO(false, Constants.STATUS_CODE.EXCEPTION, Constants.STATUS_MESSAGE.EXCEPTION + ex.Message, null);
                 }
             }
             catch (Exception ex)

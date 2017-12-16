@@ -174,10 +174,6 @@ namespace CMP_Servive.Controllers
         [HttpPost]
         public OutPutDTO deletePermission([FromBody]PermissionDTO permission)
         {
-            if (!ModelState.IsValid)
-            {
-                return new OutPutDTO(false, Constants.STATUS_CODE.FAILURE, Constants.STATUS_MESSAGE.FAILURE, null);
-            }
             var trans = commonBu.getDbContext().Database.BeginTransaction();
             try
             {

@@ -57,8 +57,8 @@ namespace CMP_Servive.Business
 
         public bool deleteRole(int userId,int roleId)
         {
-            //var x = db.Database.SqlQuery<string>("DELETE FROM UserRole  WHERE UserID = @UserID AND RoleID = @RoleID", new SqlParameter("UserID", userId), new SqlParameter("RoleID", roleId)).
-            //db.SaveChanges();
+            string sql = "DELETE RolePermission WHERE PermissionID = @PermissionID AND RoleID = @RoleID";
+            int n = db.Database.ExecuteSqlCommand("DELETE FROM UserRole  WHERE UserID = @UserID AND RoleID = @RoleID", new SqlParameter("UserID", userId), new SqlParameter("RoleID", roleId));
             return true;
         }
 

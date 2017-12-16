@@ -20,6 +20,7 @@ namespace CPM_Website.Controllers
 
         #region HttpGet
 
+        [CybertronAuthorize(Roles = RoleCodes.USERS.INDEX)]
         public ActionResult Index()
         {
             return View();
@@ -76,7 +77,7 @@ namespace CPM_Website.Controllers
             ApiClient client = ApiClient.Instance;
             try
             {
-                if (Permission.HasPermission(RoleCodes.Applications.SEARCH))
+                if (Permission.HasPermission(RoleCodes.USERS.SEARCH))
                 {
                     var apiResult = await client.PostApiAsync<JsonResultObject<User>, User>(URLResources.SAVE_USER, obj);
                     if(apiResult.Status == "05")
@@ -127,7 +128,7 @@ namespace CPM_Website.Controllers
             ApiClient client = ApiClient.Instance;
             try
             {
-                if (Permission.HasPermission(RoleCodes.Applications.SEARCH))
+                if (Permission.HasPermission(RoleCodes.USERS.SEARCH))
                 {
                     var apiResult = await client.PostApiAsync<JsonResultObject<User>, object>(URLResources.LOCK_UNLOCK_USER + id,
                     new { });
@@ -156,7 +157,7 @@ namespace CPM_Website.Controllers
             ApiClient client = ApiClient.Instance;
             try
             {
-                if (Permission.HasPermission(RoleCodes.Applications.SEARCH))
+                if (Permission.HasPermission(RoleCodes.USERS.SEARCH))
                 {
                     var apiResult = await client.PostApiAsync<JsonResultObject<User>, object>(URLResources.RESTART_USER + id,null);
                     ViewBag.Status = "1";
@@ -185,7 +186,7 @@ namespace CPM_Website.Controllers
             ApiClient client = ApiClient.Instance;
             try
             {
-                if (!Permission.HasPermission(RoleCodes.Roles.UPDATE))
+                if (Permission.HasPermission(RoleCodes.USERS.UPDATE))
                 {
                     var apiResult = await client.PostApiAsync<JsonResultObject<RoleViewModel>, RoleViewModel>("api/v1/Users/addRole", app);
                     ViewBag.Status = "1";
@@ -213,9 +214,9 @@ namespace CPM_Website.Controllers
             ApiClient client = ApiClient.Instance;
             try
             {
-                if (!Permission.HasPermission(RoleCodes.Roles.UPDATE))
+                if (Permission.HasPermission(RoleCodes.Roles.UPDATE))
                 {
-                    var apiResult = await client.PostApiAsync<JsonResultObject<RoleViewModel>, RoleViewModel>("api/v1/Users/deleteRole", app);
+                    var apiResult = await client.PostApiAsync<JsonResultObject<String>, object>("api/v1/Users/deleteRole", app);
                     ViewBag.Status = "1";
                 }
                 else
